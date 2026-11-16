@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>תרגול עצמי ושאלות חזרה — סיכום למידה עמוקה</title>
+<title>חזרה ותרגול — סיכום למידה עמוקה</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Suez+One&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -14,8 +14,26 @@
 <body class="chapter pg-practice">
 <div class="layout">
 <main>
-<header class="chap"><div class="chapmid"><div class="chapnum">תרגול</div><div class="chaptitle">תרגול עצמי ושאלות חזרה</div></div></header>
+<header class="chap"><div class="chapmid"><div class="chapnum">פרק 7 מתוך 7</div><div class="chaptitle">חזרה ותרגול</div></div></header>
 <div class="wrap">
+<section id="traps">
+<h2 id="traps-h">מלכודות נפוצות</h2>
+<div class="tbl"><table>
+<tr><th>טעות</th><th>למה זה שגוי</th><th>התיקון</th></tr>
+<tr><td>להעלות <span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> כדי ״לאמן מהר״</td><td>מעל סף מסוים כל צעד מגדיל את ה-<span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span>: התפוצצות ל-<bdi dir="ltr">inf</bdi> או <bdi dir="ltr">nan</bdi></td><td>להתחיל קטן, להגדיל פי 10, ולצייר את ה-<span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span></td></tr>
+<tr><td><bdi dir="ltr">preds</bdi> בצורה (<bdi dir="ltr">N, 1</bdi>) ו-<bdi dir="ltr">Y</bdi> בצורה (<bdi dir="ltr">1, N</bdi>)</td><td><span class="gt" tabindex="0" data-tip="פעולה בין מערכים בצורות שונות: המערך הקטן ״נמתח״ לצורה של הגדול בלי להעתיק זיכרון.">broadcasting</span> יוצר מטריצה <bdi dir="ltr">N×N</bdi>, ה-<span class="gt" tabindex="0" data-tip="Mean Squared Error: ממוצע ריבועי ההפרשים בין הניבוי לתשובה הנכונה.">MSE</span> יוצא מספר שגוי בלי שגיאה</td><td><span class="gt" tabindex="0" data-tip="משנה צורה כמו view, אבל מעתיק כשהזיכרון לא רציף.">reshape</span> לאותה צורה ו-<code class="nw">assert</code></td></tr>
+<tr><td>להשתמש ב-<span class="gt" tabindex="0" data-tip="פונקציה שמחזירה +1 למספר חיובי ו-−1 לשלילי.">sign</span> <span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">בנוירון</span> שמאמנים ב-<bdi dir="ltr">GD</bdi></td><td><span class="gt" tabindex="0" data-tip="קצב השינוי של פונקציה. כאן: כמה ה-Loss משתנה כשמזיזים פרמטר אחד מעט.">הנגזרת</span> 0 כמעט בכל מקום, אין ממה ללמוד</td><td><span class="gt" tabindex="0" data-tip="הפונקציה σ(z) = 1/(1+e⁻ᶻ). דוחסת כל מספר לטווח שבין 0 ל-1.">סיגמואיד</span> (או <span class="gt" tabindex="0" data-tip="הפונקציה max(0, z): מאפסת ערכים שליליים ומשאירה חיוביים כמו שהם.">ReLU</span> <span class="gt" tabindex="0" data-tip="שכבה בין שכבת הקלט לשכבת הפלט. לא רואים את הערכים שלה מבחוץ.">בשכבות נסתרות</span>)</td></tr>
+<tr><td>לשכוח את <span class="ltr">σ′</span> <span class="gt" tabindex="0" data-tip="וקטור הנגזרות החלקיות של ה-Loss לפי כל פרמטר. מראה לאן ה-Loss עולה הכי מהר.">בגרדיאנט</span> של <span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא קטגוריה מתוך קבוצה סופית, למשל חתול או כלב.">סיווג</span></td><td><span class="gt" tabindex="0" data-tip="קצב השינוי של פונקציה. כאן: כמה ה-Loss משתנה כשמזיזים פרמטר אחד מעט.">הנגזרת</span> של <span class="gt" tabindex="0" data-tip="Mean Squared Error: ממוצע ריבועי ההפרשים בין הניבוי לתשובה הנכונה.">MSE</span> על <span class="ltr">σ(z)</span> דורשת כלל שרשרת</td><td>להוסיף <span class="ltr">p·(1 − p)</span>, ולאמת מול <code class="nw">backward()</code></td></tr>
+<tr><td>להשתמש ב-<span class="gt" tabindex="0" data-tip="אחוז הדוגמאות שהמודל סיווג נכון.">accuracy</span> בתור <span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span></td><td>היא מדרגות: אי אפשר לגזור</td><td><span class="gt" tabindex="0" data-tip="Mean Squared Error: ממוצע ריבועי ההפרשים בין הניבוי לתשובה הנכונה.">MSE</span> לאימון, <span class="gt" tabindex="0" data-tip="אחוז הדוגמאות שהמודל סיווג נכון.">accuracy</span> להערכה</td></tr>
+<tr><td>לשכוח את ה-<span class="gt" tabindex="0" data-tip="המספר b שמתווסף לסכום המשוקלל. מזיז את קו ההחלטה כך שלא חייב לעבור בראשית.">bias</span></td><td>הישר חייב לעבור דרך הראשית</td><td>N <span class="gt" tabindex="0" data-tip="הפרמטרים שהאימון מכוון. כל קלט מוכפל במשקולת שלו.">משקולות</span> + <bdi dir="ltr">b</bdi> אחד</td></tr>
+<tr><td>להחסיר <bdi dir="ltr">dw</bdi> בצורה <bdi dir="ltr">(1, 8)</bdi> מ-<bdi dir="ltr">W</bdi> בצורה <bdi dir="ltr">(8, 1)</bdi></td><td><span class="gt" tabindex="0" data-tip="פעולה בין מערכים בצורות שונות: המערך הקטן ״נמתח״ לצורה של הגדול בלי להעתיק זיכרון.">broadcasting</span> יוצר <bdi dir="ltr">(8, 8)</bdi></td><td><code>dw.view(n._w.shape)</code></td></tr>
+<tr><td>וקטורים חד-ממדיים <code class="nw">(N,)</code></td><td>.<bdi dir="ltr">T</bdi> לא עושה כלום, תוצאות מפתיעות בלי שגיאה</td><td>צורות מפורשות (<bdi dir="ltr">N,1</bdi>) או (<bdi dir="ltr">1,N</bdi>)</td></tr>
+<tr><td>לבדוק רק על דאטה האימון</td><td><span class="gt" tabindex="0" data-tip="המודל משנן את דוגמאות האימון, כולל הרעש, ונכשל על דוגמאות חדשות.">overfitting</span> נראה כמו הצלחה</td><td><span class="gt" tabindex="0" data-tip="חלק מהדאטה שלא מאמנים עליו. בודקים עליו את המודל בזמן הפיתוח.">ולידציה</span> ובדיקה נפרדות</td></tr>
+<tr><td>להניח שהדאטה ״נקי״</td><td>המודל לומד גם הטיות: סרגלים בתמונות, סטריאוטיפים בטקסט</td><td>להסתכל על הדאטה (<code class="nw">show_batch</code>) ולשאול מי לא מיוצג</td></tr>
+<tr><td>לא למחוק תמונות שבורות</td><td>האימון קורס באמצע</td><td><code class="nw">verify_images</code> ו-<code class="nw">unlink</code></td></tr>
+<tr><td>להריץ תאי <span class="gt" tabindex="0" data-tip="מחברת שמשלבת תאי קוד, טקסט ופלט במסמך אחד.">Jupyter</span> לא לפי הסדר</td><td>משתנה ישן או לא מוגדר בזיכרון הגלובלי</td><td><bdi dir="ltr">Restart &amp</bdi>; <bdi dir="ltr">Run All</bdi> לפני הגשה</td></tr>
+</table></div>
+</section>
 <section id="practice">
 <h2 id="practice-h">תרגול עצמי: יעבור או ייכשל?</h2>
 <p>תרגיל חדש באותו סגנון. נסה לענות על כל צעד לפני שאתה לוחץ ״השלב הבא״. הדאטה מומצא (60 סטודנטים), והמספרים בתרשים מחושבים בדפדפן באותו אלגוריתם כמו בשקפים.</p>
@@ -64,7 +82,7 @@
 <details class="ans"><summary>תשובה</summary><p>זו בחירת <span class="gt" tabindex="0" data-tip="הדרך שבה הופכים את הבעיה למספרים: מה בדיוק נכנס למודל ומה יוצא ממנו.">ייצוג</span>: ברגע שהבעיה מיוצגת כתמונה, אפשר להשתמש במסווגי תמונות חזקים שאומנו מראש, בלי הנדסת תכונות ידנית.</p></details></li>
 </ol>
 </section>
-<div class="pager"><a class="prev" href="traps.html"><span>הקודם</span>מלכודות נפוצות</a></div>
+<div class="pager"><a class="prev" href="pytorch.html"><span>הקודם</span>6 · PyTorch</a></div>
 </div>
 </main>
 </div>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>הכללה, דאטה וייצוג — סיכום למידה עמוקה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Suez+One&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="guide.css?v=9d33a30e">
+<script data-goatcounter="https://eliorch.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- mta-theme --><link rel="stylesheet" href="../main/site-theme.css"><script src="../main/site-theme.js" data-course="dl" data-fam="db" data-footer="body"></script><!-- /mta-theme -->
+</head>
+<body class="chapter pg-data">
+<div class="layout">
+<main>
+<header class="chap"><div class="chapmid"><div class="chapnum">פרק 3 מתוך 7</div><div class="chaptitle">הכללה, דאטה וייצוג</div></div></header>
+<div class="wrap">
+<section id="generalization">
+<span class="lesson">שיעור 0 · שקפים <bdi dir="ltr">104–126</bdi></span>
+<h2 id="generalization-h">הקו בין שתי הערים — <span class="gt" tabindex="0" data-tip="היכולת של המודל לעבוד טוב על דוגמאות שלא ראה באימון.">הכללה</span>, <span class="gt" tabindex="0" data-tip="המודל פשוט מדי, ולא מצליח ללמוד את התבנית אפילו על דאטה האימון.">underfitting</span> ו-<span class="gt" tabindex="0" data-tip="המודל משנן את דוגמאות האימון, כולל הרעש, ונכשל על דוגמאות חדשות.">overfitting</span></h2>
+<p>המודל שנקבל לא מייצג את המציאות, אלא את מה שאפשר ללמוד מהדאטה שאספנו (שקף 104). והמבחן האמיתי הוא דוגמה חדשה שהמודל לא ראה באימון (שקף 117). הדוגמה של שקפים <bdi dir="ltr">119–124</bdi> מראה למה הבחירה של <span class="ch"><span class="gt" tabindex="0" data-tip="כל הפונקציות שהמודל יכול לייצג: אותה נוסחה עם כל ערכי המשקולות האפשריים. האימון בוחר מתוכן פונקציה אחת.">מרחב ההיפותזות</span></span> חשובה.</p>
+<div class="ex stepped">
+<div class="q"><b>השאלה (שקף 119)</b><bdi dir="ltr">Find the line between the two cities</bdi>: נתונים בתים של שתי ערים (אדומה וכחולה). איזה גבול כדאי ללמוד?</div>
+<div class="exgrid">
+<div class="exfig">
+<figure class="fig livefig"><div class="mainfig"></div><figcaption class="livecap"></figcaption></figure>
+<div class="stepbar"><button class="btn ghost prevBtn" type="button">הקודם</button><span class="prog"></span><button class="btn nextBtn" type="button">השלב הבא</button><button class="btn ghost allBtn" type="button">לפתרון המלא</button></div></div>
+<div class="steps">
+<div class="step" data-spec="gen" data-show="a" data-cap="הדאטה: שתי ערים, עם קצת רעש"><div class="sh">צעד 1: הסתכל על הדאטה</div><p>העיר האדומה יושבת בתוך העיר הכחולה. יש גם כמה בתים ״חריגים״: כחולים בתוך האדומה ואדום אחד בחוץ. זה <span class="gt" tabindex="0" data-tip="סטייה אקראית בדאטה שאינה חלק מהתבנית שרוצים ללמוד.">רעש</span>, כמו בכל דאטה אמיתי.</p></div>
+<div class="step" data-spec="gen" data-show="ab" data-cap="אפשרות 1: משפחה של קווים ישרים"><div class="sh">צעד 2: משפחה של ישרים</div><p>אם <span class="gt" tabindex="0" data-tip="כל הפונקציות שהמודל יכול לייצג: אותה נוסחה עם כל ערכי המשקולות האפשריים. האימון בוחר מתוכן פונקציה אחת.">מרחב ההיפותזות</span> הוא רק קווים ישרים, אין שום ישר שמפריד עיר שנמצאת בתוך עיר. המודל פשוט מדי: <strong><span class="gt" tabindex="0" data-tip="המודל פשוט מדי, ולא מצליח ללמוד את התבנית אפילו על דאטה האימון.">Underfitting</span></strong>. הוא טועה גם על דאטה האימון.</p></div>
+<div class="step" data-spec="gen" data-show="abc" data-cap="אפשרות 2: אליפסה"><div class="sh">צעד 3: משפחה של אליפסות</div><p>אליפסה תופסת את המבנה האמיתי ומוותרת על כמה נקודות רועשות. זו <strong><span class="gt" tabindex="0" data-tip="היכולת של המודל לעבוד טוב על דוגמאות שלא ראה באימון.">הכללה</span></strong> (<span class="gt" tabindex="0" data-tip="היכולת של המודל לעבוד טוב על דוגמאות שלא ראה באימון.">Generalization</span>): המודל למד את הכלל, לא את הדוגמאות.</p></div>
+<div class="step" data-spec="gen" data-show="abcd" data-cap="אפשרות 3: גבול גמיש מאוד"><div class="sh">צעד 4: משפחה גמישה מאוד</div><p>גבול מפותל שעוקף כל נקודה מקבל 0 שגיאות באימון. אבל הוא שינן את <span class="gt" tabindex="0" data-tip="סטייה אקראית בדאטה שאינה חלק מהתבנית שרוצים ללמוד.">הרעש</span>: <strong><span class="gt" tabindex="0" data-tip="המודל משנן את דוגמאות האימון, כולל הרעש, ונכשל על דוגמאות חדשות.">Overfitting</span></strong>.</p></div>
+<div class="step" data-spec="gen" data-show="abcde" data-cap="המבחן האמיתי: בתים חדשים"><div class="sh">צעד 5: בדיקה על דוגמאות חדשות</div><p>מגיעים שני בתים חדשים, ליד המקומות שבהם הגבול המפותל ״עיקם״ את עצמו. האליפסה מסווגת אותם נכון; הגבול המפותל טועה בשניהם. לכן בודקים על דאטה נפרד: אימון, <span class="gt" tabindex="0" data-tip="חלק מהדאטה שלא מאמנים עליו. בודקים עליו את המודל בזמן הפיתוח.">ולידציה</span> ובדיקה.</p></div>
+</div></div></div>
+<div class="tbl"><table>
+<tr><th>חלק מהדאטה</th><th>בשביל מה</th><th>מתי נוגעים בו</th></tr>
+<tr><td>Training</td><td>האלגוריתם מעדכן לפיו את <span class="gt" tabindex="0" data-tip="הפרמטרים שהאימון מכוון. כל קלט מוכפל במשקולת שלו.">המשקולות</span></td><td>כל <span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">epoch</span></td></tr>
+<tr><td><span class="gt" tabindex="0" data-tip="חלק מהדאטה שלא מאמנים עליו. בודקים עליו את המודל בזמן הפיתוח.">Validation</span></td><td>בוחרים לפיו הגדרות: <span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span>, <span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">epochs</span>, <span class="gt" tabindex="0" data-tip="צורת החיבור של הנוירונים והשכבות ברשת.">ארכיטקטורה</span></td><td>במהלך הפיתוח (ב-<span class="gt" tabindex="0" data-tip="ספריית Python שעוטפת את PyTorch ומאפשרת לאמן מודל בכמה שורות.">fastai</span>: <code class="nw">valid_loss</code>)</td></tr>
+<tr><td><span class="gt" tabindex="0" data-tip="דאטה שנשמר בצד לבדיקה סופית ההוגנת של המודל.">Test</span></td><td>הערכה סופית, הוגנת</td><td>פעם אחת, בסוף</td></tr>
+</table></div>
+<div class="box warn"><h4>חשיבות הדאטה: המודל לומד את מה שיש בדאטה, כולל ההטיות (שקפים <bdi dir="ltr">104–116</bdi>)</h4>
+<p><strong>מלנומה:</strong> מסווגים של סרטן עור למדו לזהות סרגלי מדידה וסימונים כירורגיים שהופיעו בתמונות, ולא את הנגע עצמו (״<bdi dir="ltr">When AI flags the ruler, not the tumor</bdi>״).</p>
+<p><strong>Gender Bias in <span class="gt" tabindex="0" data-tip="Large Language Model: מודל שפה גדול שחוזה את הטוקן הבא בטקסט.">LLMs</span></strong> (2023): מודלי שפה מאומנים על דאטה לא מאוזן ומחזירים סטריאוטיפים מגדריים, גם אחרי <span class="gt" tabindex="0" data-tip="אימון מודל שפה לפי משוב של בני אדם על התשובות שלו.">RLHF</span>, ואפילו מסבירים את הבחירה בנימוקים לא נכונים. מסקנת המאמר: צריך לבדוק בקפידה שמודלים מתייחסים בהוגנות לקבוצות מיעוט.</p>
+<p><strong>מה זה אומר לתרגיל שלך:</strong> לפני שמאמנים, שואלים מה יש בתמונות מלבד מה שרוצים לסווג (רקע, תאורה, סימונים) ומי לא מיוצג בדאטה.</p></div>
+</section>
+<section id="representation">
+<span class="lesson">שיעור 0 · שקפים <bdi dir="ltr">74–103</bdi>, <bdi dir="ltr">152–165</bdi></span>
+<h2 id="representation-h">עניין <span class="gt" tabindex="0" data-tip="הדרך שבה הופכים את הבעיה למספרים: מה בדיוק נכנס למודל ומה יוצא ממנו.">הייצוג</span> — מה קורה לטקסט בתוך <span class="gt" tabindex="0" data-tip="Large Language Model: מודל שפה גדול שחוזה את הטוקן הבא בטקסט.">LLM</span></h2>
+<p>כדי להשתמש במודל הלמידה צריך לייצג את הבעיה כמיפוי של מערך מספרים למערך מספרים (שקף 78). כשבונים מודל בעצמך מגדירים את המיפוי במפורש; כשמשתמשים במודל קיים הוא חבוי במבנה הדאטה וב-<span class="gt" tabindex="0" data-tip="וקטור מספרים שנלמד באימון ומייצג את המשמעות של טוקן.">embedding</span> של המודל (שקף 79). השקפים מראים את זה דרך שאלה ששאלו את <bdi dir="ltr">ChatGPT</bdi>.</p>
+<div class="ex stepped">
+<div class="q"><b>השאלה (שקף 80)</b>״<bdi dir="ltr">how is the data I enter in the prompt really represented when it is fed to the</bdi> <span class="gt" tabindex="0" data-tip="נוירונים מחוברים בשכבות: הפלט של שכבה אחת הוא הקלט של הבאה.">neural network</span> <bdi dir="ltr">representing you, ChatGPT</bdi>?״ עקוב אחרי הטקסט מהמקלדת ועד <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">הטוקן</span> הבא.</div>
+<div class="exgrid">
+<div class="exfig">
+<figure class="fig livefig"><div class="mainfig"></div><figcaption class="livecap"></figcaption></figure>
+<div class="stepbar"><button class="btn ghost prevBtn" type="button">הקודם</button><span class="prog"></span><button class="btn nextBtn" type="button">השלב הבא</button><button class="btn ghost allBtn" type="button">לפתרון המלא</button></div></div>
+<div class="steps">
+<div class="step" data-spec="llm" data-show="a" data-cap="1. הקלט הוא מחרוזת תווים"><div class="sh">צעד 1: טקסט</div><p>מה שהקלדת הוא רק רצף תווים: ״<bdi dir="ltr">h</bdi>״, ״<bdi dir="ltr">o</bdi>״, ״<bdi dir="ltr">w</bdi>״… עדיין לא מספרים.</p></div>
+<div class="step" data-spec="llm" data-show="ab" data-cap="2. טוקניזציה"><div class="sh">צעד 2: <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">טוקנים</span></div><p><span class="gt" tabindex="0" data-tip="הכלי שמפרק טקסט לטוקנים וממיר כל אחד למספר.">Tokenizer</span> מפרק את הטקסט לחתיכות (מילה, חלק ממילה או סימן פיסוק). זה מיפוי קבוע, לא נלמד באימון.</p></div>
+<div class="step" data-spec="llm" data-show="abc" data-cap="3. כל טוקן הוא מספר שלם"><div class="sh">צעד 3: <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">Token IDs</span></div><p>כל <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">טוקן</span> מקבל מספר באוצר המילים: <code class="nw">how → 1068</code>, <code class="nw">is → 318</code>, <code class="nw">the → 262</code>, <code class="nw">data → 3748</code> (מה-<span class="gt" tabindex="0" data-tip="הכלי שמפרק טקסט לטוקנים וממיר כל אחד למספר.">tokenizer</span> של <bdi dir="ltr">GPT</bdi>, שקף 82). המודל אף פעם לא רואה מילים, רק מספרים (שקף 83).</p></div>
+<div class="step" data-spec="llm" data-show="abcd" data-cap="4. Embedding: וקטור לכל טוקן"><div class="sh">צעד 4: וקטורים</div><p>טבלת <span class="gt" tabindex="0" data-tip="וקטור מספרים שנלמד באימון ומייצג את המשמעות של טוקן.">embedding</span> (נלמדת) הופכת כל <bdi dir="ltr">ID</bdi> לווקטור ארוך, אלפי ממדים, שמייצג משמעות. זה ההבדל מ-<span class="gt" tabindex="0" data-tip="וקטור של אפסים עם 1 יחיד במקום שמתאים למילה.">one-hot</span>: מילים קרובות במשמעות מקבלות וקטורים קרובים.</p></div>
+<div class="step" data-spec="llm" data-show="abcde" data-cap="5. שכבות הטרנספורמר"><div class="sh">צעד 5: <span class="gt" tabindex="0" data-tip="ארכיטקטורה שמבוססת על self-attention. הבסיס של מודלי השפה הגדולים.">Transformer</span></div><p>שכבות <span class="gt" tabindex="0" data-tip="מנגנון שבו כל טוקן ״מסתכל״ על כל שאר הטוקנים ושוקל כמה כל אחד חשוב לו.">self-attention</span> לומדות קשרים בין כל <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">הטוקנים</span>, ושכבות <bdi dir="ltr">feed-forward</bdi> וחיבורי <span class="gt" tabindex="0" data-tip="חיבור שמוסיף את הקלט של שכבה לפלט שלה, כדי שמידע לא ילך לאיבוד בין שכבות.">residual</span> מעבדים אותם. בסוף לכל <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">טוקן</span> יש <span class="gt" tabindex="0" data-tip="הדרך שבה הופכים את הבעיה למספרים: מה בדיוק נכנס למודל ומה יוצא ממנו.">ייצוג</span> שתלוי בהקשר: מה הוא ״אומר״ בהינתן כל השאר.</p></div>
+<div class="step" data-spec="llm" data-show="abcdef" data-cap="6. התפלגות על הטוקן הבא"><div class="sh">צעד 6: הפלט</div><p>הרשת מחזירה וקטור באורך אוצר המילים (בערך 50,000): הסתברות לכל <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">טוקן</span> אפשרי. הסביר ביותר (או דגימה מההתפלגות) הוא <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">הטוקן</span> הבא. זו הגדרת <span class="gt" tabindex="0" data-tip="Large Language Model: מודל שפה גדול שחוזה את הטוקן הבא בטקסט.">LLM</span> בשקפים <bdi dir="ltr">152–157</bdi>: ״<bdi dir="ltr">The cat sat on the</bdi> ___״.</p></div>
+</div></div></div>
+<figure class="fig"><div data-spec="repr"></div><figcaption><span class="gt" tabindex="0" data-tip="הדרך שבה הופכים את הבעיה למספרים: מה בדיוק נכנס למודל ומה יוצא ממנו.">ייצוג</span> של תמונה ושל טקסט (שקפים <bdi dir="ltr">92–94</bdi>): עוצמות פיקסלים בגווני אפור, ו-<span class="gt" tabindex="0" data-tip="וקטור של אפסים עם 1 יחיד במקום שמתאים למילה.">one-hot</span> שבו כל מילה היא וקטור עם 1 יחיד.</figcaption></figure>
+<div class="box rule"><h4>אתגר בחירת <span class="gt" tabindex="0" data-tip="הדרך שבה הופכים את הבעיה למספרים: מה בדיוק נכנס למודל ומה יוצא ממנו.">הייצוג</span> (שקפים <bdi dir="ltr">95–97</bdi>)</h4><p>לייצג כמספרים זה קל (<bdi dir="ltr">A=1, B=2</bdi>…). הקושי הוא לעשות את זה <strong>כך שהמבנה והמידע החשוב נשמרים</strong>. איך מייצגים טקסט כמערך מספרים ששומר על המשמעות (סמנטיקה) ועל התחביר? במשך שנים זה היה האתגר המרכזי של מי שבנה מודלים.</p></div>
+<div class="box tip"><h4>התרומה הגדולה של <span class="gt" tabindex="0" data-tip="נוירונים מחוברים בשכבות: הפלט של שכבה אחת הוא הקלט של הבאה.">רשתות נוירונים</span> (שקפים <bdi dir="ltr">98–103</bdi>, <bdi dir="ltr">159–162</bdi>)</h4>
+<p><strong><span class="gt" tabindex="0" data-tip="מחקר שבו מחשב ניתח תמונות של סרטן שד וגילה מאפיינים חדשים בסטרומה שחוזים הישרדות.">C-Path</span>:</strong> חוקרים פירקו תמונות מיקרוסקופיות של סרטן שד לאלפי מאפיינים כמותיים, גם של הרקמה התומכת (הסטרומה). המחשב גילה שמאפייני הסטרומה חשובים לחיזוי הישרדות לא פחות מתאי הסרטן, דבר שפתולוגים לא התמקדו בו. ״המחשבים מצביעים לנו על מה שחשוב, ולא להפך.״</p>
+<p><strong>שכבות לומדות <span class="gt" tabindex="0" data-tip="הדרך שבה הופכים את הבעיה למספרים: מה בדיוק נכנס למודל ומה יוצא ממנו.">ייצוג</span>:</strong> בשכבה 1 הרשת לומדת קצוות וצבעים, בשכבה 2 מרקמים ודפוסים, בשכבה 3 חלקים של אובייקטים. כלומר, הרשת בוחרת את <span class="gt" tabindex="0" data-tip="הדרך שבה הופכים את הבעיה למספרים: מה בדיוק נכנס למודל ומה יוצא ממנו.">הייצוג</span> בעצמה, וזה בדיוק מה שהיה קשה לעשות ידנית.</p></div>
+</section>
+<div class="pager"><a class="prev" href="neuron.html"><span>הקודם</span>2 · מהנוירון לרשת</a><a class="next" href="fastai.html"><span>הבא</span>4 · fastai</a></div>
+</div>
+</main>
+</div>
+<script src="guide.js?v=b9c23375"></script>
+</body>
+</html>

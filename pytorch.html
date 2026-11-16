@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PyTorch: טנזורים ו-autograd — סיכום למידה עמוקה</title>
+<title>PyTorch — סיכום למידה עמוקה</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Suez+One&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
 <body class="chapter pg-pytorch">
 <div class="layout">
 <main>
-<header class="chap"><div class="chapmid"><div class="chapnum">פרק 15 מתוך 15</div><div class="chaptitle"><bdi dir="ltr">PyTorch</bdi>: טנזורים ו-<bdi dir="ltr">autograd</bdi></div></div></header>
+<header class="chap"><div class="chapmid"><div class="chapnum">פרק 6 מתוך 7</div><div class="chaptitle">PyTorch</div></div></header>
 <div class="wrap">
 <section id="pytorch">
 <span class="lesson">הרצאה 4 · 11.11 · מבוא ל-<bdi dir="ltr">PyTorch</bdi></span>
@@ -72,7 +72,7 @@
 <div class="box warn"><p><strong>המעבר עצמו יקר:</strong> העברת נתונים בין זיכרון המעבד לזיכרון ה-<span class="gt" tabindex="0" data-tip="מעבד גרפי: מריץ אלפי חישובים במקביל, ולכן מאיץ אימון של רשתות.">GPU</span> איטית. זו אחת הבעיות הגדולות היום בהרצת <span class="gt" tabindex="0" data-tip="Large Language Model: מודל שפה גדול שחוזה את הטוקן הבא בטקסט.">LLM</span>: מודל שלא נכנס כולו לזיכרון ה-<span class="gt" tabindex="0" data-tip="מעבד גרפי: מריץ אלפי חישובים במקביל, ולכן מאיץ אימון של רשתות.">GPU</span> יכול להאט לקצב של <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">טוקן</span> בדקה. בלי <span class="gt" tabindex="0" data-tip="מעבד גרפי: מריץ אלפי חישובים במקביל, ולכן מאיץ אימון של רשתות.">GPU</span> במחשב, אפשר לעבוד ב-<span class="gt" tabindex="0" data-tip="מחברות Jupyter בענן של Google, עם GPU בחינם.">Google Colab</span>.</p></div>
 
 <h3 id="s6"><span class="gt" tabindex="0" data-tip="המנגנון של PyTorch שמחשב נגזרות אוטומטית מתוך החישוב שבוצע.">autograd</span>: גזירה אוטומטית</h3>
-<p>בפרק <a href="cls.html#cls">הסיווג</a> גזרנו ידנית ואחר כך בדקנו מול <span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span>. <span class="gt" tabindex="0" data-tip="המנגנון של PyTorch שמחשב נגזרות אוטומטית מתוך החישוב שבוצע.">autograd</span> עושה את הגזירה בשבילנו. מסמנים אילו משתנים מעניינים אותנו עם <code>requires_grad=True</code>, ובזמן החישוב <span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span> בונה <strong><span class="gt" tabindex="0" data-tip="גרף מכוון בלי מעגלים שנבנה בזמן הריצה: העלים הם המשתנים והצמתים הם הפעולות. backward עובר עליו מהסוף להתחלה.">גרף חישוב</span></strong>. זה <span class="gt" tabindex="0" data-tip="גרף מכוון בלי מעגלים שנבנה בזמן הריצה: העלים הם המשתנים והצמתים הם הפעולות. backward עובר עליו מהסוף להתחלה.">DAG</span>, גרף מכוון בלי מעגלים, שנבנה תוך כדי ריצה (״<span class="gt" tabindex="0" data-tip="הגרף נבנה תוך כדי שהקוד רץ, ולא מוגדר מראש.">define-by-run</span>״). העלים הם המשתנים, והצמתים הם הפעולות. ב-<code class="nw">backward()</code> הוא עובר על הגרף מהסוף להתחלה ומחשב לכל עלה את <span class="gt" tabindex="0" data-tip="קצב השינוי של פונקציה. כאן: כמה ה-Loss משתנה כשמזיזים פרמטר אחד מעט.">הנגזרת</span> לפי <span class="gt" tabindex="0" data-tip="הנגזרת של הרכבת פונקציות היא מכפלת הנגזרות שלהן.">כלל השרשרת</span>. הוא לא גוזר נוסחה סימבולית: הוא מחשב את ערך <span class="gt" tabindex="0" data-tip="קצב השינוי של פונקציה. כאן: כמה ה-Loss משתנה כשמזיזים פרמטר אחד מעט.">הנגזרת</span> בנקודה הנוכחית.</p>
+<p>בפרק <a href="scratch.html#cls">הסיווג</a> גזרנו ידנית ואחר כך בדקנו מול <span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span>. <span class="gt" tabindex="0" data-tip="המנגנון של PyTorch שמחשב נגזרות אוטומטית מתוך החישוב שבוצע.">autograd</span> עושה את הגזירה בשבילנו. מסמנים אילו משתנים מעניינים אותנו עם <code>requires_grad=True</code>, ובזמן החישוב <span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span> בונה <strong><span class="gt" tabindex="0" data-tip="גרף מכוון בלי מעגלים שנבנה בזמן הריצה: העלים הם המשתנים והצמתים הם הפעולות. backward עובר עליו מהסוף להתחלה.">גרף חישוב</span></strong>. זה <span class="gt" tabindex="0" data-tip="גרף מכוון בלי מעגלים שנבנה בזמן הריצה: העלים הם המשתנים והצמתים הם הפעולות. backward עובר עליו מהסוף להתחלה.">DAG</span>, גרף מכוון בלי מעגלים, שנבנה תוך כדי ריצה (״<span class="gt" tabindex="0" data-tip="הגרף נבנה תוך כדי שהקוד רץ, ולא מוגדר מראש.">define-by-run</span>״). העלים הם המשתנים, והצמתים הם הפעולות. ב-<code class="nw">backward()</code> הוא עובר על הגרף מהסוף להתחלה ומחשב לכל עלה את <span class="gt" tabindex="0" data-tip="קצב השינוי של פונקציה. כאן: כמה ה-Loss משתנה כשמזיזים פרמטר אחד מעט.">הנגזרת</span> לפי <span class="gt" tabindex="0" data-tip="הנגזרת של הרכבת פונקציות היא מכפלת הנגזרות שלהן.">כלל השרשרת</span>. הוא לא גוזר נוסחה סימבולית: הוא מחשב את ערך <span class="gt" tabindex="0" data-tip="קצב השינוי של פונקציה. כאן: כמה ה-Loss משתנה כשמזיזים פרמטר אחד מעט.">הנגזרת</span> בנקודה הנוכחית.</p>
 <div class="ex stepped">
 <div class="q"><b>השאלה (הדוגמה מההרצאה)</b>נתונים שלושה משתנים עם <code>requires_grad=True</code>, ומחשבים:
 <div class="fx">x = a·b</div><div class="fx">z = x·c</div><div class="fx">y = z²</div>
@@ -117,7 +117,7 @@
 </table></div>
 <div class="box tip"><p><strong>תרגיל בית 1:</strong> לפי המרצה, אחרי ההרצאה הזו יש מספיק ידע לתרגיל הבית הראשון, שניתן בסוף השבוע, עם שבועיים להגשה. החלקים שדילג עליהם (<span class="gt" tabindex="0" data-tip="המנגנון של PyTorch שמחשב נגזרות אוטומטית מתוך החישוב שבוצע.">autograd</span> ו-<bdi dir="ltr">nn</bdi> בפירוט) יושלמו בהרצאה הבאה.</p></div>
 </section>
-<div class="pager"><a class="prev" href="vectorize.html"><span>הקודם</span>14 · וקטוריזציה</a><a class="next" href="traps.html"><span>הבא</span>מלכודות נפוצות</a></div>
+<div class="pager"><a class="prev" href="scratch.html"><span>הקודם</span>5 · אימון נוירון ממאפס</a><a class="next" href="practice.html"><span>הבא</span>7 · חזרה ותרגול</a></div>
 </div>
 </main>
 </div>
