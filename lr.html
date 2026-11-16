@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>learning rate ו-epochs — סיכום למידה עמוקה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Suez+One&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="guide.css?v=1b000763">
+<script data-goatcounter="https://eliorch.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- mta-theme --><link rel="stylesheet" href="../main/site-theme.css"><script src="../main/site-theme.js" data-course="dl" data-fam="db" data-footer="body"></script><!-- /mta-theme -->
+</head>
+<body class="chapter pg-lr">
+<div class="layout">
+<main>
+<header class="chap"><div class="chapmid"><div class="chapnum">פרק 12 מתוך 14</div><div class="chaptitle"><bdi dir="ltr">learning rate</bdi> ו-<bdi dir="ltr">epochs</bdi></div></div></header>
+<div class="wrap">
+<section id="lr">
+<span class="lesson">שיעור 1 (ממאפס) · שקפים <bdi dir="ltr">25–41</bdi></span>
+<h2>פתרון מודרך: מה קובע אם האימון יצליח</h2>
+<p>״<bdi dir="ltr">We can do anything</bdi>… <bdi dir="ltr">but not necessarily well</bdi>״ (שקפים <bdi dir="ltr">26–29</bdi>): אפשר לייצג כל בעיה כמיפוי מספרים למספרים, אם יש דאטה. אבל ההצלחה תלויה בגורמים (שקפים <bdi dir="ltr">30–31</bdi>): <span class="cd">בחירת <span class="gt" tabindex="0" data-tip="הדרך שבה הופכים את הבעיה למספרים: מה בדיוק נכנס למודל ומה יוצא ממנו.">הייצוג</span></span>, <span class="ch"><span class="gt" tabindex="0" data-tip="כל הפונקציות שהמודל יכול לייצג: אותה נוסחה עם כל ערכי המשקולות האפשריים. האימון בוחר מתוכן פונקציה אחת.">מחלקת ההיפותזות</span></span>, <span class="co">ה-<span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">learning rate</span></span>, <span class="co">מספר ה-<span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">epochs</span></span>, נקודת ההתחלה ו<span class="cl"><span class="gt" tabindex="0" data-tip="מודדת כמה הפלט של המודל רחוק מהתשובה הנכונה. האימון מנסה להקטין אותה.">פונקציית הטעות</span></span>. כאן בודקים את שני הגורמים של <span class="gt" tabindex="0" data-tip="חיפוש ערכי הפרמטרים שנותנים את הטעות הכי קטנה.">האופטימיזציה</span> על <bdi dir="ltr">California housing</bdi>.</p>
+<div class="ex stepped">
+<div class="q"><b>השאלה (שקפים <bdi dir="ltr">32–41</bdi>)</b>הרץ את האימון של <bdi dir="ltr">California housing</bdi> עם <code>train(lr, epochs)</code> בכמה ערכים וצייר את ה-<span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span>. מה <span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> טוב? כמה <span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">epochs</span> צריך?</div>
+<div class="exgrid">
+<div class="exfig">
+<figure class="fig livefig"><div class="mainfig"></div><figcaption class="livecap"></figcaption></figure>
+<div class="stepbar"><button class="btn ghost prevBtn" type="button">הקודם</button><span class="prog"></span><button class="btn nextBtn" type="button">השלב הבא</button><button class="btn ghost allBtn" type="button">לפתרון המלא</button></div></div>
+<div class="steps">
+<div class="step" data-spec="lr" data-show="ab" data-cap="lr = 1e-3: התפוצצות"><div class="sh">צעד 1: <span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> גדול מדי</div><p><code>train(0.001, 100)</code>: ה-<span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span> נראה אפס ואז קופץ ל-<bdi dir="ltr">1e296</bdi> אחרי כ-37 <span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">אפוקים</span>. כל צעד ״מדלג״ מעבר למינימום ונוחת גבוה יותר מקודם, והשגיאה גדלה פי כמה בכל צעד.</p></div>
+<div class="step" data-spec="lr" data-show="abc" data-cap="lr = 1e-5: עדיין מתפוצץ"><div class="sh">צעד 2: קטן יותר, עדיין גדול</div><p><code>train(0.00001, 100)</code>: ההתפוצצות רק נדחית (בערך <span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">באפוק</span> 80, עם <span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span> של <bdi dir="ltr">1e303</bdi>). הקטנה פי 100 לא הספיקה.</p></div>
+<div class="step" data-spec="lr" data-show="abcd" data-cap="lr = 1e-7: מתכנס"><div class="sh">צעד 3: <span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> שעובד</div><p><code>train(0.0000001, 100)</code>: ירידה תלולה מ-800,000 ואז התייצבות. זה הגרף שרוצים לראות.</p></div>
+<div class="step" data-spec="lr" data-show="abcde" data-cap="זום על הסוף: 1e-7 מול 1e-8"><div class="sh">צעד 4: קטן מדי</div><p>מסתכלים על 10 <span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">האפוקים</span> האחרונים (<code>plot_loss(Loss[-10:])</code>). עם <bdi dir="ltr">1e-7</bdi> ה-<span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span> עוד יורד, מ-1910 ל-1867. עם <bdi dir="ltr">1e-8</bdi> הוא תקוע הרבה יותר גבוה ויורד לאט: מ-2353 ל-2346.</p></div>
+<div class="step" data-spec="lr" data-show="abcdef" data-cap="עוד אפוקים"><div class="sh">צעד 5: מספר ה-<span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">epochs</span></div><p>עם <span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> = <bdi dir="ltr">1e-7</bdi>: אחרי 1,000 <span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">אפוקים</span> ה-<span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span> בסביבות 212, ואחרי 10,000 בסביבות 25.21. הירידה עוד לא נעצרה, אבל היא כבר זעירה בכל <span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">אפוק</span>.</p></div>
+</div></div></div>
+<div class="tbl"><table>
+<tr><th>מה רואים בגרף ה-<bdi dir="ltr">Loss</bdi></th><th>האבחנה</th><th>מה עושים</th></tr>
+<tr><td>עולה בבת אחת לערך ענק או <bdi dir="ltr">nan</bdi></td><td><span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> גדול מדי</td><td>להקטין פי 10 בכל פעם</td></tr>
+<tr><td>יורד בקו ישר ולאט, עוד רחוק מהתייצבות</td><td><span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> קטן מדי או מעט <span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">epochs</span></td><td>להגדיל <span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> או <span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">epochs</span></td></tr>
+<tr><td>יורד ומתייצב</td><td>תקין</td><td>לבדוק על <span class="gt" tabindex="0" data-tip="חלק מהדאטה שלא מאמנים עליו. בודקים עליו את המודל בזמן הפיתוח.">ולידציה</span></td></tr>
+<tr><td>מתייצב אבל גבוה</td><td><span class="gt" tabindex="0" data-tip="כל הפונקציות שהמודל יכול לייצג: אותה נוסחה עם כל ערכי המשקולות האפשריים. האימון בוחר מתוכן פונקציה אחת.">מחלקת ההיפותזות</span> או <span class="gt" tabindex="0" data-tip="הדרך שבה הופכים את הבעיה למספרים: מה בדיוק נכנס למודל ומה יוצא ממנו.">הייצוג</span> חלשים</td><td>מודל עשיר יותר, תכונות טובות יותר</td></tr>
+</table></div>
+<p>רוצה לראות את זה בעצמך? חזור ל<a href="method.html#gdtool">כלי ה-<bdi dir="ltr">gradient descent</bdi></a> ונסה <span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> = 0.8.</p>
+</section>
+<div class="pager"><a class="prev" href="housing.html"><span>הקודם</span>11 · 8 תכונות וצורות</a><a class="next" href="cls.html"><span>הבא</span>13 · סיווג בינארי</a></div>
+</div>
+</main>
+</div>
+<script src="guide.js?v=25489825"></script>
+</body>
+</html>

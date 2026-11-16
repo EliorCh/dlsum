@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>שיטת 7 הצעדים — סיכום למידה עמוקה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Suez+One&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="guide.css?v=1b000763">
+<script data-goatcounter="https://eliorch.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- mta-theme --><link rel="stylesheet" href="../main/site-theme.css"><script src="../main/site-theme.js" data-course="dl" data-fam="db" data-footer="body"></script><!-- /mta-theme -->
+</head>
+<body class="chapter pg-method">
+<div class="layout">
+<main>
+<header class="chap"><div class="chapmid"><div class="chapnum">פרק 2 מתוך 14</div><div class="chaptitle">שיטת 7 הצעדים</div></div></header>
+<div class="wrap">
+<section id="method">
+<h2>שיטת 7 הצעדים</h2>
+<p>אותו מתכון פותר את כל התרגילים בקורס. צעדים <bdi dir="ltr">1–4</bdi> הם מה שהמרצה קורא ״מודל הלמידה״; צעדים <bdi dir="ltr">5–7</bdi> הם המימוש.</p>
+<ol class="method">
+<li><h3 id="s1"><span class="gt" tabindex="0" data-tip="הדרך שבה הופכים את הבעיה למספרים: מה בדיוק נכנס למודל ומה יוצא ממנו.">ייצוג</span>: הפוך את הבעיה למיפוי מספרים ← מספרים</h3>
+<p>שאל: מה בדיוק נכנס ומה יוצא, כמערכים? מה ה-<span class="gt" tabindex="0" data-tip="הממדים של מערך. למשל (20640, 8) הוא 20,640 שורות ו-8 עמודות.">shape</span> של <bdi dir="ltr">X</bdi> ושל <bdi dir="ltr">Y</bdi>? תמונה 3×3 הופכת ל-9 מספרים; בית בקליפורניה הופך ל-8 מספרים; טקסט הופך <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">לטוקנים</span> ואז לווקטורים.</p>
+<div class="box tip"><p><strong>דוגמה:</strong> <span class="gt" tabindex="0" data-tip="נוירון יחיד עם פונקציית sign. המודל של רוזנבלט מ-1957.">בפרספטרון</span> של שיעור 0, שחור הוא 0 ולבן הוא 1, ושיטוח המטריצה שורה אחרי שורה נותן וקטור באורך 9.</p></div></li>
+<li><h3 id="s2">סוג הבעיה: <span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא מספר ממשי, למשל מחיר.">רגרסיה</span> או <span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא קטגוריה מתוך קבוצה סופית, למשל חתול או כלב.">סיווג</span>?</h3>
+<p>שאל: האם <bdi dir="ltr">Y</bdi> הוא מספר ממשי (<span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא מספר ממשי, למשל מחיר.">רגרסיה</span>) או קטגוריה (<span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא קטגוריה מתוך קבוצה סופית, למשל חתול או כלב.">סיווג</span>)? התשובה קובעת את הפלט: בלי <span class="gt" tabindex="0" data-tip="הפונקציה שהנוירון מפעיל על הסכום המשוקלל, למשל sign, סיגמואיד או ReLU.">אקטיבציה</span> <span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא מספר ממשי, למשל מחיר.">ברגרסיה</span>, <span class="gt" tabindex="0" data-tip="הפונקציה σ(z) = 1/(1+e⁻ᶻ). דוחסת כל מספר לטווח שבין 0 ל-1.">סיגמואיד</span> (או <span class="gt" tabindex="0" data-tip="פונקציה שמחזירה +1 למספר חיובי ו-−1 לשלילי.">sign</span>) <span class="gt" tabindex="0" data-tip="סיווג לשתי מחלקות בלבד, למשל 0 או 1.">בסיווג בינארי</span>.</p></li>
+<li><h3 id="s3">בחר <span class="ch"><span class="gt" tabindex="0" data-tip="כל הפונקציות שהמודל יכול לייצג: אותה נוסחה עם כל ערכי המשקולות האפשריים. האימון בוחר מתוכן פונקציה אחת.">משפחת היפותזות</span></span></h3>
+<p>שאל: איזו נוסחה עם פרמטרים לא ידועים? ישר (<span class="ltr">w·x + b</span>), צירוף לינארי של כמה תכונות, <span class="gt" tabindex="0" data-tip="הפונקציה σ(z) = 1/(1+e⁻ᶻ). דוחסת כל מספר לטווח שבין 0 ל-1.">סיגמואיד</span> של צירוף לינארי, או רשת. ספור כמה <span class="gt" tabindex="0" data-tip="הפרמטרים שהאימון מכוון. כל קלט מוכפל במשקולת שלו.">משקולות</span> יש: אחת לכל קלט, ועוד <span class="gt" tabindex="0" data-tip="המספר b שמתווסף לסכום המשוקלל. מזיז את קו ההחלטה כך שלא חייב לעבור בראשית.">bias</span>.</p></li>
+<li><h3 id="s4">בחר <span class="cl"><span class="gt" tabindex="0" data-tip="מודדת כמה הפלט של המודל רחוק מהתשובה הנכונה. האימון מנסה להקטין אותה.">פונקציית טעות</span></span></h3>
+<p>בקורס משתמשים ב-<span class="gt" tabindex="0" data-tip="Mean Squared Error: ממוצע ריבועי ההפרשים בין הניבוי לתשובה הנכונה.">MSE</span> גם <span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא מספר ממשי, למשל מחיר.">ברגרסיה</span> וגם <span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא קטגוריה מתוך קבוצה סופית, למשל חתול או כלב.">בסיווג</span>: <code>((preds-acts)**2).mean()</code>. שים לב: <span class="gt" tabindex="0" data-tip="אחוז הדוגמאות שהמודל סיווג נכון.">accuracy</span> הוא מדד להערכה, לא <span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span>, כי אי אפשר לגזור אותו.</p></li>
+<li><h3 id="s5">חשב את <span class="co"><span class="gt" tabindex="0" data-tip="וקטור הנגזרות החלקיות של ה-Loss לפי כל פרמטר. מראה לאן ה-Loss עולה הכי מהר.">הגרדיאנט</span></span></h3>
+<p>גזור את ה-<span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span> לפי כל פרמטר: ידנית, עם <span class="gt" tabindex="0" data-tip="ספריית Python לחישוב סימבולי, למשל גזירה של נוסחה.">SymPy</span> (כמו בשקפים), ואז אמת מול <code>loss.backward()</code> של <span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span>. אם שני החישובים זהים, הנוסחה שלך נכונה.</p></li>
+<li><h3 id="s6">לולאת אימון</h3>
+<p>בכל <span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">epoch</span>: forward ← loss ← <span class="gt" tabindex="0" data-tip="וקטור הנגזרות החלקיות של ה-Loss לפי כל פרמטר. מראה לאן ה-Loss עולה הכי מהר.">gradient</span> ← עדכון <code>w -= lr * dw</code>. בחר <span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> ומספר <span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">epochs</span>. שמור את ה-<span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span> ברשימה כדי לצייר אותו.</p></li>
+<li><h3 id="s7">הערכה ובדיקה</h3>
+<p>צייר את גרף ה-<span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span> (יורד ומתייצב? מתפוצץ?), חשב <span class="gt" tabindex="0" data-tip="אחוז הדוגמאות שהמודל סיווג נכון.">accuracy</span> <span class="gt" tabindex="0" data-tip="טבלה שסופרת, לכל מחלקה אמיתית, כמה דוגמאות המודל סיווג לכל מחלקה.">ומטריצת בלבול</span> <span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא קטגוריה מתוך קבוצה סופית, למשל חתול או כלב.">לסיווג</span>, בדוק על דאטה שהמודל לא ראה. ובכל שלב: <code>assert</code> על הצורות ופעולות וקטוריות במקום לולאות.</p></li>
+</ol>
+
+<div class="tool" id="gdtool">
+<h3 id="s8" style="margin-top:0">כלי: הרץ <span class="gt" tabindex="0" data-tip="ירידה במורד הגרדיאנט: בכל צעד מזיזים את המשקולות מעט בכיוון שמקטין את ה-Loss.">gradient descent</span> בעצמך</h3>
+<p class="small">אותו אלגוריתם כמו בשקף 10 (<span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">נוירון</span> יחיד, <span class="gt" tabindex="0" data-tip="Mean Squared Error: ממוצע ריבועי ההפרשים בין הניבוי לתשובה הנכונה.">MSE</span>), על 20 נקודות סביב הישר <bdi dir="ltr">y = 2.8x + 1.6</bdi>. בחר <span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">learning rate</span> ומספר <span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">אפוקים</span> וראה מה קורה לישר ולגרף ה-<span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span>.</p>
+<div class="row"><span><span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">learning rate</span>:</span><span class="seg" id="gdLr"><button type="button" data-v="0.001">0.001</button><button type="button" data-v="0.01" aria-pressed="true">0.01</button><button type="button" data-v="0.1">0.1</button><button type="button" data-v="0.3">0.3</button><button type="button" data-v="0.6">0.6</button><button type="button" data-v="0.8">0.8</button></span></div>
+<div class="row"><span><span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">epochs</span>:</span><span class="seg" id="gdEp"><button type="button" data-v="10">10</button><button type="button" data-v="50">50</button><button type="button" data-v="100">100</button><button type="button" data-v="500" aria-pressed="true">500</button></span></div>
+<div class="figbox" id="gdFig"></div>
+<div class="stat" id="gdStat"></div>
+</div>
+
+<h3 id="phrases">מילון ניסוחים: מה כתוב בשאלה ← מה עושים בפתרון</h3>
+<div class="tbl"><table>
+<tr><th>ניסוח בתרגיל / בשקף</th><th>מה זה בפתרון</th><th>דוגמה מהחומר</th></tr>
+<tr><td>״לחזות מחיר / ערך / מספר״</td><td><span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא מספר ממשי, למשל מחיר.">רגרסיה</span>, פלט בלי <span class="gt" tabindex="0" data-tip="הפונקציה שהנוירון מפעיל על הסכום המשוקלל, למשל sign, סיגמואיד או ReLU.">אקטיבציה</span>, <span class="gt" tabindex="0" data-tip="Mean Squared Error: ממוצע ריבועי ההפרשים בין הניבוי לתשובה הנכונה.">MSE</span></td><td><bdi dir="ltr">California housing</bdi>, ממוצע מחיר בית</td></tr>
+<tr><td>״לסווג / האם זה <bdi dir="ltr">X</bdi> או <bdi dir="ltr">Y</bdi>״</td><td><span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא קטגוריה מתוך קבוצה סופית, למשל חתול או כלב.">סיווג</span>, <span class="gt" tabindex="0" data-tip="הפונקציה σ(z) = 1/(1+e⁻ᶻ). דוחסת כל מספר לטווח שבין 0 ל-1.">סיגמואיד</span> בפלט, סף 0.5</td><td>ציפור או יער, חתול או כלב</td></tr>
+<tr><td>״מה הסיכוי ש…״</td><td><span class="gt" tabindex="0" data-tip="צירוף לינארי שעובר דרך סיגמואיד ומחזיר הסתברות בין 0 ל-1.">רגרסיה לוגיסטית</span>, פלט בין 0 ל-1</td><td>״מה הסיכוי שהמייל הוא ספאם?״</td></tr>
+<tr><td>״<span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">נוירון</span> יחיד עם <bdi dir="ltr">N</bdi> קלטים״</td><td>N <span class="gt" tabindex="0" data-tip="הפרמטרים שהאימון מכוון. כל קלט מוכפל במשקולת שלו.">משקולות</span> + <span class="gt" tabindex="0" data-tip="המספר b שמתווסף לסכום המשוקלל. מזיז את קו ההחלטה כך שלא חייב לעבור בראשית.">bias</span> אחד; <bdi dir="ltr">W</bdi> בצורה (<bdi dir="ltr">N, 1</bdi>)</td><td><code>net(X.shape[1])</code></td></tr>
+<tr><td>״<span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span> מתפוצץ / <bdi dir="ltr">nan / inf</bdi>״</td><td><span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> גדול מדי (או תכונות בסדרי גודל שונים)</td><td><span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span>=<bdi dir="ltr">1e-3</bdi> על <bdi dir="ltr">California, 1e296</bdi></td></tr>
+<tr><td>״<span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span> יורד אבל לאט מאוד״</td><td><span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> קטן מדי או מעט <span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">epochs</span></td><td><span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span>=<bdi dir="ltr">1e-8</bdi>: מ-2353 ל-2346 ב-10 <span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">אפוקים</span></td></tr>
+<tr><td>״מצוין באימון, גרוע בבדיקה״</td><td><span class="gt" tabindex="0" data-tip="המודל משנן את דוגמאות האימון, כולל הרעש, ונכשל על דוגמאות חדשות.">overfitting</span>: הגבול עוקף כל נקודה</td><td>״אפשרות 3״ בין שתי הערים</td></tr>
+<tr><td>״לוודא <span class="gt" tabindex="0" data-tip="וקטור הנגזרות החלקיות של ה-Loss לפי כל פרמטר. מראה לאן ה-Loss עולה הכי מהר.">שהגרדיאנט</span> נכון״</td><td>השוואה מול <code>requires_grad_()</code> ו-<code>backward()</code></td><td><code>gradient_using_pytorch</code></td></tr>
+<tr><td>״מאיפה מגיעה <span class="gt" tabindex="0" data-tip="התשובה הנכונה שמצורפת לכל דוגמה בדאטה.">התגית</span>?״</td><td><code>get_y</code> ב-<span class="gt" tabindex="0" data-tip="התבנית של fastai שמגדירה איך בונים את הדאטה: מה הקלט, מה התגית ואיך מפצלים.">DataBlock</span></td><td><code>parent_label</code>, <code>label_func</code></td></tr>
+<tr><td>״לפצל לאימון ובדיקה״</td><td><code>splitter=RandomSplitter(valid_pct=0.2, seed=42)</code></td><td><bdi dir="ltr">20%</bdi> <span class="gt" tabindex="0" data-tip="חלק מהדאטה שלא מאמנים עליו. בודקים עליו את המודל בזמן הפיתוח.">ולידציה</span>, <bdi dir="ltr">seed</bdi> קבוע</td></tr>
+<tr><td>״להאיץ את הקוד״</td><td><span class="gt" tabindex="0" data-tip="ביצוע פעולה על מערך שלם בבת אחת במקום לולאה על האיברים.">וקטוריזציה</span>: <code>@</code>, <code>np.where</code> במקום <bdi dir="ltr">for</bdi></td><td><bdi dir="ltr">×207</bdi> עד <bdi dir="ltr">×7,335</bdi></td></tr>
+</table></div>
+</section>
+<div class="pager"><a class="prev" href="concepts.html"><span>הקודם</span>1 · מודל הלמידה ומושגים</a><a class="next" href="perceptron.html"><span>הבא</span>3 · פרספטרון 3×3</a></div>
+</div>
+</main>
+</div>
+<script src="guide.js?v=25489825"></script>
+</body>
+</html>
