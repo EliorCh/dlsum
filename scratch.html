@@ -17,7 +17,7 @@
 <header class="chap"><div class="chapmid"><div class="chapnum">פרק 5 מתוך 7</div><div class="chaptitle">אימון נוירון ממאפס</div></div></header>
 <div class="wrap">
 <section id="reg">
-<span class="lesson">שיעור 1 (ממאפס) · שקפים <bdi dir="ltr">1–12</bdi></span>
+<span class="lesson">מצגת ״ממאפס״ · שקפים <bdi dir="ltr">1–12</bdi></span>
 <h2 id="reg-h"><span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא מספר ממשי, למשל מחיר.">רגרסיה</span> עם <span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">נוירון</span> יחיד, ממאפס</h2>
 <p>עכשיו בלי <span class="gt" tabindex="0" data-tip="ספריית Python שעוטפת את PyTorch ומאפשרת לאמן מודל בכמה שורות.">fastai</span>: כל רכיב נכתב ידנית ב-<span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span>. זה התרגיל שהכי חשוב לדעת לשחזר, כי כל השאר (8 תכונות, <span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא קטגוריה מתוך קבוצה סופית, למשל חתול או כלב.">סיווג</span>) הם וריאציות שלו. בתרשים: דאטה סינתטי שבנינו באותו מתכון כמו בשקף 4 (20 נקודות סביב ישר, עם <span class="gt" tabindex="0" data-tip="סטייה אקראית בדאטה שאינה חלק מהתבנית שרוצים ללמוד.">רעש</span>), ואימון עם אותם <span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> ואתחול כמו בשקף 10; המספרים בתרשים חושבו בהרצה אמיתית.</p>
 <div class="ex stepped">
@@ -43,7 +43,7 @@
 </div></div></div>
 </section>
 <section id="housing">
-<span class="lesson">שיעור 1 (ממאפס) · שקפים <bdi dir="ltr">13–24</bdi></span>
+<span class="lesson">מצגת ״ממאפס״ · שקפים <bdi dir="ltr">13–24</bdi></span>
 <h2 id="housing-h"><bdi dir="ltr">California housing</bdi> — מתכונה אחת ל-8</h2>
 <p>אותו <span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">נוירון</span>, אבל עכשיו כל דוגמה היא 8 מספרים. ההבדל היחיד במתמטיקה הוא שהכפל הופך לכפל מטריצות; כל הקושי הוא <strong>לעקוב אחרי הצורות</strong>. החלף את התצוגה כדי לראות את אותו פתרון כרשת וכמערכים.</p>
 <div class="ex stepped">
@@ -64,7 +64,7 @@
 <div class="box warn"><h4>למה <span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> כל כך קטן (<bdi dir="ltr">1e-7</bdi>)?</h4><p>התכונות בסדרי גודל שונים מאוד: <code class="nw">Population</code> באלפים, <code class="nw">Longitude</code> סביב <bdi dir="ltr">−122</bdi>, <code class="nw">MedInc</code> סביב 8. <span class="gt" tabindex="0" data-tip="וקטור הנגזרות החלקיות של ה-Loss לפי כל פרמטר. מראה לאן ה-Loss עולה הכי מהר.">גרדיאנט</span> על תכונה גדולה הוא ענק, ו-<span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> רגיל גורם להתפוצצות (בפרק הבא). הפתרון המקובל, שלא מופיע בשקפים האלה, הוא לנרמל כל תכונה (להחסיר ממוצע ולחלק בסטיית תקן); אחרי נרמול אפשר <span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> גדול בהרבה.</p></div>
 </section>
 <section id="lr">
-<span class="lesson">שיעור 1 (ממאפס) · שקפים <bdi dir="ltr">25–41</bdi></span>
+<span class="lesson">מצגת ״ממאפס״ · שקפים <bdi dir="ltr">25–41</bdi></span>
 <h2 id="lr-h">מה קובע אם האימון יצליח</h2>
 <p>״<bdi dir="ltr">We can do anything</bdi>… <bdi dir="ltr">but not necessarily well</bdi>״ (שקפים <bdi dir="ltr">26–29</bdi>): אפשר לייצג כל בעיה כמיפוי מספרים למספרים, אם יש דאטה. אבל ההצלחה תלויה בגורמים (שקפים <bdi dir="ltr">30–31</bdi>): <span class="cd">בחירת <span class="gt" tabindex="0" data-tip="הדרך שבה הופכים את הבעיה למספרים: מה בדיוק נכנס למודל ומה יוצא ממנו.">הייצוג</span></span>, <span class="ch"><span class="gt" tabindex="0" data-tip="כל הפונקציות שהמודל יכול לייצג: אותה נוסחה עם כל ערכי המשקולות האפשריים. האימון בוחר מתוכן פונקציה אחת.">מחלקת ההיפותזות</span></span>, <span class="co">ה-<span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">learning rate</span></span>, <span class="co">מספר ה-<span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">epochs</span></span>, נקודת ההתחלה ו<span class="cl"><span class="gt" tabindex="0" data-tip="מודדת כמה הפלט של המודל רחוק מהתשובה הנכונה. האימון מנסה להקטין אותה.">פונקציית הטעות</span></span>. כאן בודקים את שני הגורמים של <span class="gt" tabindex="0" data-tip="חיפוש ערכי הפרמטרים שנותנים את הטעות הכי קטנה.">האופטימיזציה</span> על <bdi dir="ltr">California housing</bdi>.</p>
 <div class="ex stepped">
@@ -90,7 +90,7 @@
 <p>רוצה לראות את זה בעצמך? חזור ל<a href="basics.html#gdtool">כלי ה-<bdi dir="ltr">gradient descent</bdi></a> ונסה <span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> = 0.8.</p>
 </section>
 <section id="cls">
-<span class="lesson">שיעור 1 (ממאפס) · שקפים <bdi dir="ltr">42–75</bdi></span>
+<span class="lesson">מצגת ״ממאפס״ · שקפים <bdi dir="ltr">42–75</bdi></span>
 <h2 id="cls-h"><span class="gt" tabindex="0" data-tip="סיווג לשתי מחלקות בלבד, למשל 0 או 1.">סיווג בינארי</span> עם <span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">נוירון</span> יחיד</h2>
 <p>עכשיו <bdi dir="ltr">Y</bdi> הוא 0 או 1. רוב הקוד נשאר זהה; משתנים רק הפלט של <span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">הנוירון</span> <span class="gt" tabindex="0" data-tip="וקטור הנגזרות החלקיות של ה-Loss לפי כל פרמטר. מראה לאן ה-Loss עולה הכי מהר.">והגרדיאנט</span>. בתרשים: שתי קבוצות של 50 נקודות כמו בשקף 64, ואתחול גרוע בכוונה כדי לראות את הלמידה. המספרים חושבו בהרצה אמיתית עם <span class="gt" tabindex="0" data-tip="גודל הצעד בכל עדכון של המשקולות.">lr</span> = 0.1.</p>
 <div class="ex stepped">
@@ -131,7 +131,7 @@
 <div class="fx">precision = TP / (TP + FP)</div><div class="fx">recall = TP / (TP + FN)</div></div>
 </section>
 <section id="vectorize">
-<span class="lesson">שיעור 1 (ממאפס) · שקפים <bdi dir="ltr">76–102</bdi></span>
+<span class="lesson">מצגת ״ממאפס״ · שקפים <bdi dir="ltr">76–102</bdi></span>
 <h2 id="vectorize-h"><span class="gt" tabindex="0" data-tip="ביצוע פעולה על מערך שלם בבת אחת במקום לולאה על האיברים.">וקטוריזציה</span>, <span class="gt" tabindex="0" data-tip="פעולה בין מערכים בצורות שונות: המערך הקטן ״נמתח״ לצורה של הגדול בלי להעתיק זיכרון.">broadcasting</span> וצורות של וקטורים</h2>
 <p>הקוד של <span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">הנוירון</span> עבד, אבל יש בו שתי סכנות: לולאות איטיות, וצורות לא נכונות שלא זורקות שגיאה. בשקפים <bdi dir="ltr">77–87</bdi> משווים לולאת <bdi dir="ltr">for</bdi> מול פעולה וקטורית על מערכים של מיליון איברים:</p>
 <figure class="fig"><div data-spec="speed"></div><figcaption>האצה של פעולה וקטורית מול לולאת <bdi dir="ltr">for</bdi> (שקפים <bdi dir="ltr">79, 81, 84, 87</bdi>; ציר לוגריתמי). הוראות <span class="gt" tabindex="0" data-tip="הוראת מעבד שמבצעת אותה פעולה על כמה מספרים במקביל.">SIMD</span> במעבד מבצעות כמה פעולות במקביל.</figcaption></figure>

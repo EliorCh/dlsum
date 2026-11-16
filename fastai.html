@@ -17,7 +17,7 @@
 <header class="chap"><div class="chapmid"><div class="chapnum">פרק 4 מתוך 7</div><div class="chaptitle">fastai</div></div></header>
 <div class="wrap">
 <section id="fastai">
-<span class="lesson">שיעור 1 · שקפים <bdi dir="ltr">23–32</bdi></span>
+<span class="lesson">מצגת <bdi dir="ltr">fastai</bdi> · שקפים <bdi dir="ltr">23–32</bdi></span>
 <h2 id="fastai-h">״<bdi dir="ltr">Is it a bird</bdi>?״ — צינור <span class="gt" tabindex="0" data-tip="ספריית Python שעוטפת את PyTorch ומאפשרת לאמן מודל בכמה שורות.">fastai</span> מלא</h2>
 <p><span class="gt" tabindex="0" data-tip="ספריית Python שעוטפת את PyTorch ומאפשרת לאמן מודל בכמה שורות.">fastai</span> היא ספרייה שעוטפת את <span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span> ומאפשרת לאמן מסווג תמונות בכמה שורות. כאן ארבעת הרכיבים מוסתרים בתוך פונקציות, ולכן התרגיל הוא לזהות איפה כל אחד מהם יושב.</p>
 <div class="ex stepped">
@@ -63,7 +63,7 @@
 </table></div>
 </section>
 <section id="datablock">
-<span class="lesson">שיעור 1 · שקפים <bdi dir="ltr">33–45</bdi></span>
+<span class="lesson">מצגת <bdi dir="ltr">fastai</bdi> · שקפים <bdi dir="ltr">33–45</bdi></span>
 <h2 id="datablock-h">לפרק <span class="gt" tabindex="0" data-tip="התבנית של fastai שמגדירה איך בונים את הדאטה: מה הקלט, מה התגית ואיך מפצלים.">DataBlock</span> — כלבים וחתולים</h2>
 <p>בדוגמה הקודמת כתבנו <span class="gt" tabindex="0" data-tip="התבנית של fastai שמגדירה איך בונים את הדאטה: מה הקלט, מה התגית ואיך מפצלים.">DataBlock</span> שלם בבת אחת. כאן (מהמדריך של <span class="gt" tabindex="0" data-tip="ספריית Python שעוטפת את PyTorch ומאפשרת לאמן מודל בכמה שורות.">fastai</span>, על <span class="gt" tabindex="0" data-tip="אוסף הדוגמאות שעליהן מאמנים ובודקים את המודל.">דאטהסט</span> <bdi dir="ltr">Oxford-IIIT Pet</bdi>) בונים אותו פרמטר אחרי פרמטר, ובודקים אחרי כל תוספת מה חוזר. ככה מבינים מה כל פרמטר אחראי עליו.</p>
 <div class="tbl"><table>
@@ -92,7 +92,7 @@
 </div></div></div>
 </section>
 <section id="fastai-more">
-<span class="lesson">שיעור 1 · שקפים <bdi dir="ltr">46–83</bdi></span>
+<span class="lesson">מצגת <bdi dir="ltr">fastai</bdi> · שקפים <bdi dir="ltr">46–83</bdi></span>
 <h2 id="fastai-more-h"><bdi dir="ltr">Learners</bdi>, בחירת מודל, <span class="gt" tabindex="0" data-tip="סיווג של כל פיקסל בתמונה, במקום תגית אחת לכל התמונה.">סגמנטציה</span> ותרגיל 1</h2>
 <h3>בחירת מודל (שקפים <bdi dir="ltr">48–51</bdi>)</h3>
 <p>במקום <code class="nw">resnet18</code> אפשר לקחת כל אחת ממאות <span class="gt" tabindex="0" data-tip="צורת החיבור של הנוירונים והשכבות ברשת.">הארכיטקטורות</span> בספרייה <strong><span class="gt" tabindex="0" data-tip="PyTorch Image Models: ספרייה עם מאות ארכיטקטורות תמונה מאומנות מראש.">timm</span></strong> (<span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span> <bdi dir="ltr">Image Models</bdi>). בטבלת ה-<span class="gt" tabindex="0" data-tip="השוואה של מודלים על אותו מבחן.">benchmark</span> של <span class="gt" tabindex="0" data-tip="מאגר של מיליוני תמונות מתויגות. אמת המידה המקובלת לסיווג תמונות.">ImageNet</span> משווים דיוק (<bdi dir="ltr">top-1</bdi>) מול זמן ריצה וזיכרון. ההחלטה היא הנדסית: מודל קטן ומהיר (כמו <code class="nw">convnext_tiny</code>) למכשיר חלש, מודל כבד ומדויק כשיש <span class="gt" tabindex="0" data-tip="מעבד גרפי: מריץ אלפי חישובים במקביל, ולכן מאיץ אימון של רשתות.">GPU</span> חזק.</p>
