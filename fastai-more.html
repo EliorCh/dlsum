@@ -7,28 +7,29 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Suez+One&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="guide.css?v=1b000763">
+<link rel="stylesheet" href="guide.css?v=9d33a30e">
 <script data-goatcounter="https://eliorch.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <!-- mta-theme --><link rel="stylesheet" href="../main/site-theme.css"><script src="../main/site-theme.js" data-course="dl" data-fam="db" data-footer="body"></script><!-- /mta-theme -->
 </head>
 <body class="chapter pg-fastai-more">
 <div class="layout">
 <main>
-<header class="chap"><div class="chapmid"><div class="chapnum">פרק 9 מתוך 14</div><div class="chaptitle">בחירת מודל ותרגיל 1</div></div></header>
+<header class="chap"><div class="chapmid"><div class="chapnum">פרק 9 מתוך 15</div><div class="chaptitle">בחירת מודל ותרגיל 1</div></div></header>
 <div class="wrap">
 <section id="fastai-more">
 <span class="lesson">שיעור 1 · שקפים <bdi dir="ltr">46–83</bdi></span>
 <h2><bdi dir="ltr">Learners</bdi>, בחירת מודל, <span class="gt" tabindex="0" data-tip="סיווג של כל פיקסל בתמונה, במקום תגית אחת לכל התמונה.">סגמנטציה</span> ותרגיל 1</h2>
 <h3 id="s1">בחירת מודל (שקפים <bdi dir="ltr">48–51</bdi>)</h3>
-<p>במקום <code>resnet18</code> אפשר לקחת כל אחת ממאות <span class="gt" tabindex="0" data-tip="צורת החיבור של הנוירונים והשכבות ברשת.">הארכיטקטורות</span> בספרייה <strong><span class="gt" tabindex="0" data-tip="PyTorch Image Models: ספרייה עם מאות ארכיטקטורות תמונה מאומנות מראש.">timm</span></strong> (<span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span> <bdi dir="ltr">Image Models</bdi>). בטבלת ה-<span class="gt" tabindex="0" data-tip="השוואה של מודלים על אותו מבחן.">benchmark</span> של <span class="gt" tabindex="0" data-tip="מאגר של מיליוני תמונות מתויגות. אמת המידה המקובלת לסיווג תמונות.">ImageNet</span> משווים דיוק (<bdi dir="ltr">top-1</bdi>) מול זמן ריצה וזיכרון. ההחלטה היא הנדסית: מודל קטן ומהיר (כמו <code>convnext_tiny</code>) למכשיר חלש, מודל כבד ומדויק כשיש <span class="gt" tabindex="0" data-tip="מעבד גרפי: מריץ אלפי חישובים במקביל, ולכן מאיץ אימון של רשתות.">GPU</span> חזק.</p>
+<p>במקום <code class="nw">resnet18</code> אפשר לקחת כל אחת ממאות <span class="gt" tabindex="0" data-tip="צורת החיבור של הנוירונים והשכבות ברשת.">הארכיטקטורות</span> בספרייה <strong><span class="gt" tabindex="0" data-tip="PyTorch Image Models: ספרייה עם מאות ארכיטקטורות תמונה מאומנות מראש.">timm</span></strong> (<span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span> <bdi dir="ltr">Image Models</bdi>). בטבלת ה-<span class="gt" tabindex="0" data-tip="השוואה של מודלים על אותו מבחן.">benchmark</span> של <span class="gt" tabindex="0" data-tip="מאגר של מיליוני תמונות מתויגות. אמת המידה המקובלת לסיווג תמונות.">ImageNet</span> משווים דיוק (<bdi dir="ltr">top-1</bdi>) מול זמן ריצה וזיכרון. ההחלטה היא הנדסית: מודל קטן ומהיר (כמו <code class="nw">convnext_tiny</code>) למכשיר חלש, מודל כבד ומדויק כשיש <span class="gt" tabindex="0" data-tip="מעבד גרפי: מריץ אלפי חישובים במקביל, ולכן מאיץ אימון של רשתות.">GPU</span> חזק.</p>
 <h3 id="s2"><span class="gt" tabindex="0" data-tip="סיווג של כל פיקסל בתמונה, במקום תגית אחת לכל התמונה.">סגמנטציה</span> (שקפים <bdi dir="ltr">52–53</bdi>)</h3>
-<p>במקום <span class="gt" tabindex="0" data-tip="התשובה הנכונה שמצורפת לכל דוגמה בדאטה.">תגית</span> אחת לכל תמונה, <span class="gt" tabindex="0" data-tip="התשובה הנכונה שמצורפת לכל דוגמה בדאטה.">תגית</span> <strong>לכל פיקסל</strong>. <span class="gt" tabindex="0" data-tip="אוסף הדוגמאות שעליהן מאמנים ובודקים את המודל.">בדאטהסט</span> <span class="gt" tabindex="0" data-tip="מאגר צילומי נהיגה עם תגית לכל פיקסל (כביש, מדרכה, רכב…).">CamVid</span> (צילומי נהיגה) מסווגים כביש, מדרכה, רכב וכו׳. בונים <code>unet_learner</code>, ו-<code>learn.show_results()</code> מציג שלישיות: התמונה, המפה האמיתית (<bdi dir="ltr">target</bdi>) והחיזוי (<bdi dir="ltr">pred</bdi>).</p>
+<p>במקום <span class="gt" tabindex="0" data-tip="התשובה הנכונה שמצורפת לכל דוגמה בדאטה.">תגית</span> אחת לכל תמונה, <span class="gt" tabindex="0" data-tip="התשובה הנכונה שמצורפת לכל דוגמה בדאטה.">תגית</span> <strong>לכל פיקסל</strong>. <span class="gt" tabindex="0" data-tip="אוסף הדוגמאות שעליהן מאמנים ובודקים את המודל.">בדאטהסט</span> <span class="gt" tabindex="0" data-tip="מאגר צילומי נהיגה עם תגית לכל פיקסל (כביש, מדרכה, רכב…).">CamVid</span> (צילומי נהיגה) מסווגים כביש, מדרכה, רכב וכו׳. בונים <code class="nw">unet_learner</code>, ו-<code>learn.show_results()</code> מציג שלישיות: התמונה, המפה האמיתית (<bdi dir="ltr">target</bdi>) והחיזוי (<bdi dir="ltr">pred</bdi>).</p>
 <div class="tbl"><table>
 <tr><th>משימה</th><th>הפלט</th><th>Learner</th></tr>
-<tr><td><span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא קטגוריה מתוך קבוצה סופית, למשל חתול או כלב.">סיווג</span></td><td><span class="gt" tabindex="0" data-tip="התשובה הנכונה שמצורפת לכל דוגמה בדאטה.">תגית</span> אחת לתמונה</td><td><code>vision_learner</code></td></tr>
-<tr><td><span class="gt" tabindex="0" data-tip="סיווג של כל פיקסל בתמונה, במקום תגית אחת לכל התמונה.">סגמנטציה</span></td><td><span class="gt" tabindex="0" data-tip="התשובה הנכונה שמצורפת לכל דוגמה בדאטה.">תגית</span> לכל פיקסל (מפה)</td><td><code>unet_learner</code></td></tr>
+<tr><td><span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא קטגוריה מתוך קבוצה סופית, למשל חתול או כלב.">סיווג</span></td><td><span class="gt" tabindex="0" data-tip="התשובה הנכונה שמצורפת לכל דוגמה בדאטה.">תגית</span> אחת לתמונה</td><td><code class="nw">vision_learner</code></td></tr>
+<tr><td><span class="gt" tabindex="0" data-tip="סיווג של כל פיקסל בתמונה, במקום תגית אחת לכל התמונה.">סגמנטציה</span></td><td><span class="gt" tabindex="0" data-tip="התשובה הנכונה שמצורפת לכל דוגמה בדאטה.">תגית</span> לכל פיקסל (מפה)</td><td><code class="nw">unet_learner</code></td></tr>
 </table></div>
 <h3 id="s3">תרגיל 1 (שקפים <bdi dir="ltr">54–77</bdi>)</h3>
+<div class="box warn"><p><strong>לא להגשה.</strong> בהרצאה של 28.10 המרצה הבהיר שתרגיל 1 לא מוגש. זה תרגול מומלץ, כדי להרגיש איך <span class="gt" tabindex="0" data-tip="ספריית Python שעוטפת את PyTorch ומאפשרת לאמן מודל בכמה שורות.">fastai</span> עובדת. התרגילים להגשה (<bdi dir="ltr">2–3</bdi> תרגילים, <bdi dir="ltr">50%</bdi> מהציון) מתחילים מ-<span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span>.</p></div>
 <div class="box rule"><h4>המשימה</h4><p>מצא בעיה משלך ופתור אותה עם <span class="gt" tabindex="0" data-tip="ספריית Python שעוטפת את PyTorch ומאפשרת לאמן מודל בכמה שורות.">fastai</span>: <strong>1.</strong> מצא או בנה <span class="gt" tabindex="0" data-tip="אוסף הדוגמאות שעליהן מאמנים ובודקים את המודל.">דאטהסט</span>. <strong>2.</strong> אמן מודל. <strong>3.</strong> נסה את המודל על <span class="gt" tabindex="0" data-tip="דאטה שנשמר בצד לבדיקה סופית ההוגנת של המודל.">test set</span>.</p></div>
 <p>המרצה שואל ״איך זה ייבדק? איך אתם הייתם בודקים? מה חשוב כאן?״ והתשובה בשקפים <bdi dir="ltr">72–73</bdi>: <strong>הגדרת הבעיה ובנייה או בחירה של <span class="gt" tabindex="0" data-tip="אוסף הדוגמאות שעליהן מאמנים ובודקים את המודל.">הדאטהסט</span></strong>, ו<strong>ניסוי עם האפשרויות ש-<span class="gt" tabindex="0" data-tip="ספריית Python שעוטפת את PyTorch ומאפשרת לאמן מודל בכמה שורות.">fastai</span> נותנת</strong> כדי להגיע לתוצאה הכי טובה. דיוק גבוה הוא לא המדד היחיד.</p>
 <div class="tbl"><table>
@@ -45,14 +46,14 @@
 </table></div>
 <div class="box tip"><p><strong>הלקח מהדוגמאות:</strong> הרבה מהן מצליחות בגלל <span class="cd">בחירת <span class="gt" tabindex="0" data-tip="הדרך שבה הופכים את הבעיה למספרים: מה בדיוק נכנס למודל ומה יוצא ממנו.">ייצוג</span></span> חכמה, כלומר הפיכת בעיה שאינה תמונה (קול, <bdi dir="ltr">DNA</bdi>, תנועה) לתמונה, ואז שימוש באותו מסווג תמונות.</p></div>
 <h3 id="s4"><span class="gt" tabindex="0" data-tip="ספריית Python שעוטפת את PyTorch ומאפשרת לאמן מודל בכמה שורות.">fastai</span> מול <span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span> (שקפים <bdi dir="ltr">78–81</bdi>)</h3>
-<p><span class="gt" tabindex="0" data-tip="ספריית Python שעוטפת את PyTorch ומאפשרת לאמן מודל בכמה שורות.">fastai</span> היא עטיפה מעל <span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span>: אותו כוח, פחות קוד. בשקף 79 מימוש ידני של צעד אחד של האופטימייזר <span class="gt" tabindex="0" data-tip="אופטימייזר: גרדיאנט עם מומנטום, גודל צעד מותאם לכל פרמטר ו-weight decay.">AdamW</span> ב-<span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span> (מומנטום, תיקוני <span class="gt" tabindex="0" data-tip="המספר b שמתווסף לסכום המשוקלל. מזיז את קו ההחלטה כך שלא חייב לעבור בראשית.">הטיה</span>, <span class="gt" tabindex="0" data-tip="הקטנה קבועה של המשקולות בכל צעד, כדי לצמצם overfitting.">weight decay</span>) תופס מסך שלם; ב-<span class="gt" tabindex="0" data-tip="ספריית Python שעוטפת את PyTorch ומאפשרת לאמן מודל בכמה שורות.">fastai</span> אותו אלגוריתם מורכב מכמה פונקציות קטנות. ההבדל הוא בין שליטה ברמה נמוכה לבין יעילות.</p>
+<p><span class="gt" tabindex="0" data-tip="ספריית Python שעוטפת את PyTorch ומאפשרת לאמן מודל בכמה שורות.">fastai</span> היא עטיפה מעל <span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span>: אותו כוח, פחות קוד. בשקף 79 מימוש ידני של צעד אחד של <span class="gt" tabindex="0" data-tip="האובייקט שמעדכן את המשקולות לפי הגרדיאנטים.">האופטימייזר</span> <span class="gt" tabindex="0" data-tip="אופטימייזר: גרדיאנט עם מומנטום, גודל צעד מותאם לכל פרמטר ו-weight decay.">AdamW</span> ב-<span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span> (<span class="gt" tabindex="0" data-tip="תנופה: הצעד הנוכחי מושפע גם מהצעדים הקודמים, כמו כדור שמתגלגל.">מומנטום</span>, תיקוני <span class="gt" tabindex="0" data-tip="המספר b שמתווסף לסכום המשוקלל. מזיז את קו ההחלטה כך שלא חייב לעבור בראשית.">הטיה</span>, <span class="gt" tabindex="0" data-tip="הקטנה קבועה של המשקולות בכל צעד, כדי לצמצם overfitting.">weight decay</span>) תופס מסך שלם; ב-<span class="gt" tabindex="0" data-tip="ספריית Python שעוטפת את PyTorch ומאפשרת לאמן מודל בכמה שורות.">fastai</span> אותו אלגוריתם מורכב מכמה פונקציות קטנות. ההבדל הוא בין שליטה ברמה נמוכה לבין יעילות.</p>
 <h3 id="s5"><span class="gt" tabindex="0" data-tip="מחברת שמשלבת תאי קוד, טקסט ופלט במסמך אחד.">Jupyter</span> (שקפים <bdi dir="ltr">82–83</bdi>)</h3>
 <div class="tbl"><table>
 <tr><th>מה</th><th>איך</th></tr>
-<tr><td>הרצת תא</td><td><code>Shift+Enter</code>; המספר ב-<code>In [ ]</code> אומר באיזה סדר רצו התאים</td></tr>
+<tr><td>הרצת תא</td><td><code class="nw">Shift+Enter</code>; המספר ב-<code class="nw">In [ ]</code> אומר באיזה סדר רצו התאים</td></tr>
 <tr><td>משתנים</td><td>נשמרים בזיכרון גלובלי; תא שרץ לפני תא אחר יכול להיכשל על משתנה שלא הוגדר</td></tr>
 <tr><td>טקסט</td><td>תאי <span class="gt" tabindex="0" data-tip="שפת עיצוב טקסט פשוטה: כותרות, רשימות וקישורים בסימנים קצרים.">Markdown</span> עם כותרות, רשימות ונוסחאות <bdi dir="ltr">LaTeX</bdi></td></tr>
-<tr><td>תיעוד</td><td><code>?vision_learner</code> מציג חתימה ותיעוד; <code>doc(...)</code> ב-<span class="gt" tabindex="0" data-tip="ספריית Python שעוטפת את PyTorch ומאפשרת לאמן מודל בכמה שורות.">fastai</span></td></tr>
+<tr><td>תיעוד</td><td><code class="nw">?vision_learner</code> מציג חתימה ותיעוד; <code class="nw">doc(...)</code> ב-<span class="gt" tabindex="0" data-tip="ספריית Python שעוטפת את PyTorch ומאפשרת לאמן מודל בכמה שורות.">fastai</span></td></tr>
 <tr><td>קיצורים</td><td><bdi dir="ltr">A / B</bdi>: תא מעל / מתחת; <bdi dir="ltr">D,D</bdi>: מחיקת תא (במצב פקודה)</td></tr>
 <tr><td>שגיאות</td><td>קוראים את ה-<span class="gt" tabindex="0" data-tip="הודעת השגיאה של Python, עם שרשרת הקריאות שהובילה אליה.">Traceback</span> מלמטה למעלה: סוג השגיאה, ואז השורה שנכשלה</td></tr>
 </table></div>
@@ -62,6 +63,6 @@
 </div>
 </main>
 </div>
-<script src="guide.js?v=25489825"></script>
+<script src="guide.js?v=b9c23375"></script>
 </body>
 </html>

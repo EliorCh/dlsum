@@ -533,6 +533,36 @@ function gdReg(xs,ys,w,b,lr,ep){const N=xs.length,hist=[];for(let e=0;e<=ep;e++)
  SPECS.prac={w:750,h:340,label:'תרגול',base:P.svg,L};
 })();
 
+/* ============ PyTorch: tensor dimensions 0D..4D ============ */
+(function(){
+ const L={},lab=(x,t,s)=>tx(x,236,t,{fs:13,fw:800})+tx(x,258,s,{fs:12,c:'mono tmut'});
+ const RGB=['rgba(220,38,38,.28)','rgba(22,163,74,.28)','rgba(37,99,235,.28)'],STK=['#dc2626','#16a34a','#2563eb'];
+ const stack=(x,y,s,k)=>RGB.map((f,i)=>`<rect x="${x+i*k}" y="${y-i*k}" width="${s}" height="${s}" rx="3" style="fill:${f};stroke:${STK[i]};stroke-width:1.4"/>`).join('');
+ L.a=mat(30,110,[['3.14']],{cs:56,ch:40,fs:14,c:'mhyp'})+lab(58,'0D · סקלר','shape = ()');
+ L.b=mat(120,110,[[1,2,3,4]],{cs:30,ch:40,fs:13,c:'mhyp'})+lab(180,'1D · וקטור','shape = (4,)');
+ L.c=mat(282,70,[[1,2,3,4],[5,6,7,8],[9,10,11,12]],{cs:26,ch:30,fs:11,c:'mhyp'})+lab(334,'2D · מטריצה','shape = (3, 4)');
+ L.d=stack(428,92,72,14)+tx(464,58,'R G B',{fs:11,c:'mono tmut'})+lab(478,'3D · תמונה צבעונית','(C, H, W)');
+ L.e=[0,1,2,3].map(i=>stack(560+i*44,112-i*4,34,7)).join('')+tx(650,52,'B = 4',{fs:12,c:'mono',fw:700})+lab(650,'4D · אצווה של תמונות','(B, C, H, W)')+
+     tx(650,282,'torch.rand(4, 3, 32, 32)',{fs:11,c:'mono thyp'});
+ SPECS.tdim={w:760,h:300,label:'ממדים של טנזור',L};
+})();
+
+/* ============ PyTorch: autograd computational graph, y = (a·b·c)² ============ */
+(function(){
+ const L={},N=(x,y,t,v,c)=>`<g class="${c}"><circle cx="${x}" cy="${y}" r="30"/>${tx(x,y-7,t,{fs:15,fw:800})}${tx(x,y+11,v,{fs:11,c:'mono'})}</g>`;
+ const A=[90,70],B=[90,170],C=[90,280],X=[270,120],Z=[450,200],Y=[640,200];
+ L.a=N(...A,'a','= 2','ndi')+N(...B,'b','= 3','ndi')+N(...C,'c','= 4','ndi')+tx(90,22,'requires_grad=True',{fs:11,c:'mono tdat',fw:700});
+ L.b=ar(118,80,242,112,'ink')+ar(118,162,242,130,'ink')+N(...X,'×','x = 6','nd')+tx(270,72,'x = a·b',{fs:12,c:'mono'});
+ L.c=ar(118,276,422,212,'ink')+ar(298,132,422,190,'ink')+N(...Z,'×','z = 24','nd')+tx(450,152,'z = x·c',{fs:12,c:'mono'});
+ L.d=ar(480,200,608,200,'ink')+N(...Y,'²','y = 576','ndo')+tx(640,152,'y = z²',{fs:12,c:'mono'});
+ const g=(x1,y1,x2,y2,t,lx,ly)=>`<path class="crv opt thin" d="M${x1},${y1} L${x2},${y2}" stroke-dasharray="5 4"/>`+ar(x1+(x2-x1)*.8,y1+(y2-y1)*.8,x2,y2,'sopt')+tx(lx,ly,t,{fs:11.5,c:'mono topt',fw:700});
+ L.e=g(612,222,478,222,'∂y/∂z = 2z = 48',545,240)+tx(640,262,'y.backward()',{fs:12,c:'mono topt',fw:800});
+ L.f=g(424,216,300,140,'∂y/∂x = 48·c = 192',330,190)+g(428,222,120,286,'∂y/∂c = 48·x = 288',300,272);
+ L.g=g(244,104,120,76,'192·b = 576',190,62)+g(244,134,120,166,'192·a = 384',170,176)+
+     bx(560,40,190,82,'a.grad = 576\nb.grad = 384\nc.grad = 288',{c:'bopt',fs:13,mono:true});
+ SPECS.graph={w:760,h:320,label:'גרף חישוב',L};
+})();
+
 
 /* ---- hero: mark the four components in the text ---- */
 (function(){const b=document.getElementById('markBtn'),r=document.getElementById('demoReq');if(!b)return;

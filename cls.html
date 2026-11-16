@@ -7,14 +7,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Suez+One&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="guide.css?v=1b000763">
+<link rel="stylesheet" href="guide.css?v=9d33a30e">
 <script data-goatcounter="https://eliorch.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <!-- mta-theme --><link rel="stylesheet" href="../main/site-theme.css"><script src="../main/site-theme.js" data-course="dl" data-fam="db" data-footer="body"></script><!-- /mta-theme -->
 </head>
 <body class="chapter pg-cls">
 <div class="layout">
 <main>
-<header class="chap"><div class="chapmid"><div class="chapnum">פרק 13 מתוך 14</div><div class="chaptitle">סיווג בינארי</div></div></header>
+<header class="chap"><div class="chapmid"><div class="chapnum">פרק 13 מתוך 15</div><div class="chaptitle">סיווג בינארי</div></div></header>
 <div class="wrap">
 <section id="cls">
 <span class="lesson">שיעור 1 (ממאפס) · שקפים <bdi dir="ltr">42–75</bdi></span>
@@ -39,18 +39,28 @@
 </div></div></div>
 <div class="box rule"><h4>לאמת את <span class="gt" tabindex="0" data-tip="וקטור הנגזרות החלקיות של ה-Loss לפי כל פרמטר. מראה לאן ה-Loss עולה הכי מהר.">הגרדיאנט</span> מול <span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span> (שקפים <bdi dir="ltr">68–69</bdi>)</h4><p>נוסחה שגזרנו ביד עלולה להכיל טעות. משווים אותה ל-<span class="gt" tabindex="0" data-tip="המנגנון של PyTorch שמחשב נגזרות אוטומטית מתוך החישוב שבוצע.">autograd</span>:</p>
 <pre class="ide"><code><span class="cl-row" style="--ind:0"><span class="cl-n">1</span><span class="cl-c"><span class="t-kw">def</span> <span class="t-fn">gradient_using_pytorch</span><span class="t-br">(</span><wbr><span class="t-va">X</span><span class="t-op">,</span><wbr> <span class="t-va">Y</span><span class="t-op">,</span><wbr> <span class="t-va">n</span><span class="t-br">)</span><span class="t-op">:</span></span></span><span class="cl-row" style="--ind:4"><span class="cl-n">2</span><span class="cl-c"><span class="t-va">n</span><span class="t-op">.</span><span class="t-va">_w</span><span class="t-op">.</span><span class="t-fn">requires_grad_</span><span class="t-br">(</span><wbr><span class="t-br">)</span></span></span><span class="cl-row" style="--ind:4"><span class="cl-n">3</span><span class="cl-c"><span class="t-va">n</span><span class="t-op">.</span><span class="t-va">_b</span><span class="t-op">.</span><span class="t-fn">requires_grad_</span><span class="t-br">(</span><wbr><span class="t-br">)</span></span></span><span class="cl-row" style="--ind:4"><span class="cl-n">4</span><span class="cl-c"><span class="t-va">preds</span> <span class="t-op">=</span><wbr> <span class="t-va">n</span><span class="t-op">.</span><span class="t-fn">forward</span><span class="t-br">(</span><wbr><span class="t-va">X</span><span class="t-br">)</span></span></span><span class="cl-row" style="--ind:4"><span class="cl-n">5</span><span class="cl-c"><span class="t-va">loss</span> <span class="t-op">=</span><wbr> <span class="t-fn">mse</span><span class="t-br">(</span><wbr><span class="t-va">preds</span><span class="t-op">,</span><wbr> <span class="t-va">Y</span><span class="t-br">)</span></span></span><span class="cl-row" style="--ind:4"><span class="cl-n">6</span><span class="cl-c"><span class="t-va">loss</span><span class="t-op">.</span><span class="t-fn">backward</span><span class="t-br">(</span><wbr><span class="t-br">)</span></span></span><span class="cl-row" style="--ind:4"><span class="cl-n">7</span><span class="cl-c"><span class="t-kw">return</span> <span class="t-va">n</span><span class="t-op">.</span><span class="t-va">_w</span><span class="t-op">.</span><span class="t-va">grad</span><span class="t-op">,</span><wbr> <span class="t-va">n</span><span class="t-op">.</span><span class="t-va">_b</span><span class="t-op">.</span><span class="t-va">grad</span></span></span></code></pre>
-<p>בשקף 69 שני החישובים נותנים את אותם מספרים: <bdi dir="ltr">[[0.8279], [0.8507]]</bdi> ו-0.0091. רק השני מגיע עם <code>grad_fn</code>, כי <span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span> עקב אחרי החישוב.</p></div>
+<p>בשקף 69 שני החישובים נותנים את אותם מספרים: <bdi dir="ltr">[[0.8279], [0.8507]]</bdi> ו-0.0091. רק השני מגיע עם <code class="nw">grad_fn</code>, כי <span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span> עקב אחרי החישוב.</p></div>
 <div class="tbl"><table>
 <tr><th></th><th>חזוי 0</th><th>חזוי 1</th></tr>
 <tr><td><strong>אמיתי 0</strong></td><td><bdi dir="ltr">TN</bdi>: צדקנו שזה 0</td><td><bdi dir="ltr">FP</bdi>: אמרנו 1 בטעות</td></tr>
 <tr><td><strong>אמיתי 1</strong></td><td><bdi dir="ltr">FN</bdi>: פספסנו 1</td><td><bdi dir="ltr">TP</bdi>: צדקנו שזה 1</td></tr>
 </table></div>
 <p class="small">בשקף 75 (״במהלך הדרך״) רואים מטריצה שבה כל מחלקה 0 מסווגת 1 ו-14 ממחלקה 1 מסווגות 0: קו ההפרדה עדיין חותך את אחת הקבוצות.</p>
+<div class="box tip"><h4>ארבעה יתרונות של <span class="gt" tabindex="0" data-tip="הפונקציה σ(z) = 1/(1+e⁻ᶻ). דוחסת כל מספר לטווח שבין 0 ל-1.">הסיגמואיד</span> (הרצאה 11.11)</h4><p><strong>1.</strong> הצורה שלו דומה למדרגה, כך שהוא עדיין ״מחליט״. <strong>2.</strong> הוא גזיר בכל נקודה, ולכן <span class="gt" tabindex="0" data-tip="ירידה במורד הגרדיאנט: בכל צעד מזיזים את המשקולות מעט בכיוון שמקטין את ה-Loss.">gradient descent</span> עובד. <strong>3.</strong> הוא דוחס כל מספר לטווח <span class="ltr">(0, 1)</span>, שאפשר לקרוא כהסתברות. <strong>4.</strong> <span class="gt" tabindex="0" data-tip="קצב השינוי של פונקציה. כאן: כמה ה-Loss משתנה כשמזיזים פרמטר אחד מעט.">הנגזרת</span> שלו זולה לחישוב, כי היא נבנית מהערך שכבר חישבנו:</p>
+<div class="fx">σ′(z) = σ(z) · (1 − σ(z))</div>
+<p>אפשר גם לשלוט בתלילות שלו עם פרמטר α. ככל ש-α גדול יותר, <span class="gt" tabindex="0" data-tip="הפונקציה σ(z) = 1/(1+e⁻ᶻ). דוחסת כל מספר לטווח שבין 0 ל-1.">הסיגמואיד</span> קרוב יותר למדרגה:</p>
+<div class="fx">σ(αz) = 1 / (1 + e⁻ᵅᶻ)</div></div>
+<div class="box rule"><h4>מה עוד הודגש בהרצאה</h4><p><strong><span class="gt" tabindex="0" data-tip="המספר b שמתווסף לסכום המשוקלל. מזיז את קו ההחלטה כך שלא חייב לעבור בראשית.">bias</span> הוא עוד <span class="gt" tabindex="0" data-tip="הפרמטרים שהאימון מכוון. כל קלט מוכפל במשקולת שלו.">משקל</span>.</strong> אפשר לחשוב עליו כעל <span class="gt" tabindex="0" data-tip="הפרמטרים שהאימון מכוון. כל קלט מוכפל במשקולת שלו.">משקל</span> שמחובר לקלט שערכו תמיד 1. ככה הנוסחה אחידה, וגם אותו מעדכנים לפי <span class="gt" tabindex="0" data-tip="קצב השינוי של פונקציה. כאן: כמה ה-Loss משתנה כשמזיזים פרמטר אחד מעט.">הנגזרת</span>.</p>
+<div class="fx">w·x + b = w·x + b·1</div>
+<p><strong>מי ״אשם״ בטעות?</strong> מתחילים <span class="gt" tabindex="0" data-tip="הפרמטרים שהאימון מכוון. כל קלט מוכפל במשקולת שלו.">ממשקולות</span> אקראיות. אחרי כל חישוב, <span class="gt" tabindex="0" data-tip="קצב השינוי של פונקציה. כאן: כמה ה-Loss משתנה כשמזיזים פרמטר אחד מעט.">הנגזרת</span> החלקית לפי כל <span class="gt" tabindex="0" data-tip="הפרמטרים שהאימון מכוון. כל קלט מוכפל במשקולת שלו.">משקל</span> אומרת כמה הוא תרם לטעות ולאיזה כיוון, וכל <span class="gt" tabindex="0" data-tip="הפרמטרים שהאימון מכוון. כל קלט מוכפל במשקולת שלו.">משקל</span> מתוקן לפי החלק שלו.</p>
+<p><strong><span class="gt" tabindex="0" data-tip="נקודה שבה הטעות קטנה מכל הסביבה הקרובה, אבל לא הכי קטנה בכלל.">מינימום מקומי</span>.</strong> <span class="gt" tabindex="0" data-tip="ירידה במורד הגרדיאנט: בכל צעד מזיזים את המשקולות מעט בכיוון שמקטין את ה-Loss.">gradient descent</span> יכול להיתקע בעמק שאינו הנמוך ביותר. <span class="gt" tabindex="0" data-tip="האובייקט שמעדכן את המשקולות לפי הגרדיאנטים.">אופטימייזרים</span> כמו <span class="gt" tabindex="0" data-tip="אופטימייזר שזוכר גרדיאנטים קודמים (מומנטום) ומתאים גודל צעד לכל משקל.">Adam</span> משתמשים <span class="gt" tabindex="0" data-tip="תנופה: הצעד הנוכחי מושפע גם מהצעדים הקודמים, כמו כדור שמתגלגל.">במומנטום</span> כדי לדלג מעל עמקים כאלה. ראה <a href="pytorch.html#pytorch">פרק <bdi dir="ltr">PyTorch</bdi></a>.</p>
+<p><strong>מעבר למטריצת הבלבול.</strong> מטריצת הבלבול נותנת יותר מ-<span class="gt" tabindex="0" data-tip="אחוז הדוגמאות שהמודל סיווג נכון.">accuracy</span> לבדה. המרצה הזכיר שממנה מחשבים גם מדדים כמו <span class="gt" tabindex="0" data-tip="מתוך כל מה שהמודל סימן כחיובי, כמה באמת חיובי.">precision</span> ו-<span class="gt" tabindex="0" data-tip="מתוך כל החיוביים האמיתיים, כמה המודל מצא.">recall</span>:</p>
+<div class="fx">precision = TP / (TP + FP)</div><div class="fx">recall = TP / (TP + FN)</div></div>
 </section>
 <div class="pager"><a class="prev" href="lr.html"><span>הקודם</span><bdi dir="ltr">12 · learning rate</bdi> ו-<bdi dir="ltr">epochs</bdi></a><a class="next" href="vectorize.html"><span>הבא</span>14 · וקטוריזציה</a></div>
 </div>
 </main>
 </div>
-<script src="guide.js?v=25489825"></script>
+<script src="guide.js?v=b9c23375"></script>
 </body>
 </html>

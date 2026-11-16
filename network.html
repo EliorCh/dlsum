@@ -7,14 +7,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Suez+One&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="guide.css?v=1b000763">
+<link rel="stylesheet" href="guide.css?v=9d33a30e">
 <script data-goatcounter="https://eliorch.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <!-- mta-theme --><link rel="stylesheet" href="../main/site-theme.css"><script src="../main/site-theme.js" data-course="dl" data-fam="db" data-footer="body"></script><!-- /mta-theme -->
 </head>
 <body class="chapter pg-network">
 <div class="layout">
 <main>
-<header class="chap"><div class="chapmid"><div class="chapnum">פרק 6 מתוך 14</div><div class="chaptitle">מנוירון לרשת</div></div></header>
+<header class="chap"><div class="chapmid"><div class="chapnum">פרק 6 מתוך 15</div><div class="chaptitle">מנוירון לרשת</div></div></header>
 <div class="wrap">
 <section id="network">
 <span class="lesson">שיעור 0 · שקפים <bdi dir="ltr">127–151</bdi></span>
@@ -45,6 +45,11 @@
 <tr><td><span class="gt" tabindex="0" data-tip="הפונקציה max(0, z): מאפסת ערכים שליליים ומשאירה חיוביים כמו שהם.">ReLU</span></td><td class="c">max(0, z)</td><td class="c">[0, ∞)</td><td><span class="gt" tabindex="0" data-tip="שכבה בין שכבת הקלט לשכבת הפלט. לא רואים את הערכים שלה מבחוץ.">שכבות נסתרות</span> (בקוד של שקף 63)</td></tr>
 <tr><td>זהות (בלי)</td><td class="c">z</td><td class="c">ℝ</td><td>פלט של <span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא מספר ממשי, למשל מחיר.">רגרסיה</span></td></tr>
 </table></div>
+<div class="box rule"><h4>למה חייבים <span class="gt" tabindex="0" data-tip="הפונקציה שהנוירון מפעיל על הסכום המשוקלל, למשל sign, סיגמואיד או ReLU.">פונקציית הפעלה</span>? (הרצאה 11.11)</h4><p>המרצה נתן שתי סיבות. <strong>הראשונה:</strong> להוציא <span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">מהנוירון</span> פלט בצורה שאנחנו צריכים, למשל הסתברות או מחלקה. <strong>השנייה, והחשובה יותר:</strong> לשבור את הלינאריות. בלי <span class="gt" tabindex="0" data-tip="הפונקציה שהנוירון מפעיל על הסכום המשוקלל, למשל sign, סיגמואיד או ReLU.">אקטיבציה</span>, שתי שכבות לינאריות קורסות לשכבה אחת:</p>
+<div class="fx">h = W₁x + b₁</div>
+<div class="fx">y = W₂h + b₂ = W₂(W₁x + b₁) + b₂</div>
+<div class="fx">y = (W₂W₁)x + (W₂b₁ + b₂) = W′x + b′</div>
+<p>כלומר, כל ערימה של שכבות לינאריות שקולה לשכבה לינארית אחת, עם <span class="gt" tabindex="0" data-tip="הפרמטרים שהאימון מכוון. כל קלט מוכפל במשקולת שלו.">המשקולות</span> <span class="ltr">W′</span> ו-<span class="ltr">b′</span>. היא תמיד תפריד רק בקו ישר. השכבות הנוספות לא נותנות כוח, רק עוד חישוב.</p></div>
 <div class="box tip"><h4><span class="gt" tabindex="0" data-tip="צורת החיבור של הנוירונים והשכבות ברשת.">ארכיטקטורות</span> ו-<span class="gt" tabindex="0" data-tip="Large Language Model: מודל שפה גדול שחוזה את הטוקן הבא בטקסט.">LLM</span> (שקפים <bdi dir="ltr">147–157</bdi>)</h4><p>רשת עמוקה היא רשת עם כמה <span class="gt" tabindex="0" data-tip="שכבה בין שכבת הקלט לשכבת הפלט. לא רואים את הערכים שלה מבחוץ.">שכבות נסתרות</span>. <span class="gt" tabindex="0" data-tip="צורת החיבור של הנוירונים והשכבות ברשת.">הארכיטקטורה</span> קובעת איך הן מחוברות: <span class="gt" tabindex="0" data-tip="רשת שבה המידע זורם רק קדימה, משכבת הקלט לשכבת הפלט.">Feed-Forward</span> (מידע זורם קדימה), <span class="gt" tabindex="0" data-tip="רשת חוזרת: מעבדת רצף איבר אחרי איבר וזוכרת מצב בין איברים.">RNN</span> (רצפים וטקסט), <span class="gt" tabindex="0" data-tip="ארכיטקטורה שמבוססת על self-attention. הבסיס של מודלי השפה הגדולים.">Transformers</span> (הבסיס למודלי שפה). <span class="gt" tabindex="0" data-tip="Large Language Model: מודל שפה גדול שחוזה את הטוקן הבא בטקסט.">LLM</span> הוא רשת עמוקה ענקית שהמשימה שלה היא לחזות את <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">הטוקן</span> הבא, ״<bdi dir="ltr">The cat sat on the</bdi> ___״, אחרי שאומנה על כמויות עצומות של טקסט.</p></div>
 <div class="box rule"><h4>בין אדם למכונה (שקפים <bdi dir="ltr">37–42</bdi>, <bdi dir="ltr">163–165</bdi>)</h4><p>המודל קיבל השראה <span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">מהנוירון</span> הביולוגי, אבל המתמטיקה רחוקה מאוד מהביולוגיה. שאלת המרצה: האם <span class="gt" tabindex="0" data-tip="נוירונים מחוברים בשכבות: הפלט של שכבה אחת הוא הקלט של הבאה.">רשת נוירונים</span> היא סימולציה של מוח, או חישוב מתמטי מורכב, מחולק לשלבים, שמאפשר חיפוש אוטומטי, גם של <span class="gt" tabindex="0" data-tip="הדרך שבה הופכים את הבעיה למספרים: מה בדיוק נכנס למודל ומה יוצא ממנו.">הייצוג</span>? התחושה שיש ״מישהו״ בצד השני של <bdi dir="ltr">ChatGPT</bdi> היא אשליה שנוצרת מחישוב הסתברויות ענק.</p></div>
 </section>
@@ -52,6 +57,6 @@
 </div>
 </main>
 </div>
-<script src="guide.js?v=25489825"></script>
+<script src="guide.js?v=b9c23375"></script>
 </body>
 </html>

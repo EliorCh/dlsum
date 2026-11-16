@@ -373,3 +373,5 @@ pre.ide.one .cl-row{padding-left:calc((var(--ind) + 4) * 1ch)}
 .t-nu{color:#B5CEA8}.t-de{color:#DCDCAA}.t-br{color:#FFD700}.t-op{color:#D4D4D4}
 #viewGrid td pre.ide{font-size:.7rem;padding:6px 8px!important}
 pre.ide,pre.ide *{overflow-wrap:break-word!important;word-break:normal!important}
+
+code.nw{white-space:nowrap!important;overflow-wrap:normal!important}

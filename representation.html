@@ -7,14 +7,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Suez+One&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="guide.css?v=1b000763">
+<link rel="stylesheet" href="guide.css?v=9d33a30e">
 <script data-goatcounter="https://eliorch.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <!-- mta-theme --><link rel="stylesheet" href="../main/site-theme.css"><script src="../main/site-theme.js" data-course="dl" data-fam="db" data-footer="body"></script><!-- /mta-theme -->
 </head>
 <body class="chapter pg-representation">
 <div class="layout">
 <main>
-<header class="chap"><div class="chapmid"><div class="chapnum">פרק 5 מתוך 14</div><div class="chaptitle">ייצוג ו-<bdi dir="ltr">LLM</bdi></div></div></header>
+<header class="chap"><div class="chapmid"><div class="chapnum">פרק 5 מתוך 15</div><div class="chaptitle">ייצוג ו-<bdi dir="ltr">LLM</bdi></div></div></header>
 <div class="wrap">
 <section id="representation">
 <span class="lesson">שיעור 0 · שקפים <bdi dir="ltr">74–103</bdi>, <bdi dir="ltr">152–165</bdi></span>
@@ -29,7 +29,7 @@
 <div class="steps">
 <div class="step" data-spec="llm" data-show="a" data-cap="1. הקלט הוא מחרוזת תווים"><div class="sh">צעד 1: טקסט</div><p>מה שהקלדת הוא רק רצף תווים: ״<bdi dir="ltr">h</bdi>״, ״<bdi dir="ltr">o</bdi>״, ״<bdi dir="ltr">w</bdi>״… עדיין לא מספרים.</p></div>
 <div class="step" data-spec="llm" data-show="ab" data-cap="2. טוקניזציה"><div class="sh">צעד 2: <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">טוקנים</span></div><p><span class="gt" tabindex="0" data-tip="הכלי שמפרק טקסט לטוקנים וממיר כל אחד למספר.">Tokenizer</span> מפרק את הטקסט לחתיכות (מילה, חלק ממילה או סימן פיסוק). זה מיפוי קבוע, לא נלמד באימון.</p></div>
-<div class="step" data-spec="llm" data-show="abc" data-cap="3. כל טוקן הוא מספר שלם"><div class="sh">צעד 3: <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">Token IDs</span></div><p>כל <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">טוקן</span> מקבל מספר באוצר המילים: <code>how → 1068</code>, <code>is → 318</code>, <code>the → 262</code>, <code>data → 3748</code> (מה-<span class="gt" tabindex="0" data-tip="הכלי שמפרק טקסט לטוקנים וממיר כל אחד למספר.">tokenizer</span> של <bdi dir="ltr">GPT</bdi>, שקף 82). המודל אף פעם לא רואה מילים, רק מספרים (שקף 83).</p></div>
+<div class="step" data-spec="llm" data-show="abc" data-cap="3. כל טוקן הוא מספר שלם"><div class="sh">צעד 3: <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">Token IDs</span></div><p>כל <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">טוקן</span> מקבל מספר באוצר המילים: <code class="nw">how → 1068</code>, <code class="nw">is → 318</code>, <code class="nw">the → 262</code>, <code class="nw">data → 3748</code> (מה-<span class="gt" tabindex="0" data-tip="הכלי שמפרק טקסט לטוקנים וממיר כל אחד למספר.">tokenizer</span> של <bdi dir="ltr">GPT</bdi>, שקף 82). המודל אף פעם לא רואה מילים, רק מספרים (שקף 83).</p></div>
 <div class="step" data-spec="llm" data-show="abcd" data-cap="4. Embedding: וקטור לכל טוקן"><div class="sh">צעד 4: וקטורים</div><p>טבלת <span class="gt" tabindex="0" data-tip="וקטור מספרים שנלמד באימון ומייצג את המשמעות של טוקן.">embedding</span> (נלמדת) הופכת כל <bdi dir="ltr">ID</bdi> לווקטור ארוך, אלפי ממדים, שמייצג משמעות. זה ההבדל מ-<span class="gt" tabindex="0" data-tip="וקטור של אפסים עם 1 יחיד במקום שמתאים למילה.">one-hot</span>: מילים קרובות במשמעות מקבלות וקטורים קרובים.</p></div>
 <div class="step" data-spec="llm" data-show="abcde" data-cap="5. שכבות הטרנספורמר"><div class="sh">צעד 5: <span class="gt" tabindex="0" data-tip="ארכיטקטורה שמבוססת על self-attention. הבסיס של מודלי השפה הגדולים.">Transformer</span></div><p>שכבות <span class="gt" tabindex="0" data-tip="מנגנון שבו כל טוקן ״מסתכל״ על כל שאר הטוקנים ושוקל כמה כל אחד חשוב לו.">self-attention</span> לומדות קשרים בין כל <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">הטוקנים</span>, ושכבות <bdi dir="ltr">feed-forward</bdi> וחיבורי <span class="gt" tabindex="0" data-tip="חיבור שמוסיף את הקלט של שכבה לפלט שלה, כדי שמידע לא ילך לאיבוד בין שכבות.">residual</span> מעבדים אותם. בסוף לכל <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">טוקן</span> יש <span class="gt" tabindex="0" data-tip="הדרך שבה הופכים את הבעיה למספרים: מה בדיוק נכנס למודל ומה יוצא ממנו.">ייצוג</span> שתלוי בהקשר: מה הוא ״אומר״ בהינתן כל השאר.</p></div>
 <div class="step" data-spec="llm" data-show="abcdef" data-cap="6. התפלגות על הטוקן הבא"><div class="sh">צעד 6: הפלט</div><p>הרשת מחזירה וקטור באורך אוצר המילים (בערך 50,000): הסתברות לכל <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">טוקן</span> אפשרי. הסביר ביותר (או דגימה מההתפלגות) הוא <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">הטוקן</span> הבא. זו הגדרת <span class="gt" tabindex="0" data-tip="Large Language Model: מודל שפה גדול שחוזה את הטוקן הבא בטקסט.">LLM</span> בשקפים <bdi dir="ltr">152–157</bdi>: ״<bdi dir="ltr">The cat sat on the</bdi> ___״.</p></div>
@@ -44,6 +44,6 @@
 </div>
 </main>
 </div>
-<script src="guide.js?v=25489825"></script>
+<script src="guide.js?v=b9c23375"></script>
 </body>
 </html>

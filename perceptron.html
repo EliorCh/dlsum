@@ -7,19 +7,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Suez+One&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="guide.css?v=1b000763">
+<link rel="stylesheet" href="guide.css?v=9d33a30e">
 <script data-goatcounter="https://eliorch.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <!-- mta-theme --><link rel="stylesheet" href="../main/site-theme.css"><script src="../main/site-theme.js" data-course="dl" data-fam="db" data-footer="body"></script><!-- /mta-theme -->
 </head>
 <body class="chapter pg-perceptron">
 <div class="layout">
 <main>
-<header class="chap"><div class="chapmid"><div class="chapnum">פרק 3 מתוך 14</div><div class="chaptitle">פרספטרון 3×3</div></div></header>
+<header class="chap"><div class="chapmid"><div class="chapnum">פרק 3 מתוך 15</div><div class="chaptitle">פרספטרון 3×3</div></div></header>
 <div class="wrap">
 <section id="perceptron">
 <span class="lesson">שיעור 0 · שקפים <bdi dir="ltr">14–32</bdi></span>
 <h2>פתרון מודרך: <span class="gt" tabindex="0" data-tip="נוירון יחיד עם פונקציית sign. המודל של רוזנבלט מ-1957.">הפרספטרון</span> של רוזנבלט על תמונות 3×3</h2>
-<p>ב-1957 רוזנבלט רצה מכונה שלומדת לבד לסווג תמונות. כאן הבעיה מוקטנת: תמונה בינארית 3×3, ושתי מחלקות, <code>main</code> (אלכסון ראשי) ו-<code>cross</code>. זה התרגיל הראשון של הקורס, וכל ארבעת הרכיבים מופיעים בו בצורה הכי פשוטה.</p>
+<p>ב-1957 רוזנבלט רצה מכונה שלומדת לבד לסווג תמונות. כאן הבעיה מוקטנת: תמונה בינארית 3×3, ושתי מחלקות, <code class="nw">main</code> (אלכסון ראשי) ו-<code class="nw">cross</code>. זה התרגיל הראשון של הקורס, וכל ארבעת הרכיבים מופיעים בו בצורה הכי פשוטה.</p>
 <div class="ex stepped">
 <div class="q"><b>השאלה (שקפים <bdi dir="ltr">22–32</bdi>)</b>נתון <span class="gt" tabindex="0" data-tip="אוסף הדוגמאות שעליהן מאמנים ובודקים את המודל.">דאטהסט</span> של תמונות 3×3 מתויגות <bdi dir="ltr">main</bdi> או <bdi dir="ltr">cross</bdi>. מצא <span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">נוירון</span> שמסווג אותן נכון, והפעל אותו על תמונת אלכסון ראשי. אחר כך (תרגיל, שקף 32): מה <span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">הנוירון</span> יגיד על תמונת האלכסון המשני?</div>
 <div class="exgrid">
@@ -41,7 +41,7 @@
 <p>בשורת החישוב בשקף מופיע <span class="ltr">״0.1∗1״</span> במקום השישי, אבל במטריצה <span class="ltr">w₆ = 0.2</span>, והסכום 1.1 יוצא נכון רק עם 0.2. וגם: בשקף כתוב ״1.1״ ולידו ״0.2״ — זו <span class="gt" tabindex="0" data-tip="המספר b שמתווסף לסכום המשוקלל. מזיז את קו ההחלטה כך שלא חייב לעבור בראשית.">ההטיה</span>. הכלל הוא <span class="ltr">sign(w·x + b)</span>, כלומר <span class="ltr">1.1 + 0.2 = 1.3</span>. איזו מחלקה היא ה״חיובית״? ב-<span class="gt" tabindex="0" data-tip="ספריית Python ללמידת מכונה קלאסית.">sklearn</span> המחלקות ממוינות לפי האלפבית, ['<bdi dir="ltr">cross', 'main</bdi>'], ולכן ציון חיובי הוא <bdi dir="ltr">main</bdi>.</p></div>
 <div class="tool" id="perctool">
 <h3 id="s1" style="margin-top:0">כלי: איך <span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">הנוירון</span> המאומן מחליט</h3>
-<p><strong>מה בודקים כאן:</strong> <span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">הנוירון</span> מהשקפים כבר אומן (<span class="gt" tabindex="0" data-tip="הפרמטרים שהאימון מכוון. כל קלט מוכפל במשקולת שלו.">המשקולות</span> משקף 29). הוא מקבל תמונה 3×3 ומחזיר אחת משתי תשובות: <code>main</code> (אלכסון ראשי: שחור מהפינה השמאלית-עליונה עד הימנית-תחתונה) או <code>cross</code> (המחלקה השנייה בדאטה, בעיקר אלכסון משני). שנה את התמונה וראה בדיוק איזה חישוב מוביל להחלטה.</p>
+<p><strong>מה בודקים כאן:</strong> <span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">הנוירון</span> מהשקפים כבר אומן (<span class="gt" tabindex="0" data-tip="הפרמטרים שהאימון מכוון. כל קלט מוכפל במשקולת שלו.">המשקולות</span> משקף 29). הוא מקבל תמונה 3×3 ומחזיר אחת משתי תשובות: <code class="nw">main</code> (אלכסון ראשי: שחור מהפינה השמאלית-עליונה עד הימנית-תחתונה) או <code class="nw">cross</code> (המחלקה השנייה בדאטה, בעיקר אלכסון משני). שנה את התמונה וראה בדיוק איזה חישוב מוביל להחלטה.</p>
 <div class="row" id="ppre"><span class="small">דוגמאות:</span><button type="button" class="btn ghost" data-p="0,1,1,1,0,1,1,1,0">אלכסון ראשי</button><button type="button" class="btn ghost" data-p="1,1,0,1,0,1,0,1,1">אלכסון משני</button><button type="button" class="btn ghost" data-p="1,0,1,0,1,0,1,0,1">צורת +</button><button type="button" class="btn ghost" data-p="1,1,1,1,1,1,1,1,1">הכול לבן</button></div>
 <div class="pwrap">
  <div class="pcol"><div class="ph">1. התמונה (לחץ לשינוי)</div><div class="grid3" id="pgrid"></div><div class="small">שחור הוא 0, לבן הוא 1</div></div>
@@ -57,6 +57,6 @@
 </div>
 </main>
 </div>
-<script src="guide.js?v=25489825"></script>
+<script src="guide.js?v=b9c23375"></script>
 </body>
 </html>
