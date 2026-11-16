@@ -375,3 +375,10 @@ pre.ide.one .cl-row{padding-left:calc((var(--ind) + 4) * 1ch)}
 pre.ide,pre.ide *{overflow-wrap:break-word!important;word-break:normal!important}
 
 code.nw{white-space:nowrap!important;overflow-wrap:normal!important}
+
+/* ===== prev / next, same as the other course sites ===== */
+.pager{display:flex;justify-content:space-between;gap:12px;margin:50px 0 10px;flex-wrap:wrap}
+.pager a{flex:1 1 220px;max-width:420px;display:flex;flex-direction:column;gap:2px;padding:14px 18px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none!important;color:var(--ink);font-weight:800;font-size:1.1rem;transition:border-color .15s}
+.pager a span{font-size:.82rem;font-weight:600;color:var(--muted)}
+.pager a.next{margin-inline-start:auto;text-align:left}
+.pager a:hover{border-color:var(--mta-acc,var(--ent))}
