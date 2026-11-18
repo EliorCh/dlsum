@@ -7,14 +7,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Suez+One&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="guide.css?v=ef269cee">
+<link rel="stylesheet" href="guide.css?v=8d96afc2">
 <script data-goatcounter="https://eliorch.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <!-- mta-theme --><link rel="stylesheet" href="../main/site-theme.css"><script src="../main/site-theme.js" data-course="dl" data-fam="db" data-footer="body"></script><!-- /mta-theme -->
 </head>
 <body class="chapter pg-scratch">
 <div class="layout">
 <main>
-<header class="chap"><div class="chapmid"><div class="chapnum">פרק 5 מתוך 7</div><div class="chaptitle">אימון נוירון ממאפס</div></div></header>
+<header class="chap"><div class="chapmid"><div class="chapnum">פרק 5 מתוך 9</div><div class="chaptitle">אימון נוירון ממאפס</div></div></header>
 <div class="wrap">
 <section id="reg">
 <span class="lesson">מצגת ״ממאפס״ · שקפים <bdi dir="ltr">1–12</bdi></span>
@@ -164,10 +164,10 @@
 <p><strong>2.</strong> שים <code>assert(a.shape == (5,1))</code> בקוד, וכשצריך: <code>a = a.reshape((5,1))</code>.</p>
 <p><strong>3.</strong> שים לב לסוגי נתונים: ב-<span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span>, <code class="nw">a@b</code> בין <bdi dir="ltr">float64</bdi> ל-<bdi dir="ltr">float32</bdi> זורק <bdi dir="ltr">RuntimeError</bdi> (״<bdi dir="ltr">expected both vectors to have same</bdi> <span class="gt" tabindex="0" data-tip="סוג המספרים במערך, למשל float64 או float32.">dtype</span>״). ב-<span class="gt" tabindex="0" data-tip="ספריית Python לעבודה עם מערכים ומטריצות.">NumPy</span> אותו כפל עובר ומחזיר <code class="nw">np.float64(10.0)</code>. לכן ב-<code class="nw">linear</code> של <span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">הנוירון</span> יש <code>x.type(self._w.type())</code>.</p></div>
 </section>
-<div class="pager"><a class="prev" href="fastai.html"><span>הקודם</span>4 · fastai</a><a class="next" href="pytorch.html"><span>הבא</span>6 · PyTorch</a></div>
+<div class="pager"><a class="prev" href="fastai.html"><span>הקודם</span>4 · fastai</a><a class="next" href="pytorch.html"><span>הבא</span><bdi dir="ltr">6 · PyTorch</bdi>: טנזורים ו-<bdi dir="ltr">autograd</bdi></a></div>
 </div>
 </main>
 </div>
-<script src="guide.js?v=f80e80d8"></script>
+<script src="guide.js?v=4e864cb6"></script>
 </body>
 </html>

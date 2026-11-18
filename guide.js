@@ -563,6 +563,58 @@ function gdReg(xs,ys,w,b,lr,ep){const N=xs.length,hist=[];for(let e=0;e<=ep;e++)
  SPECS.graph={w:760,h:320,label:'גרף חישוב',L};
 })();
 
+/* ============ Collaborative filtering: the Netflix example, R = U · M ============ */
+(function(){
+ const L={},cs=44,R=[[3,1,1,3,1],[1,2,4,1,3],[3,1,1,3,1],[4,3,5,4,4]];
+ const RX=330,RY=150,UX=150,MY=40,users=['A','B','C','D'],films=['M1','M2','M3','M4','M5'];
+ const rowLab=(x)=>users.map((u,i)=>tx(x,RY+i*cs+cs/2,u,{fs:14,fw:800})).join('');
+ L.a=mat(RX,RY,R,{cs,c:'mdat',fs:15})+films.map((f,j)=>tx(RX+j*cs+cs/2,RY-12,f,{fs:12,fw:800,c:'mono tdat'})).join('')+rowLab(RX-16)+
+     tx(RX+cs*2.5,RY+cs*4+22,'R: הדירוגים (4 צופים × 5 סרטים)',{fs:13,fw:700,c:'lbl'});
+ L.b=mat(RX,MY,[[3,1,1,3,1],[1,2,4,1,3]],{cs,ch:34,c:'mhyp',fs:14})+tx(RX-10,MY+17,'קומדיה',{fs:12.5,fw:700,a:'end',c:'thyp'})+tx(RX-10,MY+51,'אקשן',{fs:12.5,fw:700,a:'end',c:'thyp'})+
+     tx(RX+cs*5+14,MY+34,'כמה כל סרט',{fs:12,a:'start',c:'lbl'})+tx(RX+cs*5+14,MY+52,'קומי / אקשן',{fs:12,a:'start',c:'lbl'});
+ L.c=mat(UX,RY,[[1,0],[0,1],[1,0],[1,1]],{cs,c:'mopt',fs:15})+tx(UX+cs/2,RY-12,'קומדיה',{fs:11.5,fw:700,c:'topt'})+tx(UX+cs*1.5,RY-12,'אקשן',{fs:11.5,fw:700,c:'topt'})+
+     rowLab(UX-16)+tx(UX+cs,RY+cs*4+22,'מה כל צופה אוהב',{fs:12.5,fw:700,c:'lbl'})+tx(UX+cs*2+38,RY+cs*2,'×',{fs:26,fw:700});
+ L.d=`<rect class="hlrow" x="${UX-4}" y="${RY+3*cs-2}" width="${cs*2+8}" height="${cs+4}" rx="6"/><rect class="hlrow" x="${RX-4}" y="${RY+3*cs-2}" width="${cs*5+8}" height="${cs+4}" rx="6"/>`+
+     tx(RX+cs*5+14,RY+3*cs+12,'D = קומדיה + אקשן',{fs:12.5,fw:800,a:'start',c:'topt'})+tx(RX+cs*5+14,RY+3*cs+32,'3+1, 1+2, 1+4 ...',{fs:12,a:'start',c:'mono'});
+ L.e=`<rect class="hlcell" x="${RX+4*cs+2}" y="${RY+2*cs+2}" width="${cs-4}" height="${cs-4}" rx="5"/>`+
+     tx(RX+cs*5+14,RY+2*cs+12,'C = רק קומדיה',{fs:12.5,fw:800,a:'start',c:'tmod'})+tx(RX+cs*5+14,RY+2*cs+32,'C·M5 = 1·1 + 0·3 = 1',{fs:12,a:'start',c:'mono tmod'});
+ SPECS.mf={w:760,h:380,label:'פירוק מטריצה',L};
+})();
+
+/* ============ Collaborative filtering: training the factors from random numbers ============ */
+(function(){
+ const L={},cs=50,ch=32,fmt=v=>v.toFixed(2).replace(/0$/,'').replace(/\.0?$/,'');
+ const P=[[0.2,0.5],[0.3,0.4],[0.7,0.8],[0.4,0.5]],F=[[1.2,3.1,0.3,2.5,0.2],[2.4,1.5,4.4,0.4,1.1]];
+ const E=P.map(p=>F[0].map((_,j)=>+(p[0]*F[0][j]+p[1]*F[1][j]).toFixed(2)));
+ const R=[[3,1,1,3,1],[1,2,4,1,3],[3,1,1,3,1],[4,3,5,4,4]];
+ const PX=40,EX=180,FY=40,EY=130,RX=490;
+ L.a=mat(EX,FY,F,{cs,ch,c:'mhyp',fs:13})+tx(EX-8,FY+16,'F1',{fs:12,a:'end',fw:800,c:'mono thyp'})+tx(EX-8,FY+48,'F2',{fs:12,a:'end',fw:800,c:'mono thyp'})+
+     mat(PX,EY,P,{cs,ch:40,c:'mopt',fs:13})+tx(PX+cs/2,EY-12,'F1',{fs:12,fw:800,c:'mono topt'})+tx(PX+cs*1.5,EY-12,'F2',{fs:12,fw:800,c:'mono topt'})+
+     ['A','B','C','D'].map((u,i)=>tx(PX-12,EY+i*40+20,u,{fs:13,fw:800})).join('')+
+     tx(EX+cs*2.5,FY+ch*2+13,'מתחילים ממספרים אקראיים',{fs:11.5,fw:700,c:'lbl'});
+ L.b=`<rect class="hlrow" x="${PX-3}" y="${EY-3}" width="${cs*2+6}" height="46" rx="6"/><rect class="hlrow" x="${EX-3}" y="${FY-3}" width="${cs+6}" height="${ch*2+6}" rx="6"/>`+
+     mat(EX,EY,[[E[0][0]]],{cs,ch:40,c:'mmod',fs:13})+tx(EX+cs+12,EY+20,'1.2·0.2 + 2.4·0.5 = 1.44',{fs:12,a:'start',c:'mono tmod',fw:700});
+ L.c=mat(EX,EY,E,{cs,ch:40,c:'mmod',fs:12.5})+tx(EX+cs*2.5,EY+40*4+18,'P × F: הניבוי',{fs:12.5,fw:700,c:'tmod'});
+ L.d=mat(RX+70,EY,R,{cs:38,ch:40,c:'mdat',fs:13})+tx(RX+70+95,EY+40*4+18,'R: האמת',{fs:12.5,fw:700,c:'tdat'})+tx(RX+46,EY+80,'↔',{fs:20,fw:700,c:'lbl'})+
+     `<rect class="hlcell" x="${EX+2}" y="${EY+2}" width="${cs-4}" height="36" rx="5"/><rect class="hlcell" x="${RX+72}" y="${EY+2}" width="34" height="36" rx="5"/>`+
+     tx(RX+70+95,FY+14,'(3 − 1.44)² + (1 − 1.37)² + …',{fs:11.5,c:'mono tlos',fw:700})+tx(RX+70+95,FY+38,'= 67.59',{fs:12,c:'mono tlos',fw:800})+tx(RX+70+95,FY+62,'סכום ריבועי הטעויות',{fs:11.5,c:'tlos',fw:700});
+ const ud=(x,y)=>tx(x,y,'↕',{fs:15,fw:800,c:'topt'});
+ L.e=`<rect class="hlrow" x="${EX+cs-3}" y="${FY-3}" width="${cs+6}" height="${ch*2+6}" rx="6"/>`+ud(PX+cs-7,EY+9)+ud(PX+2*cs-7,EY+9)+ud(EX+2*cs-7,FY+9)+ud(EX+2*cs-7,FY+ch+9)+`<rect class="hlcell" x="${EX+cs+2}" y="${EY+2}" width="${cs-4}" height="36" rx="5"/>`+
+     tx(390,326,'הנגזרת אומרת לכל מספר לאן לזוז',{fs:12.5,fw:800,c:'topt'});
+ SPECS.mftrain={w:780,h:342,label:'אימון הפקטורים',L};
+})();
+
+/* ============ NeuMF: two paths over the same user/item ids ============ */
+(function(){
+ const L={};
+ L.a=bx(20,40,150,54,'משתמש u\nembedding',{c:'bdat',fs:13})+bx(20,140,150,54,'פריט i\nembedding',{c:'bdat',fs:13});
+ L.b=bx(250,22,190,62,'GMF\np_u ⊙ q_i',{c:'bhyp',fs:13})+bx(250,150,190,62,'MLP\n[p_u ; q_i] → ReLU…',{c:'bhyp',fs:13})+
+     ar(170,67,248,53,'ink')+ar(170,167,248,60,'ink')+ar(170,67,248,175,'ink')+ar(170,167,248,182,'ink');
+ L.c=bx(520,86,130,62,'שרשור\nLinear',{c:'bmod',fs:13})+ar(440,53,518,105,'ink')+ar(440,181,518,130,'ink')+
+     bx(680,92,62,50,'ŷ_ui',{c:'bopt',fs:15,mono:true})+ar(650,117,678,117,'ink')+tx(711,160,'סיגמואיד',{fs:11.5,c:'lbl'});
+ SPECS.neumf={w:760,h:235,label:'NeuMF',L};
+})();
+
 
 /* ---- hero: mark the four components in the text ---- */
 (function(){const b=document.getElementById('markBtn'),r=document.getElementById('demoReq');if(!b)return;
@@ -643,6 +695,54 @@ function gdReg(xs,ys,w,b,lr,ep){const N=xs.length,hist=[];for(let e=0;e<=ep;e++)
  document.addEventListener('click',e=>{const g=e.target.closest('.gt');if(g){if(cur===g&&Date.now()-at>350)hide();else show(g);}else if(!e.target.closest('.gtip'))hide();});
  window.addEventListener('scroll',hide,{passive:true});
  document.addEventListener('keydown',e=>{if(e.key==='Escape')hide();});
+})();
+
+/* ---- matrix-factorization playground: SGD on the 4×5 Netflix matrix, one cell hidden ---- */
+(function(){
+ const box=document.getElementById('mftool');if(!box)return;
+ const R=[[3,1,1,3,1],[1,2,4,1,3],[3,1,1,3,1],[4,3,5,4,4]],HID=[2,4],U=['A','B','C','D'];
+ const P0=[[0.2,0.5],[0.3,0.4],[0.7,0.8],[0.4,0.5]],F0=[[1.2,3.1,0.3,2.5,0.2],[2.4,1.5,4.4,0.4,1.1]];
+ let k=2,lr=0.03,P,Q,ep,hist,r;
+ function reset(){r=rng(7);ep=0;hist=[];
+  if(k===2){P=P0.map(x=>x.slice());Q=[0,1,2,3,4].map(j=>[F0[0][j],F0[1][j]]);}
+  else{P=U.map(()=>Array.from({length:k},()=>0.2+0.6*r()));Q=R[0].map(()=>Array.from({length:k},()=>0.4+1.2*r()));}
+  hist.push(rmse());draw();}
+ const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0);
+ const pred=(u,i)=>dot(P[u],Q[i]);
+ function rmse(){let s=0,n=0;for(let u=0;u<4;u++)for(let i=0;i<5;i++){if(u===HID[0]&&i===HID[1])continue;s+=(R[u][i]-pred(u,i))**2;n++;}return Math.sqrt(s/n);}
+ function epoch(){const cells=[];for(let u=0;u<4;u++)for(let i=0;i<5;i++)if(!(u===HID[0]&&i===HID[1]))cells.push([u,i]);
+  for(let j=cells.length-1;j>0;j--){const t=Math.floor(r()*(j+1));[cells[j],cells[t]]=[cells[t],cells[j]];}
+  for(const[u,i]of cells){const e=R[u][i]-pred(u,i),pu=P[u].slice();for(let f=0;f<k;f++){P[u][f]+=lr*e*Q[i][f];Q[i][f]+=lr*e*pu[f];}}
+  ep++;hist.push(rmse());}
+ function run(n){for(let t=0;t<n;t++)epoch();draw();}
+ const f2=v=>(Math.round(v*100)/100).toFixed(2);
+ function draw(){
+  const nar=box.clientWidth<560,cs=nar?50:46,ch=34,x0=nar?40:60,y0=40,x1=nar?40:380,y1=nar?y0+ch*4+70:y0,W=nar?310:700;let s='';
+  const E=U.map((_,u)=>R[0].map((_,i)=>pred(u,i)));
+  s+=tx(x0+cs*2.5,16,'R: האמת',{fs:13,fw:800,c:'tdat'})+tx(x1+cs*2.5,y1-24,'P × Q: הניבוי של המודל',{fs:13,fw:800,c:'tmod'});
+  U.forEach((u,i)=>{s+=tx(x0-14,y0+i*ch+ch/2,u,{fs:13,fw:800})+tx(x1-14,y1+i*ch+ch/2,u,{fs:13,fw:800});});
+  ['M1','M2','M3','M4','M5'].forEach((m,j)=>{s+=tx(x0+j*cs+cs/2,y0+ch*4+14,m,{fs:11,c:'mono lbl'})+tx(x1+j*cs+cs/2,y1+ch*4+14,m,{fs:11,c:'mono lbl'});});
+  s+=mat(x0,y0,R.map((row,u)=>row.map((v,i)=>u===HID[0]&&i===HID[1]?'?':v)),{cs,ch,c:'mdat',fs:14});
+  s+=mat(x1,y1,E.map(row=>row.map(f2)),{cs,ch,c:'mmod',fs:12.5});
+  s+=`<rect class="hlcell" x="${x0+HID[1]*cs+2}" y="${y0+HID[0]*ch+2}" width="${cs-4}" height="${ch-4}" rx="5"/><rect class="hlcell" x="${x1+HID[1]*cs+2}" y="${y1+HID[0]*ch+2}" width="${cs-4}" height="${ch-4}" rx="5"/>`;
+  const Pp=plot({x:x0,y:y1+ch*4+40,w:W-x0-20,h:110,xr:[0,Math.max(10,ep)],yr:[0,Math.max(2,hist[0])],xt:[0,Math.max(10,ep)],yt:[0,1,2],xl:'epoch',yl:'RMSE'});
+  s+=Pp.svg+`<polyline class="crv los" points="${hist.map((h,i)=>Pp.X(i).toFixed(1)+','+Pp.Y(h).toFixed(1)).join(' ')}"/>`;
+  const H=y1+ch*4+40+110+30;document.getElementById('mfFig').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="אימון פירוק מטריצה">${s}</svg>`;
+  const h=pred(HID[0],HID[1]),last=hist[hist.length-1];
+  let msg;
+  if(ep===0)msg='עדיין לא התחלנו. הניבויים מהמספרים ההתחלתיים רחוקים מהאמת.';
+  else if(last>0.5&&k===1)msg='עם פקטור אחד בלבד המודל לא מצליח: הטעות נתקעת. אין מספיק ״טעמים״ כדי לתאר את כל הצופים.';
+  else if(last>0.1||(k===2&&last>0.02))msg='הטעות יורדת. המשיכו לאמן.';
+  else if(k===2)msg='שני פקטורים מספיקים כדי לשחזר את הטבלה, והניבוי למשבצת החסרה מגיע ל-1: בדיוק מה ש-C (חובב קומדיה) היה נותן.';
+  else msg='שלושה פקטורים מתאימים לתאים הידועים, אבל יש יותר פרמטרים מכפי שהנתונים קובעים. הניבוי למשבצת החסרה תלוי בהתחלה האקראית ולא חייב לצאת 1. זו התאמת יתר.';
+  document.getElementById('mfStat').innerHTML=`<span>אפוקים: <b>${ep}</b></span><span>RMSE על 19 התאים הידועים: <b>${hist[hist.length-1].toFixed(3)}</b></span><span>ניבוי ל-C על M5: <b>${f2(h)}</b></span><p class="small" style="flex-basis:100%;margin:4px 0 0">${msg}</p>`;
+ }
+ const segK=document.getElementById('mfK');segK.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;segK.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));k=+b.dataset.v;reset();});
+ document.getElementById('mf10').addEventListener('click',()=>run(10));
+ document.getElementById('mf100').addEventListener('click',()=>run(100));
+ document.getElementById('mfReset').addEventListener('click',reset);
+ reset();
+ let lw=box.clientWidth;window.addEventListener('resize',()=>{if(Math.abs(box.clientWidth-lw)>40){lw=box.clientWidth;draw();}});
 })();
 
 initGuide();

@@ -7,14 +7,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Suez+One&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="guide.css?v=ef269cee">
+<link rel="stylesheet" href="guide.css?v=8d96afc2">
 <script data-goatcounter="https://eliorch.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <!-- mta-theme --><link rel="stylesheet" href="../main/site-theme.css"><script src="../main/site-theme.js" data-course="dl" data-fam="db" data-footer="body"></script><!-- /mta-theme -->
 </head>
 <body class="chapter pg-practice">
 <div class="layout">
 <main>
-<header class="chap"><div class="chapmid"><div class="chapnum">פרק 7 מתוך 7</div><div class="chaptitle">חזרה ותרגול</div></div></header>
+<header class="chap"><div class="chapmid"><div class="chapnum">פרק 9 מתוך 9</div><div class="chaptitle">חזרה ותרגול</div></div></header>
 <div class="wrap">
 <section id="traps">
 <h2 id="traps-h">מלכודות נפוצות</h2>
@@ -32,6 +32,14 @@
 <tr><td>להניח שהדאטה ״נקי״</td><td>המודל לומד גם הטיות: סרגלים בתמונות, סטריאוטיפים בטקסט</td><td>להסתכל על הדאטה (<code class="nw">show_batch</code>) ולשאול מי לא מיוצג</td></tr>
 <tr><td>לא למחוק תמונות שבורות</td><td>האימון קורס באמצע</td><td><code class="nw">verify_images</code> ו-<code class="nw">unlink</code></td></tr>
 <tr><td>להריץ תאי <span class="gt" tabindex="0" data-tip="מחברת שמשלבת תאי קוד, טקסט ופלט במסמך אחד.">Jupyter</span> לא לפי הסדר</td><td>משתנה ישן או לא מוגדר בזיכרון הגלובלי</td><td><bdi dir="ltr">Restart &amp</bdi>; <bdi dir="ltr">Run All</bdi> לפני הגשה</td></tr>
+<tr><td>לשכוח <code class="nw">zero_grad()</code></td><td><span class="gt" tabindex="0" data-tip="וקטור הנגזרות החלקיות של ה-Loss לפי כל פרמטר. מראה לאן ה-Loss עולה הכי מהר.">הגרדיאנטים</span> מצטברים בין <span class="gt" tabindex="0" data-tip="קבוצת דוגמאות שמעובדות יחד בצעד אימון אחד.">אצוות</span>, והאימון מתפוצץ</td><td><code>optimizer.zero_grad()</code> בתחילת כל צעד</td></tr>
+<tr><td><span class="gt" tabindex="0" data-tip="הופכת וקטור ציונים להסתברויות חיוביות שסכומן 1.">Softmax</span> בסוף רשת שמאמנים עם <code class="nw">CrossEntropyLoss</code></td><td>ה-<span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span> כבר מפעילה <span class="gt" tabindex="0" data-tip="הופכת וקטור ציונים להסתברויות חיוביות שסכומן 1.">Softmax</span>, וכך הוא מופעל פעמיים</td><td>להוציא את ה-<span class="gt" tabindex="0" data-tip="הופכת וקטור ציונים להסתברויות חיוביות שסכומן 1.">Softmax</span> ולהעביר <span class="gt" tabindex="0" data-tip="הציונים הגולמיים של הרשת, לפני Softmax או סיגמואיד.">logits</span></td></tr>
+<tr><td><span class="gt" tabindex="0" data-tip="התשובה הנכונה שמצורפת לכל דוגמה בדאטה.">תגיות</span> מסוג <bdi dir="ltr">float</bdi> ל-<code class="nw">CrossEntropyLoss</code></td><td>שגיאה: <span class="gt" tabindex="0" data-tip="התשובה הנכונה שמצורפת לכל דוגמה בדאטה.">התגיות</span> חייבות להיות <bdi dir="ltr">int64</bdi></td><td><code class="nw">y.long()</code></td></tr>
+<tr><td>מודל על <span class="gt" tabindex="0" data-tip="מעבד גרפי: מריץ אלפי חישובים במקביל, ולכן מאיץ אימון של רשתות.">GPU</span> וקלט על המעבד</td><td>שגיאת <bdi dir="ltr">device</bdi></td><td><code class="nw">.to(device)</code> גם למודל וגם לכל <span class="gt" tabindex="0" data-tip="קבוצת דוגמאות שמעובדות יחד בצעד אימון אחד.">אצווה</span></td></tr>
+<tr><td>לשכוח <code class="nw">model.eval()</code> בהערכה</td><td><span class="gt" tabindex="0" data-tip="באימון מאפס באקראי חלק מהנוירונים, כדי שהרשת לא תסתמך על נוירון אחד. עוזר נגד overfitting.">Dropout</span> ממשיך לכבות <span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">נוירונים</span>, <span class="gt" tabindex="0" data-tip="מנרמל כל ערוץ לפי הממוצע וסטיית התקן באצווה. מייצב ומאיץ את האימון.">BatchNorm</span> ממשיך להתעדכן</td><td><code class="nw">model.eval()</code> ו-<code class="nw">torch.no_grad()</code></td></tr>
+<tr><td>לשנות חיתוך של <span class="gt" tabindex="0" data-tip="מערך רב-ממדי של PyTorch, שיכול לרוץ על GPU ולעקוב אחרי נגזרות.">טנזור</span> ולחשוב שהמקור לא ישתנה</td><td>חיתוך הוא <span class="gt" tabindex="0" data-tip="מבט בצורה אחרת על אותו זיכרון, בלי העתקה.">view</span> לאותו זיכרון</td><td><code class="nw">clone()</code></td></tr>
+<tr><td>להתייחס לתא ריק במטריצת הדירוגים כאל 0</td><td>״לא ראה״ הוא לא ״שנא״. המודל ילמד שכולם שונאים הכול</td><td>לאמן רק על התאים הידועים</td></tr>
+<tr><td>לסמוך על דמיון שמחושב על 2 פריטים משותפים</td><td>מתאם על שתי נקודות תמיד יוצא 1 או <span class="ltr">−1</span></td><td><span class="gt" tabindex="0" data-tip="הקטנת דמיון שמבוסס על מעט פריטים משותפים, כי הוא לא אמין.">shrinkage</span>, או מינימום של פריטים משותפים</td></tr>
 </table></div>
 </section>
 <section id="practice">
@@ -80,12 +88,28 @@
 <details class="ans"><summary>תשובה</summary><p>טקסט ← <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">טוקנים</span> ← <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">Token IDs</span> ← וקטורי <span class="gt" tabindex="0" data-tip="וקטור מספרים שנלמד באימון ומייצג את המשמעות של טוקן.">embedding</span> ← שכבות <span class="gt" tabindex="0" data-tip="ארכיטקטורה שמבוססת על self-attention. הבסיס של מודלי השפה הגדולים.">Transformer</span> (<span class="gt" tabindex="0" data-tip="מנגנון שבו כל טוקן ״מסתכל״ על כל שאר הטוקנים ושוקל כמה כל אחד חשוב לו.">self-attention</span>) ← התפלגות הסתברויות על אוצר המילים ← בחירת <span class="gt" tabindex="0" data-tip="יחידת טקסט קטנה: מילה, חלק ממילה או סימן פיסוק. כל טוקן מקבל מספר.">הטוקן</span> הבא.</p></details></li>
 <li>למה בדוגמאות של תרגיל 1 הופכים קול ו-<bdi dir="ltr">DNA</bdi> לתמונות?
 <details class="ans"><summary>תשובה</summary><p>זו בחירת <span class="gt" tabindex="0" data-tip="הדרך שבה הופכים את הבעיה למספרים: מה בדיוק נכנס למודל ומה יוצא ממנו.">ייצוג</span>: ברגע שהבעיה מיוצגת כתמונה, אפשר להשתמש במסווגי תמונות חזקים שאומנו מראש, בלי הנדסת תכונות ידנית.</p></details></li>
+<li>ב-<code class="nw">nn.Linear(4, 2)</code>, מה הצורה של <code class="nw">weight</code>, ומה הצורה של הפלט לקלט בצורה <bdi dir="ltr">(3, 4)</bdi>?
+<details class="ans"><summary>תשובה</summary><p><span class="gt" tabindex="0" data-tip="הפרמטרים שהאימון מכוון. כל קלט מוכפל במשקולת שלו.">המשקולות</span> בצורה <bdi dir="ltr">(2, 4)</bdi>, כלומר <code class="nw">[out, in]</code>, והפלט בצורה <bdi dir="ltr">(3, 2)</bdi>. השכבה מחשבת את <span class="ltr">x Wᵀ + b</span>.</p></details></li>
+<li>קוראים ל-<code class="nw">backward()</code> פעמיים בלי <code class="nw">zero_grad</code>, על <span class="ltr">y₁ = 3x</span> ואחר כך על <span class="ltr">y₂ = 5x</span>. מה יהיה ב-<code class="nw">x.grad</code>?
+<details class="ans"><summary>תשובה</summary><p>8. <span class="gt" tabindex="0" data-tip="וקטור הנגזרות החלקיות של ה-Loss לפי כל פרמטר. מראה לאן ה-Loss עולה הכי מהר.">הגרדיאנטים</span> מצטברים: 3 מהקריאה הראשונה ועוד 5 מהשנייה.</p></details></li>
+<li>תמונה בגודל 32×32 עוברת <code class="nw">nn.Conv2d</code> עם <span class="gt" tabindex="0" data-tip="החלון הקטן של שכבת קונבולוציה, שמחפש תבנית בכל מקום בתמונה.">kernel</span> 3, בלי <span class="gt" tabindex="0" data-tip="ריפוד באפסים סביב התמונה, כדי שהקונבולוציה לא תקטין אותה.">padding</span> ועם <span class="gt" tabindex="0" data-tip="בכמה פיקסלים זז החלון בכל צעד.">stride</span> 2. מה גודל הפלט?
+<details class="ans"><summary>תשובה</summary><p>15 על 15:</p><div class="fx">⌊(32 + 0 − 3) / 2⌋ + 1 = 15</div></details></li>
+<li><span class="gt" tabindex="0" data-tip="כתיבת מטריצה גדולה כמכפלה של שתי מטריצות צרות: שורה לכל משתמש ושורה לכל פריט.">בפירוק מטריצה</span>, למה מאמנים רק על התאים הידועים ולא ממלאים את החסרים באפסים?
+<details class="ans"><summary>תשובה</summary><p>כי תא חסר פירושו ״לא יודעים״. אם נמלא אפסים, המודל ילמד לנבא אפס לכל מה שלא נצפה, ואז לא ימליץ על שום דבר חדש.</p></details></li>
+<li>גזור את חוק העדכון של <span class="ltr">q_i</span> <span class="gt" tabindex="0" data-tip="כתיבת מטריצה גדולה כמכפלה של שתי מטריצות צרות: שורה לכל משתמש ושורה לכל פריט.">בפירוק מטריצה</span> עם הטיות. (שאלה בסגנון מבחן מהשקף האחרון)
+<details class="ans"><summary>תשובה</summary><p>האיבר ב-<span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span> שתלוי ב-<span class="ltr">q_i</span> עבור דירוג אחד:</p><div class="fx">(r_ui − μ − b_u − b_i − p_uᵀq_i)² + λ‖q_i‖²</div><p><span class="gt" tabindex="0" data-tip="קצב השינוי של פונקציה. כאן: כמה ה-Loss משתנה כשמזיזים פרמטר אחד מעט.">הנגזרת</span> לפי <span class="ltr">q_i</span>:</p><div class="fx"><bdi dir="ltr">−2</bdi> e_ui p_u + 2λ q_i</div><p>הולכים נגד <span class="gt" tabindex="0" data-tip="קצב השינוי של פונקציה. כאן: כמה ה-Loss משתנה כשמזיזים פרמטר אחד מעט.">הנגזרת</span>, ומכניסים את הקבוע 2 לתוך η:</p><div class="fx">q_i ← q_i + η (e_ui p_u − λ q_i)</div></details></li>
+<li>למה <span class="gt" tabindex="0" data-tip="מתאם בין שני וקטורים אחרי שמחסירים מכל אחד את הממוצע שלו. ערך בין מינוס 1 ל-1.">Pearson</span> בין שני משתמשים יכול להיות 1, ובכל זאת הם שכנים גרועים לניבוי?
+<details class="ans"><summary>תשובה</summary><p>אם יש להם רק שני פריטים משותפים, <span class="gt" tabindex="0" data-tip="מתאם בין שני וקטורים אחרי שמחסירים מכל אחד את הממוצע שלו. ערך בין מינוס 1 ל-1.">Pearson</span> תמיד יוצא 1 או <span class="ltr">−1</span>, בלי קשר לטעם האמיתי. הדמיון לא אמין, ולכן מקטינים אותו לפי מספר הפריטים המשותפים (<span class="gt" tabindex="0" data-tip="הקטנת דמיון שמבוסס על מעט פריטים משותפים, כי הוא לא אמין.">shrinkage</span>).</p></details></li>
+<li>המערכת המליצה על <bdi dir="ltr">a, b, c, d, e</bdi>, והמשתמש אהב את <bdi dir="ltr">b, e</bdi> ו-<bdi dir="ltr">z</bdi>. מה <bdi dir="ltr">Precision@5</bdi> ו-<bdi dir="ltr">Recall@5</bdi>?
+<details class="ans"><summary>תשובה</summary><p>שתי פגיעות מתוך 5 המלצות, ומתוך 3 פריטים אהובים:</p><div class="fx">Precision@5 = 2/5 = 0.4</div><div class="fx">Recall@5 = 2/3 = 0.667</div></details></li>
+<li>מה ההבדל בין <code class="nw">model.eval()</code> לבין <code class="nw">torch.no_grad()</code>? צריך את שניהם?
+<details class="ans"><summary>תשובה</summary><p>כן, הם עושים דברים שונים. <code class="nw">model.eval()</code> משנה את התנהגות השכבות: מכבה <span class="gt" tabindex="0" data-tip="באימון מאפס באקראי חלק מהנוירונים, כדי שהרשת לא תסתמך על נוירון אחד. עוזר נגד overfitting.">Dropout</span> ומקפיא את <span class="gt" tabindex="0" data-tip="מנרמל כל ערוץ לפי הממוצע וסטיית התקן באצווה. מייצב ומאיץ את האימון.">BatchNorm</span>. <code class="nw">torch.no_grad()</code> מפסיק לבנות את <span class="gt" tabindex="0" data-tip="גרף מכוון בלי מעגלים שנבנה בזמן הריצה: העלים הם המשתנים והצמתים הם הפעולות. backward עובר עליו מהסוף להתחלה.">גרף החישוב</span>, וכך חוסך זיכרון וזמן.</p></details></li>
 </ol>
 </section>
-<div class="pager"><a class="prev" href="pytorch.html"><span>הקודם</span>6 · PyTorch</a></div>
+<div class="pager"><a class="prev" href="cf.html"><span>הקודם</span>8 · סינון שיתופי ומערכות המלצה</a></div>
 </div>
 </main>
 </div>
-<script src="guide.js?v=f80e80d8"></script>
+<script src="guide.js?v=4e864cb6"></script>
 </body>
 </html>
