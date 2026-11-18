@@ -33,6 +33,24 @@
 <div class="step" data-spec="gen" data-show="abcd" data-cap="אפשרות 3: גבול גמיש מאוד"><div class="sh">צעד 4: משפחה גמישה מאוד</div><p>גבול מפותל שעוקף כל נקודה מקבל 0 שגיאות באימון. אבל הוא שינן את <span class="gt" tabindex="0" data-tip="סטייה אקראית בדאטה שאינה חלק מהתבנית שרוצים ללמוד.">הרעש</span>: <strong><span class="gt" tabindex="0" data-tip="המודל משנן את דוגמאות האימון, כולל הרעש, ונכשל על דוגמאות חדשות.">Overfitting</span></strong>.</p></div>
 <div class="step" data-spec="gen" data-show="abcde" data-cap="המבחן האמיתי: בתים חדשים"><div class="sh">צעד 5: בדיקה על דוגמאות חדשות</div><p>מגיעים שני בתים חדשים, ליד המקומות שבהם הגבול המפותל ״עיקם״ את עצמו. האליפסה מסווגת אותם נכון; הגבול המפותל טועה בשניהם. לכן בודקים על דאטה נפרד: אימון, <span class="gt" tabindex="0" data-tip="חלק מהדאטה שלא מאמנים עליו. בודקים עליו את המודל בזמן הפיתוח.">ולידציה</span> ובדיקה.</p></div>
 </div></div></div>
+<h3>אותו רעיון <span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא מספר ממשי, למשל מחיר.">ברגרסיה</span>: פולינום ממעלה גבוהה (מחברת <bdi dir="ltr">GDFromScratch</bdi>)</h3>
+<p>במחברת של הקורס יש הדגמה להעשרה, ״לא נלמד בצורה מסודרת״. מייצרים 150 נקודות מפולינום ממעלה 3, ומוסיפים <span class="gt" tabindex="0" data-tip="סטייה אקראית בדאטה שאינה חלק מהתבנית שרוצים ללמוד.">רעש</span>:</p>
+<div class="fx">y = 5 + 1.5x − 4x² + 2x³ + noise</div>
+<p>ואז מתאימים להן פולינומים ממעלות שונות. פולינום ממעלה <bdi dir="ltr">d</bdi> הוא עדיין <span class="gt" tabindex="0" data-tip="רגרסיה שבה הפונקציה היא ישר: w·x + b.">רגרסיה לינארית</span>: מוסיפים תכונות <span class="ltr">x², x³, …, x^d</span> ומתאימים להן <span class="gt" tabindex="0" data-tip="הפרמטרים שהאימון מכוון. כל קלט מוכפל במשקולת שלו.">משקולות</span>, כמו ב-8 התכונות של <bdi dir="ltr">California housing</bdi>. כל מעלה היא <span class="gt" tabindex="0" data-tip="כל הפונקציות שהמודל יכול לייצג: אותה נוסחה עם כל ערכי המשקולות האפשריים. האימון בוחר מתוכן פונקציה אחת.">משפחת היפותזות</span> אחרת, וזו בדיוק הבחירה בין ישר, אליפסה וגבול מפותל מהשאלה הקודמת.</p>
+<div class="ex stepped">
+<div class="q"><b>השאלה</b>איזו מעלה כדאי לבחור: <bdi dir="ltr">1, 2, 3</bdi> או 10? מודדים <span class="gt" tabindex="0" data-tip="Mean Squared Error: ממוצע ריבועי ההפרשים בין הניבוי לתשובה הנכונה.">MSE</span> על נקודות האימון, ועל 1,000 נקודות חדשות מאותו מקור (בדיקה).</div>
+<div class="exgrid">
+<div class="exfig">
+<figure class="fig livefig"><div class="mainfig"></div><figcaption class="livecap"></figcaption></figure>
+<div class="stepbar"><button class="btn ghost prevBtn" type="button">הקודם</button><span class="prog"></span><button class="btn nextBtn" type="button">השלב הבא</button><button class="btn ghost allBtn" type="button">לפתרון המלא</button></div></div>
+<div class="steps">
+<div class="step" data-spec="poly" data-show="a" data-cap="הדאטה והפולינום האמיתי"><div class="sh">צעד 1: הדאטה</div><p>150 נקודות, והקו המקווקו הוא הפולינום שממנו הן נוצרו. המודל לא רואה אותו, רק את הנקודות.</p></div>
+<div class="step" data-spec="poly" data-show="ab" data-cap="מעלה 1: ישר"><div class="sh">צעד 2: ישר</div><p>ישר לא יכול להתעקם. הטעות גבוהה גם באימון וגם בבדיקה, וזה <span class="gt" tabindex="0" data-tip="המודל פשוט מדי, ולא מצליח ללמוד את התבנית אפילו על דאטה האימון.">underfitting</span>.</p></div>
+<div class="step" data-spec="poly" data-show="abc" data-cap="מעלה 2: פרבולה"><div class="sh">צעד 3: פרבולה</div><p>טוב יותר, אבל עדיין חסרה גמישות: <span class="gt" tabindex="0" data-tip="Mean Squared Error: ממוצע ריבועי ההפרשים בין הניבוי לתשובה הנכונה.">MSE</span> של 68.5. במחברת יוצאים המקדמים:</p><div class="fx">6.36 + 12.36x − 4.32x²</div></div>
+<div class="step" data-spec="poly" data-show="abcd" data-cap="מעלה 3: בדיוק המשפחה הנכונה"><div class="sh">צעד 4: מעלה 3</div><p>המשפחה מתאימה למקור, והמקדמים כמעט זהים לאמיתיים:</p><div class="fx">5.00 + 1.43x − 3.98x² + 2.02x³</div><p>ה-<span class="gt" tabindex="0" data-tip="Mean Squared Error: ממוצע ריבועי ההפרשים בין הניבוי לתשובה הנכונה.">MSE</span> יורד לכ-2.3, קרוב לשונות של <span class="gt" tabindex="0" data-tip="סטייה אקראית בדאטה שאינה חלק מהתבנית שרוצים ללמוד.">הרעש</span> עצמו:</p><div class="fx">1.5² = 2.25</div></div>
+<div class="step" data-spec="poly" data-show="abcde" data-cap="מעלה 10: גמיש מדי"><div class="sh">צעד 5: מעלה 10</div><p>על האימון הטעות עוד יותר קטנה (2.08), כי יש יותר פרמטרים שמתאימים גם <span class="gt" tabindex="0" data-tip="סטייה אקראית בדאטה שאינה חלק מהתבנית שרוצים ללמוד.">לרעש</span>. אבל על נקודות חדשות היא עולה ל-2.56. זה <span class="gt" tabindex="0" data-tip="המודל משנן את דוגמאות האימון, כולל הרעש, ונכשל על דוגמאות חדשות.">overfitting</span>. המודל למד את <span class="gt" tabindex="0" data-tip="סטייה אקראית בדאטה שאינה חלק מהתבנית שרוצים ללמוד.">הרעש</span> של המדגם. בקצוות של התחום הוא כבר מתחיל להתפתל.</p></div>
+</div></div></div>
+<p class="small">את המקדמים של מעלה 2 ו-3 העתקנו מהפלט של המחברת, וקיבלנו אותם גם בהרצה שלנו. את ה-<span class="gt" tabindex="0" data-tip="Mean Squared Error: ממוצע ריבועי ההפרשים בין הניבוי לתשובה הנכונה.">MSE</span> על נקודות חדשות חישבנו בעצמנו, כי במחברת אין קבוצת בדיקה.</p>
 <div class="tbl"><table>
 <tr><th>חלק מהדאטה</th><th>בשביל מה</th><th>מתי נוגעים בו</th></tr>
 <tr><td>Training</td><td>האלגוריתם מעדכן לפיו את <span class="gt" tabindex="0" data-tip="הפרמטרים שהאימון מכוון. כל קלט מוכפל במשקולת שלו.">המשקולות</span></td><td>כל <span class="gt" tabindex="0" data-tip="מעבר אחד על כל הדאטה בלולאת האימון.">epoch</span></td></tr>
@@ -72,6 +90,6 @@
 </div>
 </main>
 </div>
-<script src="guide.js?v=4e864cb6"></script>
+<script src="guide.js?v=33d5b4f1"></script>
 </body>
 </html>
