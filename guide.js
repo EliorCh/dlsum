@@ -633,7 +633,7 @@ function gdReg(xs,ys,w,b,lr,ep){const N=xs.length,hist=[];for(let e=0;e<=ep;e++)
  const fmt=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/[A-Za-z][A-Za-z0-9 .,'’\-_()\/=+*σ⁻ᶻ]*[A-Za-z0-9)ᶻ]|[A-Za-z]/g,m=>`<bdi dir="ltr">${m}</bdi>`);
  function show(el){if(cur!==el)at=Date.now();cur=el;tip.innerHTML=`<b>${el.textContent}</b> ${fmt(el.dataset.tip)}`;tip.hidden=false;
    const r=el.getBoundingClientRect(),w=Math.min(320,window.innerWidth-24);tip.style.maxWidth=w+'px';
-   const tw=tip.offsetWidth,th=tip.offsetHeight;let x=r.left+r.width/2-tw/2;x=Math.max(12,Math.min(x,window.innerWidth-tw-12));
+   const tw=tip.offsetWidth,th=tip.offsetHeight;const vw=window.innerWidth,rb=(function(){var m=document.querySelector('.mta-menu'),q=m&&m.getBoundingClientRect();return q&&q.width&&q.left>r.right?Math.min(q.left,vw):vw})();let x=r.left+r.width/2-tw/2;x=Math.max(12,Math.min(x,rb-tw-12));
    let y=r.top-th-8;tip.classList.toggle('below',y<8);if(y<8)y=r.bottom+8;
    tip.style.left=x+'px';tip.style.top=y+'px';}
  function hide(){cur=null;tip.hidden=true;}

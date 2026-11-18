@@ -343,7 +343,7 @@ pre code{white-space:inherit!important}
 /* ===== term tooltips ===== */
 .gt{border-bottom:1.5px dotted var(--ent);cursor:help;text-decoration:none}
 .gt:hover,.gt:focus-visible{background:var(--ent-bg);border-bottom-style:solid;outline:none;border-radius:3px}
-.gtip{position:fixed;z-index:50;background:var(--ink);color:var(--paper);font-size:.9rem;line-height:1.5;padding:8px 12px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.25);text-align:right;pointer-events:none}
+.gtip{position:fixed;z-index:9999;background:var(--ink);color:var(--paper);font-size:.9rem;line-height:1.5;padding:8px 12px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.25);text-align:right;pointer-events:none}
 .gtip b{color:var(--paper);margin-inline-end:.3em}
 .gtip[hidden]{display:none!important}
 /* perceptron tool */
