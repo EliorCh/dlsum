@@ -385,3 +385,9 @@ code.nw{white-space:nowrap!important;overflow-wrap:normal!important}
 
 svg .hlrow{fill:none;stroke:var(--opt);stroke-width:2.6}
 svg .hlcell{fill:none;stroke:var(--mod);stroke-width:3}
+
+/* ===== "what the lecturer stressed" (same teal as .lect in main/site-theme.css) ===== */
+.box.lect{border-inline-start-color:#0f766e;background:#f0fdfa}
+.box.lect h4{color:#0f766e}
+.box.lect h4::before{content:"";display:inline-block;width:.55em;height:.55em;border-radius:50%;background:currentColor;margin-inline-end:.45em;vertical-align:.08em}
+.box.lect ul{margin:.3em 0 0;padding-inline-start:1.2em}.box.lect li{margin:.25em 0}
