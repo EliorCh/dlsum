@@ -28,6 +28,7 @@
 <div class="box rule"><h4>הרעיון המרכזי</h4><p>משתמשים שהסכימו בעבר כנראה יסכימו גם בעתיד, ופריטים שאותם אנשים אהבו קשורים זה לזה. המערכת לא צריכה לדעת שום דבר על תוכן הסרט: לא הז׳אנר, לא הבמאי ולא השחקנים. היא לומדת רק מתוך מי דירג מה.</p></div>
 
 <h3 id="s1">הבעיה: מטריצה עם חורים</h3>
+<p class="small">לפי שקף 26 יש לבעיה כמה גרסאות של מטרה: לנבא דירוג (<span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא מספר ממשי, למשל מחיר.">רגרסיה</span>), להפיק רשימה מדורגת של <bdi dir="ltr">K</bdi> פריטים (<bdi dir="ltr">top-K</bdi>), או לנבא את הפריט הבא בתוך <bdi dir="ltr">session</bdi>.</p>
 <p>הנתונים הם מטריצה <bdi dir="ltr">R</bdi>: שורה לכל משתמש, עמודה לכל פריט, ובכל תא הדירוג. רוב התאים ריקים, כי כל משתמש ראה רק מעט מהפריטים. המשימה היא לנבא את התאים החסרים, ולהמליץ על הפריטים שהניבוי שלהם הכי גבוה.</p>
 <div class="tbl"><table data-nogloss>
 <tr><th></th><th>פריט 1</th><th>פריט 2</th><th>פריט 3</th><th>פריט 4</th><th>פריט 5</th></tr>
@@ -130,6 +131,7 @@
 <h3 id="s5"><span class="gt" tabindex="0" data-tip="כתיבת מטריצה גדולה כמכפלה של שתי מטריצות צרות: שורה לכל משתמש ושורה לכל פריט.">פירוק מטריצה</span> עם הטיות (<bdi dir="ltr">Biased MF</bdi>)</h3>
 <p>יש משתמשים שנותנים לכולם ציון גבוה, ויש סרטים שכולם אוהבים. לכן מוסיפים לניבוי שלושה איברים: הממוצע הכללי μ, <span class="gt" tabindex="0" data-tip="המספר b שמתווסף לסכום המשוקלל. מזיז את קו ההחלטה כך שלא חייב לעבור בראשית.">הטיה</span> של המשתמש <span class="ltr">b_u</span>, <span class="gt" tabindex="0" data-tip="המספר b שמתווסף לסכום המשוקלל. מזיז את קו ההחלטה כך שלא חייב לעבור בראשית.">והטיה</span> של הפריט <span class="ltr">b_i</span>. המכפלה של <span class="gt" tabindex="0" data-tip="מספרים שהמודל לומד לכל משתמש ולכל פריט. הם מסבירים את הדירוגים, גם אם אין להם שם.">הפקטורים</span> מסבירה רק את מה שנשאר:</p>
 <div class="fx">r̂_ui = μ + b_u + b_i + p_uᵀ q_i</div>
+<p class="small">בגרסה המעודכנת של המצגת (שקף 40) נוספה הערה בעברית: זו ״נוסחת החיזוי הקלאסית של פירוק מטריצות עם הטיות, שהתפרסמה במסגרת אתגר נטפליקס״. ה-<span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span> שמתחתיה מסומנת שם כ״פונקציית ההפסד לאימון מודל פירוק מטריצות עם הטיות״ (<bdi dir="ltr">Regularized</bdi> <span class="gt" tabindex="0" data-tip="מודדת כמה הפלט של המודל רחוק מהתשובה הנכונה. האימון מנסה להקטין אותה.">Loss Function</span>).</p>
 <p>את הפרמטרים לומדים על התאים הידועים בלבד (Ω), עם <span class="gt" tabindex="0" data-tip="עונש ב-Loss על פרמטרים גדולים, כדי למנוע התאמת יתר.">רגולריזציה</span> שמענישה מספרים גדולים, כדי למנוע <span class="gt" tabindex="0" data-tip="overfitting: המודל מתאים לנתוני האימון ולא מכליל לנתונים חדשים.">התאמת יתר</span>:</p>
 <div class="fx">L = Σ_(u,i)∈Ω (r_ui − r̂_ui)² + λ (‖p_u‖² + ‖q_i‖² + b_u² + b_i²)</div>
 <p>הניבוי בלי <span class="gt" tabindex="0" data-tip="מספרים שהמודל לומד לכל משתמש ולכל פריט. הם מסבירים את הדירוגים, גם אם אין להם שם.">הפקטורים</span>, <span class="ltr">μ + b_u + b_i</span>, נקרא <strong><span class="gt" tabindex="0" data-tip="ניבוי פשוט שתמיד משווים אליו. כאן: ממוצע כללי ועוד הטיה של המשתמש ושל הפריט.">baseline</span></strong>. הוא כבר נותן תוצאה טובה, ותמיד משווים אליו.</p>
@@ -190,6 +192,44 @@
 <h3 id="s8">פריט-פריט, ומדדי דמיון</h3>
 <p>אותו רעיון, הפוך: כדי לנבא את הדירוג של <bdi dir="ltr">u</bdi> לפריט <bdi dir="ltr">i</bdi>, מסתכלים על פריטים שדומים ל-<bdi dir="ltr">i</bdi> ש-<bdi dir="ltr">u</bdi> כבר דירג. בפועל משתמשים בזה יותר מבמשתמש-משתמש: פריטים משתנים לאט יותר ממשתמשים, ולכן אפשר לחשב את הדמיון ביניהם מראש, פעם ביום. זה ה-״לקוחות שקנו את <bdi dir="ltr">X</bdi> קנו גם את <bdi dir="ltr">Y</bdi>״ של <bdi dir="ltr">Amazon</bdi> משנת 2003.</p>
 <div class="fx">r̂_ui = Σ_j s_ij r_uj / Σ_j |s_ij|</div>
+<p>בגרסה המעודכנת של המצגת (שקף 31) הנוסחה של פריט-פריט כתובה עם המשתמש <bdi dir="ltr">x</bdi>. <span class="ltr">N(i;x)</span> היא קבוצת הפריטים ש-<bdi dir="ltr">x</bdi> דירג ושדומים ל-<bdi dir="ltr">i</bdi>, ו-<span class="ltr">s_ij</span> הוא הדמיון בין הפריטים <bdi dir="ltr">i</bdi> ו-<bdi dir="ltr">j</bdi>. ובמילים של השקף: ״דרג את <bdi dir="ltr">i</bdi> כממוצע של הדירוגים שלי לפריטים אחרים, משוקלל לפי הדמיון שלהם ל-<bdi dir="ltr">i</bdi>״.</p>
+<div class="fx">r_xi = Σ_j∈N(i;x) s_ij · r_xj / Σ_j∈N(i;x) s_ij</div>
+<p class="small">בשקף 31 המכנה הוא סכום הדמיונות עצמם, ובשקף 34 סכום הערכים המוחלטים. כשמשאירים רק דמיונות חיוביים, כמו שהשקף ממליץ, אין הבדל.</p>
+
+<div class="ex">
+<div class="q"><b>דוגמה מחושבת: טבלת הספרים (שקף 32)</b>ארבעה קוראים דירגו חמישה ספרים. סימן שאלה הוא דירוג חסר. מה ידרג <bdi dir="ltr">John</bdi> את ״גאווה ודעה קדומה״?
+<div class="tbl"><table data-nogloss>
+<tr><th>ספר</th><th>John</th><th>Bob</th><th>Alice</th><th>Peter</th></tr>
+<tr><td>LOTR</td><td class="c">4</td><td class="c">?</td><td class="c">5</td><td class="c">4</td></tr>
+<tr><td>Pride and Prejudice</td><td class="c">?</td><td class="c">?</td><td class="c">5</td><td class="c">3</td></tr>
+<tr><td>Frankenstein</td><td class="c">5</td><td class="c">4</td><td class="c">?</td><td class="c">5</td></tr>
+<tr><td>The Hunchback of Notre-Dame</td><td class="c">2</td><td class="c">3</td><td class="c">5</td><td class="c">?</td></tr>
+<tr><td>The Count of Monte Cristo</td><td class="c">5</td><td class="c">?</td><td class="c">4</td><td class="c">4</td></tr>
+</table></div></div>
+<div class="box warn"><h4>שימו לב: השקף נמצא בחלק של פריט-פריט, אבל הנוסחה בו היא משתמש-משתמש</h4><p>בשקף 32 <span class="ltr">s_ik</span> מוגדר כ-<span class="gt" tabindex="0" data-tip="הקוסינוס של הזווית בין שני וקטורים: המכפלה הסקלרית חלקי מכפלת האורכים.">cosine</span> בין <strong>המשתמשים</strong> <bdi dir="ltr">i</bdi> ו-<bdi dir="ltr">k</bdi>, והחצים יוצאים מהעמודה של <bdi dir="ltr">Peter</bdi>. לכן כאן נחשב את הדוגמה בשתי הדרכים. השקף עצמו לא נותן תוצאה מספרית, את המספרים חישבנו בעצמנו.</p></div>
+<div class="fx">r̂_ij = Σ_k∈N(j) s_ik · r_kj / Σ_k∈N(j) |s_ik|</div>
+<p><strong>דרך 1: משתמש-משתמש, כמו הנוסחה בשקף.</strong> השכנים של <bdi dir="ltr">John</bdi> שדירגו את הספר הם <bdi dir="ltr">Alice</bdi> ו-<bdi dir="ltr">Peter</bdi> (גם <bdi dir="ltr">Bob</bdi> לא דירג אותו). מחשבים <span class="gt" tabindex="0" data-tip="הקוסינוס של הזווית בין שני וקטורים: המכפלה הסקלרית חלקי מכפלת האורכים.">cosine</span> רק על הספרים שגם <bdi dir="ltr">John</bdi> וגם השכן דירגו.</p>
+<p><bdi dir="ltr">John</bdi> ו-<bdi dir="ltr">Alice</bdi> דירגו שניהם את <bdi dir="ltr">LOTR</bdi>, את <bdi dir="ltr">Hunchback</bdi> ואת <bdi dir="ltr">Monte Cristo</bdi>:</p>
+<div class="fx">John = <bdi dir="ltr">(4, 2, 5)</bdi>,  Alice = <bdi dir="ltr">(5, 5, 4)</bdi></div>
+<div class="fx">cos = (4·5 + 2·5 + 5·4) / (√45 · √66) = 50 / 54.50 = 0.918</div>
+<p><bdi dir="ltr">John</bdi> ו-<bdi dir="ltr">Peter</bdi> דירגו שניהם את <bdi dir="ltr">LOTR</bdi>, את <bdi dir="ltr">Frankenstein</bdi> ואת <bdi dir="ltr">Monte Cristo</bdi>:</p>
+<div class="fx">John = <bdi dir="ltr">(4, 5, 5)</bdi>,  Peter = <bdi dir="ltr">(4, 5, 4)</bdi></div>
+<div class="fx">cos = (4·4 + 5·5 + 5·4) / (√66 · √57) = 61 / 61.34 = 0.994</div>
+<p>הניבוי הוא ממוצע הדירוגים של השכנים לספר, <bdi dir="ltr">Alice</bdi> נתנה 5 ו-<bdi dir="ltr">Peter</bdi> נתן 3, משוקלל לפי הדמיון:</p>
+<div class="fx">r̂ = (0.918·5 + 0.994·3) / (0.918 + 0.994) = 7.57 / 1.912 = 3.96</div>
+<p><bdi dir="ltr">Peter</bdi> דומה ל-<bdi dir="ltr">John</bdi> קצת יותר, ולכן הניבוי קרוב יותר ל-3 שלו מאשר ל-5 של <bdi dir="ltr">Alice</bdi>.</p>
+<p><strong>דרך 2: פריט-פריט, כמו בשקף 31.</strong> מחשבים את הדמיון בין ״גאווה ודעה קדומה״ לכל ספר ש-<bdi dir="ltr">John</bdi> דירג, לפי הקוראים שדירגו את שניהם:</p>
+<div class="tbl"><table data-nogloss>
+<tr><th>ספר ש-<bdi dir="ltr">John</bdi> דירג</th><th>הדירוג של <bdi dir="ltr">John</bdi></th><th>קוראים משותפים</th><th>cosine</th></tr>
+<tr><td>LOTR</td><td class="c">4</td><td>Alice, Peter</td><td class="c">0.991</td></tr>
+<tr><td>Frankenstein</td><td class="c">5</td><td><bdi dir="ltr">Peter</bdi> בלבד</td><td class="c">1.000</td></tr>
+<tr><td>Hunchback</td><td class="c">2</td><td><bdi dir="ltr">Alice</bdi> בלבד</td><td class="c">1.000</td></tr>
+<tr><td>Monte Cristo</td><td class="c">5</td><td>Alice, Peter</td><td class="c">0.970</td></tr>
+</table></div>
+<div class="fx">r̂ = (0.991·4 + 1·5 + 1·2 + 0.970·5) / (0.991 + 1 + 1 + 0.970) = 15.81 / 3.961 = 3.99</div>
+<p>שתי הדרכים נותנות כמעט 4. אבל שימו לב לשתי השורות עם קורא משותף אחד בלבד: <span class="gt" tabindex="0" data-tip="הקוסינוס של הזווית בין שני וקטורים: המכפלה הסקלרית חלקי מכפלת האורכים.">cosine</span> בין וקטורים באורך 1 הוא תמיד 1, בלי קשר לדירוגים. זו אותה בעיה כמו <span class="gt" tabindex="0" data-tip="מתאם בין שני וקטורים אחרי שמחסירים מכל אחד את הממוצע שלו. ערך בין מינוס 1 ל-1.">Pearson</span> על שני פריטים בדוגמה הקודמת, ובגללה עושים <span class="gt" tabindex="0" data-tip="הקטנת דמיון שמבוסס על מעט פריטים משותפים, כי הוא לא אמין.">shrinkage</span>. גם ניבוי ל-<bdi dir="ltr">Bob</bdi> על אותו ספר ייתקל בזה: יש לו רק ספר משותף אחד עם <bdi dir="ltr">Alice</bdi> ואחד עם <bdi dir="ltr">Peter</bdi>, ולכן שני הדמיונות יוצאים 1.</p>
+</div>
+
 <p>הדמיון בין פריטים מחושב ב-<span class="gt" tabindex="0" data-tip="cosine בין פריטים, אחרי שמחסירים מכל דירוג את הממוצע של המשתמש שנתן אותו.">adjusted cosine</span>. מחסירים מכל דירוג את הממוצע של המשתמש שנתן אותו, ורק אז מחשבים <span class="gt" tabindex="0" data-tip="הקוסינוס של הזווית בין שני וקטורים: המכפלה הסקלרית חלקי מכפלת האורכים.">cosine</span>.</p>
 <div class="tbl"><table>
 <tr><th>מדד</th><th>מתי</th></tr>
