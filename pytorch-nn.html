@@ -18,7 +18,7 @@
 <div class="wrap">
 <section id="pytorch-nn">
 <span class="lesson">הרצאה 18.11 · מצגת <bdi dir="ltr">PyTorch</bdi>, שקפים <bdi dir="ltr">34–65</bdi></span>
-<h2>בניית רשת ואימון ב-<span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span></h2>
+<h2 class="chapter">בניית רשת ואימון ב-<span class="gt" tabindex="0" data-tip="ספריית Python לרשתות נוירונים: טנזורים וגזירה אוטומטית.">PyTorch</span></h2>
 <p><span class="gt" tabindex="0" data-tip="המנגנון של PyTorch שמחשב נגזרות אוטומטית מתוך החישוב שבוצע.">autograd</span> נותן את <span class="gt" tabindex="0" data-tip="קצב השינוי של פונקציה. כאן: כמה ה-Loss משתנה כשמזיזים פרמטר אחד מעט.">הנגזרות</span>. כדי לאמן רשת אמיתית צריך עוד חמישה חלקים: מודל (<code class="nw">nn.Module</code>), פונקציית <span class="gt" tabindex="0" data-tip="פונקציית הטעות: מספר שמודד כמה המודל טועה. את המספר הזה האימון מקטין.">Loss</span>, <span class="gt" tabindex="0" data-tip="האובייקט שמעדכן את המשקולות לפי הגרדיאנטים.">אופטימייזר</span>, צינור נתונים (<code class="nw">Dataset</code> ו-<code class="nw">DataLoader</code>), ולולאה שמחברת את כולם. אלה בדיוק ארבעת הרכיבים של מודל הלמידה מ<a href="basics.html#model">הפרק הראשון</a>, הפעם כקוד.</p>
 <div class="tbl"><table>
 <tr><th>רכיב במודל הלמידה</th><th>ב-<bdi dir="ltr">PyTorch</bdi></th></tr>
