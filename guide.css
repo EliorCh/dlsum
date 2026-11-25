@@ -391,3 +391,15 @@ svg .hlcell{fill:none;stroke:var(--mod);stroke-width:3}
 .box.lect h4{color:#0f766e}
 .box.lect h4::before{content:"";display:inline-block;width:.55em;height:.55em;border-radius:50%;background:currentColor;margin-inline-end:.45em;vertical-align:.08em}
 .box.lect ul{margin:.3em 0 0;padding-inline-start:1.2em}.box.lect li{margin:.25em 0}
+
+/* ===== ratings coloured like the course slides: 1 red, 2 orange, 3 yellow, 4 green, 5 blue ===== */
+:root{--rt1:#f4978a;--rt2:#f9c592;--rt3:#f8ec8f;--rt4:#ade29a;--rt5:#8cc8f3}
+table.ratings td.rt{color:#1c1917;font-weight:800}
+table.ratings td.rt1,svg .mat.rtm .cell.rt1{background:var(--rt1);fill:var(--rt1)}
+table.ratings td.rt2,svg .mat.rtm .cell.rt2{background:var(--rt2);fill:var(--rt2)}
+table.ratings td.rt3,svg .mat.rtm .cell.rt3{background:var(--rt3);fill:var(--rt3)}
+table.ratings td.rt4,svg .mat.rtm .cell.rt4{background:var(--rt4);fill:var(--rt4)}
+table.ratings td.rt5,svg .mat.rtm .cell.rt5{background:var(--rt5);fill:var(--rt5)}
+table.ratings td.rtq{background:var(--surface);color:var(--muted)}
+svg .mat.rtm .cell[class*="rt"]{stroke:rgba(0,0,0,.18)}
+svg .mat.rtm text{fill:#1c1917;font-weight:700}

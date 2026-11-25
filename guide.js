@@ -28,12 +28,13 @@ function bx(x,y,w,h,label,o={}){
   return `<g class="bx ${o.c||'bk'}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r??7}"/>${lines.map((s,i)=>tx(x+w/2,y0+i*lh,s,{fs,fw:o.fw||700,c:o.mono?'mono':''})).join('')}</g>`;
 }
 function circ(x,y,r,c='nd',label='',o={}){return `<g class="${c}"><circle cx="${x}" cy="${y}" r="${r}"/>${label?tx(x,y,label,{fs:o.fs||14,fw:700}):''}</g>`;}
-/* matrix of values; o = {cs:cell, c:class, hl:Set('i,j'), lab, fs, dark:fn(v)->bool} */
+/* matrix of values; o = {cs:cell, c:class, hl:Set('i,j'), lab, fs, dark:fn(v)->bool, cc:fn(v)->extra cell class} */
+const RTC=v=>{const n=Math.round(+v);return isFinite(n)&&String(v).trim()!==''&&n>=1&&n<=5?'rt'+n:'';};
 function mat(x,y,rows,o={}){
   const cs=o.cs||34,ch=o.ch||cs,fs=o.fs||13;let s='';
   rows.forEach((r,i)=>r.forEach((v,j)=>{
     const dark=o.dark?o.dark(v,i,j):false, hl=o.hl&&o.hl.has(i+','+j);
-    s+=`<rect class="cell${dark?' dk':''}${hl?' hl':''}" x="${x+j*cs}" y="${y+i*ch}" width="${cs}" height="${ch}"/>`;
+    s+=`<rect class="cell${dark?' dk':''}${hl?' hl':''}${o.cc?' '+o.cc(v,i,j):''}" x="${x+j*cs}" y="${y+i*ch}" width="${cs}" height="${ch}"/>`;
     if(v!==''&&v!==null&&!o.novals)s+=tx(x+j*cs+cs/2,y+i*ch+ch/2,String(v),{fs,c:'mono'+(dark?' inv':'')});
   }));
   if(o.br){const w=rows[0].length*cs,h=rows.length*ch;s+=`<path class="brk" d="M${x-3},${y} h-5 v${h} h5 M${x+w+3},${y} h5 v${h} h-5"/>`;}
@@ -568,7 +569,7 @@ function gdReg(xs,ys,w,b,lr,ep){const N=xs.length,hist=[];for(let e=0;e<=ep;e++)
  const L={},cs=44,R=[[3,1,1,3,1],[1,2,4,1,3],[3,1,1,3,1],[4,3,5,4,4]];
  const RX=330,RY=150,UX=150,MY=40,users=['A','B','C','D'],films=['M1','M2','M3','M4','M5'];
  const rowLab=(x)=>users.map((u,i)=>tx(x,RY+i*cs+cs/2,u,{fs:14,fw:800})).join('');
- L.a=mat(RX,RY,R,{cs,c:'mdat',fs:15})+films.map((f,j)=>tx(RX+j*cs+cs/2,RY-12,f,{fs:12,fw:800,c:'mono tdat'})).join('')+rowLab(RX-16)+
+ L.a=mat(RX,RY,R,{cs,c:'mdat rtm',fs:15,cc:RTC})+films.map((f,j)=>tx(RX+j*cs+cs/2,RY-12,f,{fs:12,fw:800,c:'mono tdat'})).join('')+rowLab(RX-16)+
      tx(RX+cs*2.5,RY+cs*4+22,'R: הדירוגים (4 צופים × 5 סרטים)',{fs:13,fw:700,c:'lbl'});
  L.b=mat(RX,MY,[[3,1,1,3,1],[1,2,4,1,3]],{cs,ch:34,c:'mhyp',fs:14})+tx(RX-10,MY+17,'קומדיה',{fs:12.5,fw:700,a:'end',c:'thyp'})+tx(RX-10,MY+51,'אקשן',{fs:12.5,fw:700,a:'end',c:'thyp'})+
      tx(RX+cs*5+14,MY+34,'כמה כל סרט',{fs:12,a:'start',c:'lbl'})+tx(RX+cs*5+14,MY+52,'קומי / אקשן',{fs:12,a:'start',c:'lbl'});
@@ -595,7 +596,7 @@ function gdReg(xs,ys,w,b,lr,ep){const N=xs.length,hist=[];for(let e=0;e<=ep;e++)
  L.b=`<rect class="hlrow" x="${PX-3}" y="${EY-3}" width="${cs*2+6}" height="46" rx="6"/><rect class="hlrow" x="${EX-3}" y="${FY-3}" width="${cs+6}" height="${ch*2+6}" rx="6"/>`+
      mat(EX,EY,[[E[0][0]]],{cs,ch:40,c:'mmod',fs:13})+tx(EX+cs+12,EY+20,'1.2·0.2 + 2.4·0.5 = 1.44',{fs:12,a:'start',c:'mono tmod',fw:700});
  L.c=mat(EX,EY,E,{cs,ch:40,c:'mmod',fs:12.5})+tx(EX+cs*2.5,EY+40*4+18,'P × F: הניבוי',{fs:12.5,fw:700,c:'tmod'});
- L.d=mat(RX+70,EY,R,{cs:38,ch:40,c:'mdat',fs:13})+tx(RX+70+95,EY+40*4+18,'R: האמת',{fs:12.5,fw:700,c:'tdat'})+tx(RX+46,EY+80,'↔',{fs:20,fw:700,c:'lbl'})+
+ L.d=mat(RX+70,EY,R,{cs:38,ch:40,c:'mdat rtm',fs:13,cc:RTC})+tx(RX+70+95,EY+40*4+18,'R: האמת',{fs:12.5,fw:700,c:'tdat'})+tx(RX+46,EY+80,'↔',{fs:20,fw:700,c:'lbl'})+
      `<rect class="hlcell" x="${EX+2}" y="${EY+2}" width="${cs-4}" height="36" rx="5"/><rect class="hlcell" x="${RX+72}" y="${EY+2}" width="34" height="36" rx="5"/>`+
      tx(RX+70+95,FY+14,'(3 − 1.44)² + (1 − 1.37)² + …',{fs:11.5,c:'mono tlos',fw:700})+tx(RX+70+95,FY+38,'= 67.59',{fs:12,c:'mono tlos',fw:800})+tx(RX+70+95,FY+62,'סכום ריבועי הטעויות',{fs:11.5,c:'tlos',fw:700});
  const ud=(x,y)=>tx(x,y,'↕',{fs:15,fw:800,c:'topt'});
@@ -754,8 +755,8 @@ function gdReg(xs,ys,w,b,lr,ep){const N=xs.length,hist=[];for(let e=0;e<=ep;e++)
   s+=tx(x0+cs*2.5,16,'R: האמת',{fs:13,fw:800,c:'tdat'})+tx(x1+cs*2.5,y1-24,'P × Q: הניבוי של המודל',{fs:13,fw:800,c:'tmod'});
   U.forEach((u,i)=>{s+=tx(x0-14,y0+i*ch+ch/2,u,{fs:13,fw:800})+tx(x1-14,y1+i*ch+ch/2,u,{fs:13,fw:800});});
   ['M1','M2','M3','M4','M5'].forEach((m,j)=>{s+=tx(x0+j*cs+cs/2,y0+ch*4+14,m,{fs:11,c:'mono lbl'})+tx(x1+j*cs+cs/2,y1+ch*4+14,m,{fs:11,c:'mono lbl'});});
-  s+=mat(x0,y0,R.map((row,u)=>row.map((v,i)=>u===HID[0]&&i===HID[1]?'?':v)),{cs,ch,c:'mdat',fs:14});
-  s+=mat(x1,y1,E.map(row=>row.map(f2)),{cs,ch,c:'mmod',fs:12.5});
+  s+=mat(x0,y0,R.map((row,u)=>row.map((v,i)=>u===HID[0]&&i===HID[1]?'?':v)),{cs,ch,c:'mdat rtm',fs:14,cc:RTC});
+  s+=mat(x1,y1,E.map(row=>row.map(f2)),{cs,ch,c:'mmod rtm',fs:12.5,cc:RTC});
   s+=`<rect class="hlcell" x="${x0+HID[1]*cs+2}" y="${y0+HID[0]*ch+2}" width="${cs-4}" height="${ch-4}" rx="5"/><rect class="hlcell" x="${x1+HID[1]*cs+2}" y="${y1+HID[0]*ch+2}" width="${cs-4}" height="${ch-4}" rx="5"/>`;
   const Pp=plot({x:x0,y:y1+ch*4+40,w:W-x0-20,h:110,xr:[0,Math.max(10,ep)],yr:[0,Math.max(2,hist[0])],xt:[0,Math.max(10,ep)],yt:[0,1,2],xl:'epoch',yl:'RMSE'});
   s+=Pp.svg+`<polyline class="crv los" points="${hist.map((h,i)=>Pp.X(i).toFixed(1)+','+Pp.Y(h).toFixed(1)).join(' ')}"/>`;

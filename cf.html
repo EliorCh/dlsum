@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Suez+One&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="guide.css?v=bf3699ad">
+<link rel="stylesheet" href="guide.css?v=9d5a5ab1">
 <script data-goatcounter="https://eliorch.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <!-- mta-theme --><link rel="stylesheet" href="../main/site-theme.css"><script src="../main/site-theme.js" data-course="dl" data-fam="db" data-footer="body"></script><!-- /mta-theme -->
 </head>
@@ -30,14 +30,14 @@
 <h3 id="s1">הבעיה: מטריצה עם חורים</h3>
 <p class="small">לפי שקף 26 יש לבעיה כמה גרסאות של מטרה: לנבא דירוג (<span class="gt" tabindex="0" data-tip="בעיה שבה הפלט הוא מספר ממשי, למשל מחיר.">רגרסיה</span>), להפיק רשימה מדורגת של <bdi dir="ltr">K</bdi> פריטים (<bdi dir="ltr">top-K</bdi>), או לנבא את הפריט הבא בתוך <bdi dir="ltr">session</bdi>.</p>
 <p>הנתונים הם מטריצה <bdi dir="ltr">R</bdi>: שורה לכל משתמש, עמודה לכל פריט, ובכל תא הדירוג. רוב התאים ריקים, כי כל משתמש ראה רק מעט מהפריטים. המשימה היא לנבא את התאים החסרים, ולהמליץ על הפריטים שהניבוי שלהם הכי גבוה.</p>
-<div class="tbl"><table data-nogloss>
+<div class="tbl"><table class="ratings" data-nogloss>
 <tr><th></th><th>פריט 1</th><th>פריט 2</th><th>פריט 3</th><th>פריט 4</th><th>פריט 5</th></tr>
-<tr><td><strong>משתמש 1</strong></td><td class="c">5</td><td class="c">3</td><td class="c">?</td><td class="c">1</td><td class="c">4</td></tr>
-<tr><td><strong>משתמש 2</strong></td><td class="c">4</td><td class="c">?</td><td class="c">?</td><td class="c">1</td><td class="c">3</td></tr>
-<tr><td><strong>משתמש 3</strong></td><td class="c">1</td><td class="c">1</td><td class="c">?</td><td class="c">5</td><td class="c">?</td></tr>
-<tr><td><strong>משתמש 4</strong></td><td class="c">1</td><td class="c">?</td><td class="c">?</td><td class="c">4</td><td class="c">?</td></tr>
-<tr><td><strong>משתמש 5</strong></td><td class="c">?</td><td class="c">1</td><td class="c">5</td><td class="c">4</td><td class="c">?</td></tr>
-<tr><td><strong>משתמש 6</strong></td><td class="c">?</td><td class="c">?</td><td class="c">5</td><td class="c">4</td><td class="c">1</td></tr>
+<tr><td><strong>משתמש 1</strong></td><td class="c rt rt5">5</td><td class="c rt rt3">3</td><td class="c rt rtq">?</td><td class="c rt rt1">1</td><td class="c rt rt4">4</td></tr>
+<tr><td><strong>משתמש 2</strong></td><td class="c rt rt4">4</td><td class="c rt rtq">?</td><td class="c rt rtq">?</td><td class="c rt rt1">1</td><td class="c rt rt3">3</td></tr>
+<tr><td><strong>משתמש 3</strong></td><td class="c rt rt1">1</td><td class="c rt rt1">1</td><td class="c rt rtq">?</td><td class="c rt rt5">5</td><td class="c rt rtq">?</td></tr>
+<tr><td><strong>משתמש 4</strong></td><td class="c rt rt1">1</td><td class="c rt rtq">?</td><td class="c rt rtq">?</td><td class="c rt rt4">4</td><td class="c rt rtq">?</td></tr>
+<tr><td><strong>משתמש 5</strong></td><td class="c rt rtq">?</td><td class="c rt rt1">1</td><td class="c rt rt5">5</td><td class="c rt rt4">4</td><td class="c rt rtq">?</td></tr>
+<tr><td><strong>משתמש 6</strong></td><td class="c rt rtq">?</td><td class="c rt rtq">?</td><td class="c rt rt5">5</td><td class="c rt rt4">4</td><td class="c rt rt1">1</td></tr>
 </table></div>
 <p class="small">הדוגמה משקף 7: 18 תאים ידועים מתוך 30, כלומר צפיפות של <bdi dir="ltr">60%</bdi>. במערכות אמיתיות הצפיפות היא בדרך כלל בין <bdi dir="ltr">0.1%</bdi> ל-<bdi dir="ltr">2%</bdi>. השאלה בשקף: מה ידרג משתמש 1 את פריט 3?</p>
 <div class="box warn"><h4>תא ריק הוא לא אפס</h4><p>תא ריק פירושו ״לא יודעים״, לא ״לא אהב״. לכן מאמנים רק על התאים הידועים. בקוד מקובל לסמן ריק ב-0, וצריך לזכור לסנן אותו, כמו <code>mask = R[u] &gt; 0</code> בקוד של שקף 17.</p></div>
@@ -59,12 +59,12 @@
 <p>למה בכלל אפשר לנבא תא חסר? כי אנשים לא מדרגים באקראי. במצגת יש שלוש טבלאות: אחת שבה כולם נותנים 3 לכל סרט, אחת שבה יש תבנית, ואחת שנראית אקראית. המרצה שאל בכיתה איזו מהן נראית אמיתית. התשובה: האמצעית. הראשונה אחידה מדי, והשלישית אקראית מדי, ולאנשים אמיתיים יש תבנית דירוג. בטבלה עם התבנית, שורות ועמודות <strong>תלויות</strong> זו בזו: שתי שורות זהות (<bdi dir="ltr">A</bdi> ו-<bdi dir="ltr">C</bdi>), ושורה אחת היא סכום של שתיים אחרות (<bdi dir="ltr">D</bdi> שווה <bdi dir="ltr">B</bdi> ועוד <bdi dir="ltr">C</bdi>). הרעיון: לפרק את הטבלה הגדולה למכפלה של שתי טבלאות קטנות, כמו ש-24 מתפרק ל-6 כפול 4.</p>
 <div class="ex stepped">
 <div class="q"><b>השאלה (דוגמת <bdi dir="ltr">Netflix</bdi> מהמצגת)</b>ארבעה צופים, <bdi dir="ltr">A</bdi> עד <bdi dir="ltr">D</bdi>, דירגו חמישה סרטים, <bdi dir="ltr">M1</bdi> עד <bdi dir="ltr">M5</bdi>:
-<div class="tbl"><table data-nogloss>
+<div class="tbl"><table class="ratings" data-nogloss>
 <tr><th></th><th>M1</th><th>M2</th><th>M3</th><th>M4</th><th>M5</th></tr>
-<tr><td><strong>A</strong></td><td class="c">3</td><td class="c">1</td><td class="c">1</td><td class="c">3</td><td class="c">1</td></tr>
-<tr><td><strong>B</strong></td><td class="c">1</td><td class="c">2</td><td class="c">4</td><td class="c">1</td><td class="c">3</td></tr>
-<tr><td><strong>C</strong></td><td class="c">3</td><td class="c">1</td><td class="c">1</td><td class="c">3</td><td class="c">?</td></tr>
-<tr><td><strong>D</strong></td><td class="c">4</td><td class="c">3</td><td class="c">5</td><td class="c">4</td><td class="c">4</td></tr>
+<tr><td><strong>A</strong></td><td class="c rt rt3">3</td><td class="c rt rt1">1</td><td class="c rt rt1">1</td><td class="c rt rt3">3</td><td class="c rt rt1">1</td></tr>
+<tr><td><strong>B</strong></td><td class="c rt rt1">1</td><td class="c rt rt2">2</td><td class="c rt rt4">4</td><td class="c rt rt1">1</td><td class="c rt rt3">3</td></tr>
+<tr><td><strong>C</strong></td><td class="c rt rt3">3</td><td class="c rt rt1">1</td><td class="c rt rt1">1</td><td class="c rt rt3">3</td><td class="c rt rtq">?</td></tr>
+<tr><td><strong>D</strong></td><td class="c rt rt4">4</td><td class="c rt rt3">3</td><td class="c rt rt5">5</td><td class="c rt rt4">4</td><td class="c rt rt4">4</td></tr>
 </table></div>
 אפשר לכתוב את הטבלה כמכפלה של שתי טבלאות קטנות? ומה <bdi dir="ltr">C</bdi> ייתן ל-<bdi dir="ltr">M5</bdi>?</div>
 <div class="exgrid">
@@ -170,12 +170,12 @@
 <p>הסכום הוא על השכנים הקרובים ביותר שדירגו את <bdi dir="ltr">i</bdi>. ו-<span class="ltr">s_uv</span> הוא הדמיון, שמחושב רק על הפריטים ששניהם דירגו.</p>
 <div class="ex">
 <div class="q"><b>דוגמה מחושבת (שקף 16)</b>נבא את הדירוג של <bdi dir="ltr">A</bdi> לפריט <bdi dir="ltr">X</bdi>:
-<div class="tbl"><table data-nogloss>
+<div class="tbl"><table class="ratings" data-nogloss>
 <tr><th>משתמש</th><th>X</th><th>Y</th><th>Z</th><th>ממוצע</th></tr>
-<tr><td><strong>A</strong></td><td class="c">?</td><td class="c">5</td><td class="c">3</td><td class="c">4.00</td></tr>
-<tr><td><strong>B</strong></td><td class="c">4</td><td class="c">4</td><td class="c">2</td><td class="c">3.33</td></tr>
-<tr><td><strong>C</strong></td><td class="c">5</td><td class="c">5</td><td class="c">1</td><td class="c">3.67</td></tr>
-<tr><td><strong>D</strong></td><td class="c">2</td><td class="c">1</td><td class="c">4</td><td class="c">2.33</td></tr>
+<tr><td><strong>A</strong></td><td class="c rt rtq">?</td><td class="c rt rt5">5</td><td class="c rt rt3">3</td><td class="c">4.00</td></tr>
+<tr><td><strong>B</strong></td><td class="c rt rt4">4</td><td class="c rt rt4">4</td><td class="c rt rt2">2</td><td class="c">3.33</td></tr>
+<tr><td><strong>C</strong></td><td class="c rt rt5">5</td><td class="c rt rt5">5</td><td class="c rt rt1">1</td><td class="c">3.67</td></tr>
+<tr><td><strong>D</strong></td><td class="c rt rt2">2</td><td class="c rt rt1">1</td><td class="c rt rt4">4</td><td class="c">2.33</td></tr>
 </table></div></div>
 <p><strong>1. דמיון.</strong> <bdi dir="ltr">A</bdi> דירג רק את <bdi dir="ltr">Y</bdi> ו-<bdi dir="ltr">Z</bdi>, ולכן משווים רק עליהם. <bdi dir="ltr">B, C</bdi> ו-<bdi dir="ltr">A</bdi> אוהבים את <bdi dir="ltr">Y</bdi> יותר מ-<bdi dir="ltr">Z</bdi>, ולכן מתאם <span class="gt" tabindex="0" data-tip="מתאם בין שני וקטורים אחרי שמחסירים מכל אחד את הממוצע שלו. ערך בין מינוס 1 ל-1.">Pearson</span> שלהם עם <bdi dir="ltr">A</bdi> הוא <bdi dir="ltr">1. D</bdi> הפוך: המתאם שלו הוא <span class="ltr">−1</span>. מוציאים את <bdi dir="ltr">D</bdi> מהשכנים.</p>
 <p><strong>2. הסטיות של השכנים ב-<bdi dir="ltr">X</bdi>:</strong></p>
@@ -198,13 +198,13 @@
 
 <div class="ex">
 <div class="q"><b>דוגמה מחושבת: טבלת הספרים (שקף 32)</b>ארבעה קוראים דירגו חמישה ספרים. סימן שאלה הוא דירוג חסר. מה ידרג <bdi dir="ltr">John</bdi> את ״גאווה ודעה קדומה״?
-<div class="tbl"><table data-nogloss>
+<div class="tbl"><table class="ratings" data-nogloss>
 <tr><th>ספר</th><th>John</th><th>Bob</th><th>Alice</th><th>Peter</th></tr>
-<tr><td>LOTR</td><td class="c">4</td><td class="c">?</td><td class="c">5</td><td class="c">4</td></tr>
-<tr><td>Pride and Prejudice</td><td class="c">?</td><td class="c">?</td><td class="c">5</td><td class="c">3</td></tr>
-<tr><td>Frankenstein</td><td class="c">5</td><td class="c">4</td><td class="c">?</td><td class="c">5</td></tr>
-<tr><td>The Hunchback of Notre-Dame</td><td class="c">2</td><td class="c">3</td><td class="c">5</td><td class="c">?</td></tr>
-<tr><td>The Count of Monte Cristo</td><td class="c">5</td><td class="c">?</td><td class="c">4</td><td class="c">4</td></tr>
+<tr><td>LOTR</td><td class="c rt rt4">4</td><td class="c rt rtq">?</td><td class="c rt rt5">5</td><td class="c rt rt4">4</td></tr>
+<tr><td>Pride and Prejudice</td><td class="c rt rtq">?</td><td class="c rt rtq">?</td><td class="c rt rt5">5</td><td class="c rt rt3">3</td></tr>
+<tr><td>Frankenstein</td><td class="c rt rt5">5</td><td class="c rt rt4">4</td><td class="c rt rtq">?</td><td class="c rt rt5">5</td></tr>
+<tr><td>The Hunchback of Notre-Dame</td><td class="c rt rt2">2</td><td class="c rt rt3">3</td><td class="c rt rt5">5</td><td class="c rt rtq">?</td></tr>
+<tr><td>The Count of Monte Cristo</td><td class="c rt rt5">5</td><td class="c rt rtq">?</td><td class="c rt rt4">4</td><td class="c rt rt4">4</td></tr>
 </table></div></div>
 <div class="box warn"><h4>שימו לב: השקף נמצא בחלק של פריט-פריט, אבל הנוסחה בו היא משתמש-משתמש</h4><p>בשקף 32 <span class="ltr">s_ik</span> מוגדר כ-<span class="gt" tabindex="0" data-tip="הקוסינוס של הזווית בין שני וקטורים: המכפלה הסקלרית חלקי מכפלת האורכים.">cosine</span> בין <strong>המשתמשים</strong> <bdi dir="ltr">i</bdi> ו-<bdi dir="ltr">k</bdi>, והחצים יוצאים מהעמודה של <bdi dir="ltr">Peter</bdi>. לכן כאן נחשב את הדוגמה בשתי הדרכים. השקף עצמו לא נותן תוצאה מספרית, את המספרים חישבנו בעצמנו.</p></div>
 <div class="fx">r̂_ij = Σ_k∈N(j) s_ik · r_kj / Σ_k∈N(j) |s_ik|</div>
@@ -310,6 +310,6 @@
 </div>
 </main>
 </div>
-<script src="guide.js?v=33d5b4f1"></script>
+<script src="guide.js?v=d072d969"></script>
 </body>
 </html>
