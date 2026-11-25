@@ -408,3 +408,11 @@ svg .mat.rtm text{fill:#1c1917;font-weight:700}
 table.ratings,table.mtx{direction:ltr}
 table.ratings th,table.ratings td,table.mtx th,table.mtx td{text-align:center}
 table.ratings td:first-child,table.mtx td:first-child,table.ratings th:first-child,table.mtx th:first-child{text-align:start}
+
+/* ===== formulas (KaTeX, rendered at build time) ===== */
+.katex{direction: ltr !important;unicode-bidi:isolate;font-size:1.08em}
+.fx.math{font-family:inherit}
+.fx.math .katex{font-size:1.18em;line-height:1.6}
+.fx.math .katex .base{margin-block:.15em}
+span.ltr.math .katex{font-size:1.05em}
+@media (max-width:520px){.fx.math .katex{font-size:1.02em}}
