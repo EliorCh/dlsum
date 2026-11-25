@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Suez+One&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="guide.css?v=9d5a5ab1">
+<link rel="stylesheet" href="guide.css?v=f68da714">
 <script data-goatcounter="https://eliorch.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <!-- mta-theme --><link rel="stylesheet" href="../main/site-theme.css"><script src="../main/site-theme.js" data-course="dl" data-fam="db" data-footer="body"></script><!-- /mta-theme -->
 </head>
@@ -93,14 +93,14 @@
 <p>במציאות אף אחד לא אומר למודל מה ״קומדיה״ ומה ״אקשן״. הוא מתחיל ממספרים אקראיים ומשפר אותם ב-<span class="gt" tabindex="0" data-tip="ירידה במורד הגרדיאנט: בכל צעד מזיזים את המשקולות מעט בכיוון שמקטין את ה-Loss.">gradient descent</span>, בדיוק כמו <span class="gt" tabindex="0" data-tip="הפרמטרים שהאימון מכוון. כל קלט מוכפל במשקולת שלו.">המשקולות</span> של <span class="gt" tabindex="0" data-tip="יחידת חישוב: מכפילה כל קלט במשקולת, מחברת, מוסיפה bias ומפעילה פונקציית הפעלה.">נוירון</span>. <span class="gt" tabindex="0" data-tip="מספרים שהמודל לומד לכל משתמש ולכל פריט. הם מסבירים את הדירוגים, גם אם אין להם שם.">הפקטורים</span> שהוא מוצא לא חייבים להיות ז׳אנרים: הם מה שהכי טוב מסביר את הדירוגים.</p>
 <div class="ex stepped">
 <div class="q"><b>השאלה (דוגמת <bdi dir="ltr">Netflix</bdi>, המשך)</b>מתחילים עם שני <span class="gt" tabindex="0" data-tip="מספרים שהמודל לומד לכל משתמש ולכל פריט. הם מסבירים את הדירוגים, גם אם אין להם שם.">פקטורים</span> אקראיים, <bdi dir="ltr">F1</bdi> ו-<bdi dir="ltr">F2</bdi>, לכל צופה ולכל סרט:
-<div class="tbl"><table data-nogloss>
+<div class="tbl"><table class="mtx" data-nogloss>
 <tr><th>צופה</th><th>F1</th><th>F2</th></tr>
 <tr><td><strong>A</strong></td><td class="c">0.2</td><td class="c">0.5</td></tr>
 <tr><td><strong>B</strong></td><td class="c">0.3</td><td class="c">0.4</td></tr>
 <tr><td><strong>C</strong></td><td class="c">0.7</td><td class="c">0.8</td></tr>
 <tr><td><strong>D</strong></td><td class="c">0.4</td><td class="c">0.5</td></tr>
 </table></div>
-<div class="tbl"><table data-nogloss>
+<div class="tbl"><table class="mtx" data-nogloss>
 <tr><th>סרט</th><th>M1</th><th>M2</th><th>M3</th><th>M4</th><th>M5</th></tr>
 <tr><td><strong>F1</strong></td><td class="c">1.2</td><td class="c">3.1</td><td class="c">0.3</td><td class="c">2.5</td><td class="c">0.2</td></tr>
 <tr><td><strong>F2</strong></td><td class="c">2.4</td><td class="c">1.5</td><td class="c">4.4</td><td class="c">0.4</td><td class="c">1.1</td></tr>

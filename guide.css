@@ -403,3 +403,8 @@ table.ratings td.rt5,svg .mat.rtm .cell.rt5{background:var(--rt5);fill:var(--rt5
 table.ratings td.rtq{background:var(--surface);color:var(--muted)}
 svg .mat.rtm .cell[class*="rt"]{stroke:rgba(0,0,0,.18)}
 svg .mat.rtm text{fill:#1c1917;font-weight:700}
+
+/* matrices read left to right, like the diagrams and the slides (M1 on the left) */
+table.ratings,table.mtx{direction:ltr}
+table.ratings th,table.ratings td,table.mtx th,table.mtx td{text-align:center}
+table.ratings td:first-child,table.mtx td:first-child,table.ratings th:first-child,table.mtx th:first-child{text-align:start}
