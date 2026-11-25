@@ -564,22 +564,30 @@ function gdReg(xs,ys,w,b,lr,ep){const N=xs.length,hist=[];for(let e=0;e<=ep;e++)
  SPECS.graph={w:760,h:320,label:'גרף חישוב',L};
 })();
 
-/* ============ Collaborative filtering: the Netflix example, R = U · M ============ */
+/* ============ Collaborative filtering: the Netflix example, U (4×2) × M (2×5) = R (4×5) ============ */
 (function(){
- const L={},cs=44,R=[[3,1,1,3,1],[1,2,4,1,3],[3,1,1,3,1],[4,3,5,4,4]];
- const RX=330,RY=150,UX=150,MY=40,users=['A','B','C','D'],films=['M1','M2','M3','M4','M5'];
- const rowLab=(x)=>users.map((u,i)=>tx(x,RY+i*cs+cs/2,u,{fs:14,fw:800})).join('');
- L.a=mat(RX,RY,R,{cs,c:'mdat rtm',fs:15,cc:RTC})+films.map((f,j)=>tx(RX+j*cs+cs/2,RY-12,f,{fs:12,fw:800,c:'mono tdat'})).join('')+rowLab(RX-16)+
-     tx(RX+cs*2.5,RY+cs*4+22,'R: הדירוגים (4 צופים × 5 סרטים)',{fs:13,fw:700,c:'lbl'});
- L.b=mat(RX,MY,[[3,1,1,3,1],[1,2,4,1,3]],{cs,ch:34,c:'mhyp',fs:14})+tx(RX-10,MY+17,'קומדיה',{fs:12.5,fw:700,a:'end',c:'thyp'})+tx(RX-10,MY+51,'אקשן',{fs:12.5,fw:700,a:'end',c:'thyp'})+
-     tx(RX+cs*5+14,MY+34,'כמה כל סרט',{fs:12,a:'start',c:'lbl'})+tx(RX+cs*5+14,MY+52,'קומי / אקשן',{fs:12,a:'start',c:'lbl'});
- L.c=mat(UX,RY,[[1,0],[0,1],[1,0],[1,1]],{cs,c:'mopt',fs:15})+tx(UX+cs/2,RY-12,'קומדיה',{fs:11.5,fw:700,c:'topt'})+tx(UX+cs*1.5,RY-12,'אקשן',{fs:11.5,fw:700,c:'topt'})+
-     rowLab(UX-16)+tx(UX+cs,RY+cs*4+22,'מה כל צופה אוהב',{fs:12.5,fw:700,c:'lbl'})+tx(UX+cs*2+38,RY+cs*2,'×',{fs:26,fw:700});
- L.d=`<rect class="hlrow" x="${UX-4}" y="${RY+3*cs-2}" width="${cs*2+8}" height="${cs+4}" rx="6"/><rect class="hlrow" x="${RX-4}" y="${RY+3*cs-2}" width="${cs*5+8}" height="${cs+4}" rx="6"/>`+
-     tx(RX+cs*5+14,RY+3*cs+12,'D = קומדיה + אקשן',{fs:12.5,fw:800,a:'start',c:'topt'})+tx(RX+cs*5+14,RY+3*cs+32,'3+1, 1+2, 1+4 ...',{fs:12,a:'start',c:'mono'});
- L.e=`<rect class="hlcell" x="${RX+4*cs+2}" y="${RY+2*cs+2}" width="${cs-4}" height="${cs-4}" rx="5"/>`+
-     tx(RX+cs*5+14,RY+2*cs+12,'C = רק קומדיה',{fs:12.5,fw:800,a:'start',c:'tmod'})+tx(RX+cs*5+14,RY+2*cs+32,'C·M5 = 1·1 + 0·3 = 1',{fs:12,a:'start',c:'mono tmod'});
- SPECS.mf={w:760,h:380,label:'פירוק מטריצה',L};
+ const L={},cs=40,R=[[3,1,1,3,1],[1,2,4,1,3],[3,1,1,3,1],[4,3,5,4,4]],M=[[3,1,1,3,1],[1,2,4,1,3]],U=[[1,0],[0,1],[1,0],[1,1]];
+ const users=['A','B','C','D'],films=['M1','M2','M3','M4','M5'];
+ const UX=48,UY=96,MX=228,MY=UY+cs,RX=486,RY=UY;
+ const rows=(x)=>users.map((u,i)=>tx(x,UY+i*cs+cs/2,u,{fs:14,fw:800})).join('');
+ const cols=(x,y,c)=>films.map((f,j)=>tx(x+j*cs+cs/2,y,f,{fs:12,fw:800,c:'mono '+c})).join('');
+ const box=(x,y,w,h,c)=>`<rect class="${c}" x="${x-3}" y="${y-3}" width="${w+6}" height="${h+6}" rx="6"/>`;
+ L.a=mat(RX,RY,R,{cs,c:'mdat rtm',fs:15,cc:RTC})+cols(RX,RY-12,'tdat')+rows(RX-14)+
+     tx(RX+cs*2.5,RY+cs*4+20,'R: הדירוגים (4 × 5)',{fs:12.5,fw:700,c:'tdat'});
+ L.b=mat(MX,MY,M,{cs,c:'mhyp',fs:15})+cols(MX,MY-12,'thyp')+
+     tx(MX-8,MY+cs/2,'קומדיה',{fs:12,fw:700,a:'end',c:'thyp'})+tx(MX-8,MY+cs*1.5,'אקשן',{fs:12,fw:700,a:'end',c:'thyp'})+
+     tx(MX+cs*2.5,MY+cs*2+20,'M: כמה כל סרט קומי / אקשן (2 × 5)',{fs:12.5,fw:700,c:'thyp'});
+ L.c=mat(UX,UY,U,{cs,c:'mopt',fs:15})+tx(UX+cs/2,UY-12,'קומדיה',{fs:11,fw:700,c:'topt'})+tx(UX+cs*1.5,UY-12,'אקשן',{fs:11,fw:700,c:'topt'})+rows(UX-14)+
+     tx(UX+cs,UY+cs*4+20,'U: מה כל צופה אוהב (4 × 2)',{fs:12.5,fw:700,c:'topt'})+
+     tx((UX+2*cs+MX-48)/2,UY+cs*2,'×',{fs:28,fw:800})+tx((MX+5*cs+RX-16)/2,UY+cs*2,'=',{fs:28,fw:800});
+ /* step d: one cell as a dot product, D · M3 */
+ L.d=box(UX,UY+3*cs,2*cs,cs,'hlrow')+box(MX+2*cs,MY,cs,2*cs,'hlrow')+box(RX+2*cs,RY+3*cs,cs,cs,'hlrow')+
+     tx(390,UY+cs*4+52,'D · M3 = 1·1 + 1·4 = 5',{fs:14,fw:800,c:'mono topt'})+
+     tx(390,UY+cs*4+74,'שורה של U כפול עמודה של M נותנת תא אחד ב-R',{fs:12,c:'lbl'});
+ /* step e: the missing cell, C · M5 */
+ L.e=box(UX,UY+2*cs,2*cs,cs,'hlcell')+box(MX+4*cs,MY,cs,2*cs,'hlcell')+box(RX+4*cs,RY+2*cs,cs,cs,'hlcell')+
+     tx(390,UY+cs*4+100,'C · M5 = 1·1 + 0·3 = 1',{fs:14,fw:800,c:'mono tmod'});
+ SPECS.mf={w:780,h:UY+cs*4+118,label:'פירוק מטריצה',L};
 })();
 
 /* ============ Collaborative filtering: training the factors from random numbers ============ */
