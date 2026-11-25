@@ -738,49 +738,68 @@ function gdReg(xs,ys,w,b,lr,ep){const N=xs.length,hist=[];for(let e=0;e<=ep;e++)
  document.addEventListener('keydown',e=>{if(e.key==='Escape')hide();});
 })();
 
-/* ---- matrix-factorization playground: SGD on the 4×5 Netflix matrix, one cell hidden ---- */
+/* ---- matrix-factorization playground: SGD on the 4×5 Netflix matrix, one cell hidden ----
+   one step = one known cell; one epoch = all 19 known cells once, in a fresh random order */
 (function(){
  const box=document.getElementById('mftool');if(!box)return;
- const R=[[3,1,1,3,1],[1,2,4,1,3],[3,1,1,3,1],[4,3,5,4,4]],HID=[2,4],U=['A','B','C','D'];
+ const R=[[3,1,1,3,1],[1,2,4,1,3],[3,1,1,3,1],[4,3,5,4,4]],HID=[2,4],U=['A','B','C','D'],MV=['M1','M2','M3','M4','M5'];
  const P0=[[0.2,0.5],[0.3,0.4],[0.7,0.8],[0.4,0.5]],F0=[[1.2,3.1,0.3,2.5,0.2],[2.4,1.5,4.4,0.4,1.1]];
- let k=2,lr=0.03,P,Q,ep,hist,r;
- function reset(){r=rng(7);ep=0;hist=[];
+ let k=2,lr=0.03,P,Q,ep,hist,r,queue,steps,last;
+ function reset(){r=rng(7);ep=0;hist=[];queue=[];steps=0;last=null;
   if(k===2){P=P0.map(x=>x.slice());Q=[0,1,2,3,4].map(j=>[F0[0][j],F0[1][j]]);}
   else{P=U.map(()=>Array.from({length:k},()=>0.2+0.6*r()));Q=R[0].map(()=>Array.from({length:k},()=>0.4+1.2*r()));}
   hist.push(rmse());draw();}
  const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0);
  const pred=(u,i)=>dot(P[u],Q[i]);
  function rmse(){let s=0,n=0;for(let u=0;u<4;u++)for(let i=0;i<5;i++){if(u===HID[0]&&i===HID[1])continue;s+=(R[u][i]-pred(u,i))**2;n++;}return Math.sqrt(s/n);}
- function epoch(){const cells=[];for(let u=0;u<4;u++)for(let i=0;i<5;i++)if(!(u===HID[0]&&i===HID[1]))cells.push([u,i]);
-  for(let j=cells.length-1;j>0;j--){const t=Math.floor(r()*(j+1));[cells[j],cells[t]]=[cells[t],cells[j]];}
-  for(const[u,i]of cells){const e=R[u][i]-pred(u,i),pu=P[u].slice();for(let f=0;f<k;f++){P[u][f]+=lr*e*Q[i][f];Q[i][f]+=lr*e*pu[f];}}
-  ep++;hist.push(rmse());}
- function run(n){for(let t=0;t<n;t++)epoch();draw();}
+ function startEpoch(){const cells=[];for(let u=0;u<4;u++)for(let i=0;i<5;i++)if(!(u===HID[0]&&i===HID[1]))cells.push([u,i]);
+  for(let j=cells.length-1;j>0;j--){const t=Math.floor(r()*(j+1));[cells[j],cells[t]]=[cells[t],cells[j]];}queue=cells;}
+ function step(){if(!queue.length)startEpoch();const[u,i]=queue.shift(),before=pred(u,i),e=R[u][i]-before,pu=P[u].slice();
+  for(let f=0;f<k;f++){P[u][f]+=lr*e*Q[i][f];Q[i][f]+=lr*e*pu[f];}
+  steps++;last={u,i,before,e,after:pred(u,i)};if(!queue.length){ep++;hist.push(rmse());}}
+ function runEpochs(n){for(let t=0;t<n;t++){do step();while(queue.length);}draw();}
  const f2=v=>(Math.round(v*100)/100).toFixed(2);
  function draw(){
   const nar=box.clientWidth<560,cs=nar?50:46,ch=34,x0=nar?40:60,y0=40,x1=nar?40:380,y1=nar?y0+ch*4+70:y0,W=nar?310:700;let s='';
   const E=U.map((_,u)=>R[0].map((_,i)=>pred(u,i)));
   s+=tx(x0+cs*2.5,16,'R: האמת',{fs:13,fw:800,c:'tdat'})+tx(x1+cs*2.5,y1-24,'P × Q: הניבוי של המודל',{fs:13,fw:800,c:'tmod'});
   U.forEach((u,i)=>{s+=tx(x0-14,y0+i*ch+ch/2,u,{fs:13,fw:800})+tx(x1-14,y1+i*ch+ch/2,u,{fs:13,fw:800});});
-  ['M1','M2','M3','M4','M5'].forEach((m,j)=>{s+=tx(x0+j*cs+cs/2,y0+ch*4+14,m,{fs:11,c:'mono lbl'})+tx(x1+j*cs+cs/2,y1+ch*4+14,m,{fs:11,c:'mono lbl'});});
+  MV.forEach((m,j)=>{s+=tx(x0+j*cs+cs/2,y0+ch*4+14,m,{fs:11,c:'mono lbl'})+tx(x1+j*cs+cs/2,y1+ch*4+14,m,{fs:11,c:'mono lbl'});});
   s+=mat(x0,y0,R.map((row,u)=>row.map((v,i)=>u===HID[0]&&i===HID[1]?'?':v)),{cs,ch,c:'mdat rtm',fs:14,cc:RTC});
   s+=mat(x1,y1,E.map(row=>row.map(f2)),{cs,ch,c:'mmod rtm',fs:12.5,cc:RTC});
-  s+=`<rect class="hlcell" x="${x0+HID[1]*cs+2}" y="${y0+HID[0]*ch+2}" width="${cs-4}" height="${ch-4}" rx="5"/><rect class="hlcell" x="${x1+HID[1]*cs+2}" y="${y1+HID[0]*ch+2}" width="${cs-4}" height="${ch-4}" rx="5"/>`;
-  const Pp=plot({x:x0,y:y1+ch*4+40,w:W-x0-20,h:110,xr:[0,Math.max(10,ep)],yr:[0,Math.max(2,hist[0])],xt:[0,Math.max(10,ep)],yt:[0,1,2],xl:'epoch',yl:'RMSE'});
+  const hl=(x,y,w,h,c)=>`<rect class="${c}" x="${x}" y="${y}" width="${w}" height="${h}" rx="5"/>`;
+  s+=hl(x0+HID[1]*cs+2,y0+HID[0]*ch+2,cs-4,ch-4,'hlcell')+hl(x1+HID[1]*cs+2,y1+HID[0]*ch+2,cs-4,ch-4,'hlcell');
+  /* the factors themselves: P (one row per viewer) and Q (one column per movie) */
+  const fs2=28,fy=y1+ch*4+48,px=x0,qx=nar?x0:x1,fcs=nar?42:cs,qy=nar?fy+4*fs2+34:fy;
+  s+=tx(px+k*(fs2+16)/2,fy-12,'P: צופים',{fs:12,fw:800,c:'topt'})+tx(qx+fcs*2.5,qy-12,'Q: סרטים',{fs:12,fw:800,c:'thyp'});
+  s+=mat(px,fy,P.map(row=>row.map(v=>v.toFixed(2))),{cs:fs2+16,ch:fs2,c:'mopt',fs:10.5});
+  U.forEach((u,i)=>{s+=tx(px-12,fy+i*fs2+fs2/2,u,{fs:11.5,fw:800});});
+  s+=mat(qx,qy,Array.from({length:k},(_,f)=>Q.map(q=>q[f].toFixed(2))),{cs:fcs,ch:fs2,c:'mhyp',fs:10.5});
+  if(last){s+=hl(x0+last.i*cs+1,y0+last.u*ch+1,cs-2,ch-2,'hlrow')+hl(x1+last.i*cs+1,y1+last.u*ch+1,cs-2,ch-2,'hlrow')+
+    hl(px-2,fy+last.u*fs2-2,k*(fs2+16)+4,fs2+4,'hlrow')+hl(qx+last.i*fcs-2,qy-2,fcs+4,k*fs2+4,'hlrow');}
+  const gy=(nar?qy+k*fs2:fy+Math.max(4,k)*fs2)+34;
+  const Pp=plot({x:x0,y:gy,w:W-x0-20,h:110,xr:[0,Math.max(10,ep)],yr:[0,Math.max(2,hist[0])],xt:[0,Math.max(10,ep)],yt:[0,1,2],xl:'epoch',yl:'RMSE'});
   s+=Pp.svg+`<polyline class="crv los" points="${hist.map((h,i)=>Pp.X(i).toFixed(1)+','+Pp.Y(h).toFixed(1)).join(' ')}"/>`;
-  const H=y1+ch*4+40+110+30;document.getElementById('mfFig').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="אימון פירוק מטריצה">${s}</svg>`;
-  const h=pred(HID[0],HID[1]),last=hist[hist.length-1];
+  const H=gy+110+34;document.getElementById('mfFig').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="אימון פירוק מטריצה">${s}</svg>`;
+  const h=pred(HID[0],HID[1]),lastR=hist[hist.length-1];
   let msg;
-  if(ep===0)msg='עדיין לא התחלנו. הניבויים מהמספרים ההתחלתיים רחוקים מהאמת.';
-  else if(last>0.5&&k===1)msg='עם פקטור אחד בלבד המודל לא מצליח: הטעות נתקעת. אין מספיק ״טעמים״ כדי לתאר את כל הצופים.';
-  else if(last>0.1||(k===2&&last>0.02))msg='הטעות יורדת. המשיכו לאמן.';
+  if(steps===0)msg='עדיין לא התחלנו. הניבויים מהמספרים ההתחלתיים רחוקים מהאמת. התחילו ב״צעד אחד״ כדי לראות עדכון בודד.';
+  else if(ep===0)msg='באמצע האפוק הראשון. כל צעד מתקן תא אחד, ולכן הניבויים בתאים אחרים זזים רק מעט.';
+  else if(lastR>0.5&&k===1)msg='עם פקטור אחד בלבד המודל לא מצליח: הטעות נתקעת. אין מספיק ״טעמים״ כדי לתאר את כל הצופים.';
+  else if(lastR>0.1||(k===2&&lastR>0.02))msg='הטעות יורדת. המשיכו לאמן.';
   else if(k===2)msg='שני פקטורים מספיקים כדי לשחזר את הטבלה, והניבוי למשבצת החסרה מגיע ל-1: בדיוק מה ש-C (חובב קומדיה) היה נותן.';
   else msg='שלושה פקטורים מתאימים לתאים הידועים, אבל יש יותר פרמטרים מכפי שהנתונים קובעים. הניבוי למשבצת החסרה תלוי בהתחלה האקראית ולא חייב לצאת 1. זו התאמת יתר.';
-  document.getElementById('mfStat').innerHTML=`<span>אפוקים: <b>${ep}</b></span><span>RMSE על 19 התאים הידועים: <b>${hist[hist.length-1].toFixed(3)}</b></span><span>ניבוי ל-C על M5: <b>${f2(h)}</b></span><p class="small" style="flex-basis:100%;margin:4px 0 0">${msg}</p>`;
+  let ls='';
+  if(last){const tiny=Math.abs(last.e)<0.005,dir=last.e>0?'עלה':'ירד';
+   ls=`<p class="small" style="flex-basis:100%;margin:4px 0 0"><strong>הצעד האחרון:</strong> התא של ${U[last.u]} על ${MV[last.i]}, במסגרת האדומה. הניבוי היה <b>${f2(last.before)}</b> והדירוג האמיתי <b>${R[last.u][last.i]}</b>, כלומר טעות של <b>${f2(last.e)}</b>. ${tiny?'הניבוי כבר כמעט מדויק, ולכן השורה ב-P והעמודה ב-Q כמעט לא זזו.':`השורה של ${U[last.u]} ב-P והעמודה של ${MV[last.i]} ב-Q, גם הן במסגרת אדומה, זזו קצת, והניבוי בתא ${dir} ל-<b>${f2(last.after)}</b>.`}</p>`;}
+  const inEp=queue.length?`<span>צעדים באפוק הנוכחי: <b>${19-queue.length}</b> מתוך <b>19</b></span>`:'';
+  document.getElementById('mfStat').innerHTML=`<span>אפוקים שהושלמו: <b>${ep}</b></span><span>צעדים: <b>${steps}</b></span>${inEp}<span>RMSE על 19 התאים הידועים: <b>${rmse().toFixed(3)}</b></span><span>ניבוי ל-C על M5: <b>${f2(h)}</b></span>${ls}<p class="small" style="flex-basis:100%;margin:4px 0 0">${msg}</p>`;
  }
  const segK=document.getElementById('mfK');segK.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;segK.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));k=+b.dataset.v;reset();});
- document.getElementById('mf10').addEventListener('click',()=>run(10));
- document.getElementById('mf100').addEventListener('click',()=>run(100));
+ document.getElementById('mfStep').addEventListener('click',()=>{step();draw();});
+ document.getElementById('mf1').addEventListener('click',()=>runEpochs(1));
+ document.getElementById('mf10').addEventListener('click',()=>runEpochs(10));
+ document.getElementById('mf100').addEventListener('click',()=>runEpochs(100));
  document.getElementById('mfReset').addEventListener('click',reset);
  reset();
  let lw=box.clientWidth;window.addEventListener('resize',()=>{if(Math.abs(box.clientWidth-lw)>40){lw=box.clientWidth;draw();}});
